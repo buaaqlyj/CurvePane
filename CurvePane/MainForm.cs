@@ -32,7 +32,7 @@ namespace CurvePane
         {
             setCurveTypeTabControl(curveTypeComboBox.SelectedIndex);
         }
-        private void curveTypeTabControl_TabIndexChanged(object sender, EventArgs e)
+        private void curveTypeTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             setCurveTypeComboBox(curveTypeTabControl.SelectedIndex);
         }

@@ -61,7 +61,7 @@
             this.curveTypeTabControl.SelectedIndex = 0;
             this.curveTypeTabControl.Size = new System.Drawing.Size(557, 149);
             this.curveTypeTabControl.TabIndex = 0;
-            this.curveTypeTabControl.TabIndexChanged += new System.EventHandler(curveTypeTabControl_TabIndexChanged);
+            this.curveTypeTabControl.SelectedIndexChanged += new System.EventHandler(curveTypeTabControl_SelectedIndexChanged);
             // 
             // pcTabPage
             // 
