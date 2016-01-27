@@ -22,8 +22,12 @@ The final project for my Product Modeling Tech class
 
 The ZedGraph control library which is under LGPLv2 is used in this program without any modifications.
 
-Introduction
---------
+## Requirements
+
+DotNet Framework 2.0
+
+## Introduction
+
 https://github.com/buaaqlyj/CurvePane
 
 This program can draw some curve splines which are commonly used in Product Modeling, including: Polynomial curves, CSI curve(Cubic Spline Interpolation), Parametric Cubic Spline curve, Bézier curve, B-Spline curve and NURBS curve.

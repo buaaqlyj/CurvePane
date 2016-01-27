@@ -97,15 +97,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ZedGraphTool\ZedGraph.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ZedGraphTool\ZedGraph.resources.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ZedGraphTool\ZedGraph.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="ZedGraphTool\ZedGraph.dll" />
+    <None Include="ZedGraphTool\ZedGraph.resources.dll" />
+    <None Include="ZedGraphTool\ZedGraph.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -232,7 +232,7 @@
             // 
             this.infoLabel.AutoSize = true;
             this.infoLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.infoLabel.Location = new System.Drawing.Point(185, 641);
+            this.infoLabel.Location = new System.Drawing.Point(322, 641);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(425, 12);
             this.infoLabel.TabIndex = 3;
