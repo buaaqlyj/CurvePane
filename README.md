@@ -24,7 +24,7 @@ The ZedGraph control library which is under LGPLv2 is used in this program witho
 
 ## Requirements
 
-DotNet Framework 2.0
+* DotNet Framework 2.0
 
 ## Introduction
 
