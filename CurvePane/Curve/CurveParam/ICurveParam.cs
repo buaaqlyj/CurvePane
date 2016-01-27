@@ -6,5 +6,6 @@ namespace CurvePane.Curve.CurveParam
 {
     public interface ICurveParam
     {
+        CurveType getCurveType();
     }
 }

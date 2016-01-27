@@ -18,7 +18,7 @@ namespace CurvePane
         #region Control_EventHandler
 
         #region Github Info
-        private void label3_Click(object sender, EventArgs e)
+        private void infoLabel_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/buaaqlyj/CurvePane");
         }
