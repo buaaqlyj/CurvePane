@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CurvePane.Curve.CurveParam
 {
-    interface ICurveParam
+    public interface ICurveParam
     {
     }
 }

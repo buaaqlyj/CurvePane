@@ -6,7 +6,7 @@ using CurvePane.Curve.CurveParam;
 
 namespace CurvePane.Curve.CurveAlgo
 {
-    interface ICurveAlgo
+    public interface ICurveAlgo
     {
         void drawACurve(ICurveParam curveParam);
 

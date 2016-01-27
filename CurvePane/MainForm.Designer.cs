@@ -214,7 +214,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label3.Location = new System.Drawing.Point(180, 636);
+            this.label3.Location = new System.Drawing.Point(185, 641);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(425, 12);
             this.label3.TabIndex = 3;
@@ -225,7 +225,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(805, 657);
+            this.ClientSize = new System.Drawing.Size(805, 662);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.zedGraphControl1);
             this.Controls.Add(this.groupBox1);
