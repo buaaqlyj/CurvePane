@@ -49,22 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Curve\CurveAlgo\ICurveAlgo.cs" />
-    <Compile Include="Curve\CurveAlgo\polynomialCurveAlgo.cs" />
-    <Compile Include="Curve\CurveElements\Interval\DataInterval.cs" />
-    <Compile Include="Extension\Variable\DoubleExtension.cs" />
-    <Compile Include="Curve\CurveElements\Point\CurvePoint.cs" />
-    <Compile Include="Curve\CurveElements\PointList\ICurvePointList.cs" />
-    <Compile Include="Curve\CurveElements\PointList\NormalCurvePointList.cs" />
-    <Compile Include="Curve\CurveElements\PointList\OrderedCurvePointList.cs" />
-    <Compile Include="Curve\CurveElements\IntervalCurve\PolynomialCurve.cs" />
-    <Compile Include="Curve\CurveParam\CurveType.cs" />
-    <Compile Include="Curve\CurveParam\ICurveParam.cs" />
-    <Compile Include="Curve\CurveParam\polynomialCurveParam.cs" />
-    <Compile Include="Extension\Tool\EnumExtension.cs" />
-    <Compile Include="Extension\Tool\MathExtension.cs" />
-    <Compile Include="UserExceptions\SameXInOrderedCurvePointListException.cs" />
-    <Compile Include="UserExceptions\UnmatchedCurveParamTypeException.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,7 +85,12 @@
     <None Include="ZedGraphTool\ZedGraph.resources.dll" />
     <None Include="ZedGraphTool\ZedGraph.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Curve\CurveBase.csproj">
+      <Project>{116AA068-48F5-488E-A4FC-CADFC9DD78B3}</Project>
+      <Name>CurveBase</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

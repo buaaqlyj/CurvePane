@@ -13,21 +13,36 @@
 /// limitations under the License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-using Curve.CurveElements.IntervalCurve;
-using Curve.CurveInterpolatedData;
-using Curve.CurveParam;
+using Util.Variable;
 
-namespace CurvePane.ZedGraphTool
+namespace CurveBase.CurveElements.PointList
 {
-    public static class ZedGraphHelpler
+    public interface ICurvePointList
     {
-        
-        public static void DrawCurves(ICurveInterpolatedData curveData)
-        {
-            //TODO: Draw curves.
-        }
+        int IndexOf(DataPoint item);
+
+        void RemoveAt(int index);
+
+        DataPoint this[int index] { get; set; }
+
+        void Add(DataPoint item);
+
+        void Clear();
+
+        bool Contains(DataPoint item);
+
+        void CopyTo(DataPoint[] array, int arrayIndex);
+
+        int Count { get; }
+
+        bool IsReadOnly { get; }
+
+        bool Remove(DataPoint item);
+
+        IEnumerator<DataPoint> GetEnumerator();
     }
 }

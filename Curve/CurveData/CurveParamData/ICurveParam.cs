@@ -16,18 +16,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Curve.CurveElements.IntervalCurve;
-using Curve.CurveInterpolatedData;
-using Curve.CurveParam;
-
-namespace CurvePane.ZedGraphTool
+namespace CurveBase.CurveData.CurveParamData
 {
-    public static class ZedGraphHelpler
+    public interface ICurveParam
     {
-        
-        public static void DrawCurves(ICurveInterpolatedData curveData)
-        {
-            //TODO: Draw curves.
-        }
+        CurveType getCurveType();
     }
 }
