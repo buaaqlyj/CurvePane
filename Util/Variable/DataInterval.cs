@@ -94,8 +94,8 @@ namespace Util.Variable
 
         private DataInterval()
         {
-            leftBorder = null;
-            rightBorder = null;
+            leftBorder = new DoubleExtension(0);
+            rightBorder = new DoubleExtension(0);
             nullInterval = true;
         }
         #endregion
@@ -122,6 +122,14 @@ namespace Util.Variable
             get
             {
                 return rightBorder;
+            }
+        }
+
+        public DoubleExtension Length
+        {
+            get
+            {
+                return rightBorder - leftBorder;
             }
         }
         #endregion

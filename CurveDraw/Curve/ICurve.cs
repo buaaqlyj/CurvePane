@@ -18,6 +18,7 @@ using System.Text;
 
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
+using ZedGraph;
 
 namespace CurveDraw.Curve
 {
@@ -29,6 +30,6 @@ namespace CurveDraw.Curve
 
         ICurveInterpolatedData interpolateCurve(ICurveParam curveParam);
 
-        void drawCurve(ICurveInterpolatedData curveInterpolatedData);
+        PointPairList sampleCurve(ICurveInterpolatedData curveInterpolatedData);
     }
 }

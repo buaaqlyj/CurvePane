@@ -25,10 +25,11 @@ using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
 using Util.Tool;
 using Util.Variable;
+using ZedGraph;
 
 namespace CurveDraw.Curve
 {
-    public class polynomialInterpolatedCurve : ICurve
+    public class polynomialCurve : ICurve
     {
         #region ICurve Member
 
@@ -68,16 +69,23 @@ namespace CurveDraw.Curve
                 //TODO: handle SameXInOrderedCurvePointListException
                 return null;
             }
-
-            polynomialCurveParam param = (polynomialCurveParam)curveParam;
-            List<PolynomialCurve> polynomialCurves = generatePolynomialCurves(param);
+            return new polynomialCurveInterpolatedData(generatePolynomialCurves((polynomialCurveParam)curveParam));
         }
 
-        public void drawCurve(ICurveInterpolatedData curveInterpolatedData)
+        public PointPairList sampleCurve(ICurveInterpolatedData curveInterpolatedData)
         {
-            curveInterpolatedData.drawCurve();
+            if (curveInterpolatedData.getCurveType() != CurveType.polynomialCurve)
+            {
+                throw new UnmatchedCurveParamTypeException(CurveType.polynomialCurve, curveInterpolatedData.getCurveType());
+            }
+            polynomialCurveInterpolatedData data = (polynomialCurveInterpolatedData)curveInterpolatedData;
+            PointPairList list = new PointPairList();
+            foreach (PolynomialCurve curve in data.Curves)
+            {
+                list.AddRange(sampleACurve(curve));
+            }
+            return list;
         }
-        
         #endregion
 
         #region Private.Methods
@@ -104,6 +112,32 @@ namespace CurveDraw.Curve
                     break;
             }
             return polynomialCurve;
+        }
+
+        private List<PointPair> sampleACurve(PolynomialCurve curve)
+        {
+            double stepSize;
+            int step;
+            if (curve.Interval.Length.CoordinateValue > 0.05)
+            {
+                stepSize = curve.Interval.Length.CoordinateValue / 50;
+                step = 5;
+            }
+            else
+            {
+                stepSize = 0.001;
+                step = (int)(curve.Interval.Length.CoordinateValue * 1000);
+            }
+            double xValue = curve.Interval.LeftBorder.CoordinateValue;
+            PointPair pt;
+            List<PointPair> pts = new List<PointPair>();
+            while (xValue <= curve.Interval.RightBorder)
+            {
+                pt = new PointPair(xValue, curve.calculate(xValue));
+                pts.Add(pt);
+                xValue += stepSize;
+            }
+            return pts;
         }
         #endregion
 

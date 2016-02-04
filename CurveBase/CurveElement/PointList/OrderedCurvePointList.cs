@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using Util.Variable;
-using CurveBase.CurveElements.Point;
 
 namespace CurveBase.CurveElements.PointList
 {

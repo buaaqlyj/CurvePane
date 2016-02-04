@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-using Curve.CurveElements.IntervalCurve;
-using Curve.CurveInterpolatedData;
-using Curve.CurveParam;
+using CurveBase.CurveElements.IntervalCurve;
+using CurveBase.CurveData.CurveInterpolatedData;
+using Util.Variable;
+using ZedGraph;
 
 namespace CurvePane.ZedGraphTool
 {

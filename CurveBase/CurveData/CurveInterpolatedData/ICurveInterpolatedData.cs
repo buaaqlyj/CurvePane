@@ -7,7 +7,5 @@ namespace CurveBase.CurveData.CurveInterpolatedData
     public interface ICurveInterpolatedData
     {
         CurveType getCurveType();
-
-        void drawCurve();
     }
 }

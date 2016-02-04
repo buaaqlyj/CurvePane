@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurveData\CurveInterpolatedData\polynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveElement\IntervalCurve\PolynomialCurve.cs" />
     <Compile Include="CurveElement\PointList\ICurvePointList.cs" />
     <Compile Include="CurveElement\PointList\NormalCurvePointList.cs" />
