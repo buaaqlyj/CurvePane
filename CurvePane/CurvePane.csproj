@@ -86,7 +86,7 @@
     <None Include="ZedGraphTool\ZedGraph.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Curve\CurveBase.csproj">
+    <ProjectReference Include="..\CurveBase\CurveBase.csproj">
       <Project>{116AA068-48F5-488E-A4FC-CADFC9DD78B3}</Project>
       <Name>CurveBase</Name>
     </ProjectReference>

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{62C75B93-1AB6-47DD-995A-BBF52416F182}</ProjectGuid>
+    <ProjectGuid>{116AA068-48F5-488E-A4FC-CADFC9DD78B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CurveDraw</RootNamespace>
-    <AssemblyName>CurveDraw</AssemblyName>
+    <RootNamespace>Curve</RootNamespace>
+    <AssemblyName>Curve</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,22 +36,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Curve\ICurve.cs" />
-    <Compile Include="Curve\polynomialCurve.cs" />
+    <Compile Include="CurveElement\IntervalCurve\PolynomialCurve.cs" />
+    <Compile Include="CurveElement\PointList\ICurvePointList.cs" />
+    <Compile Include="CurveElement\PointList\NormalCurvePointList.cs" />
+    <Compile Include="CurveElement\PointList\OrderedCurvePointList.cs" />
+    <Compile Include="CurveException\SameXInOrderedCurvePointListException.cs" />
+    <Compile Include="CurveException\UnmatchedCurveParamTypeException.cs" />
+    <Compile Include="CurveData\CurveInterpolatedData\ICurveInterpolatedData.cs" />
+    <Compile Include="CurveType.cs" />
+    <Compile Include="CurveData\CurveParamData\ICurveParam.cs" />
+    <Compile Include="CurveData\CurveParamData\polynomialCurveParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\CurveBase\CurveBase.csproj">
-      <Project>{116AA068-48F5-488E-A4FC-CADFC9DD78B3}</Project>
-      <Name>CurveBase</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Util\Util.csproj">
       <Project>{F466F1FB-CCBE-4E10-9ABE-91E009AEF1E1}</Project>
       <Name>Util</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CurveMethod\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
