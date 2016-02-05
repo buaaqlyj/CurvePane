@@ -23,7 +23,7 @@ namespace Util.Variable.PointList
 {
     public class OrderedCurvePointList : ICurvePointList
     {
-        private SortedList<DoubleExtension, DataPoint> sortedPointList;
+        protected SortedList<DoubleExtension, DataPoint> sortedPointList;
 
         #region Constructor
         public OrderedCurvePointList(List<DataPoint> points)

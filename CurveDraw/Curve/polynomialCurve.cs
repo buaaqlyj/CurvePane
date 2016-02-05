@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 using CurveBase;
@@ -69,7 +70,12 @@ namespace CurveDraw.Curve
                 //TODO: handle SameXInOrderedCurvePointListException
                 return null;
             }
-            return new polynomialCurveInterpolatedData(generatePolynomialCurves((polynomialCurveParam)curveParam));
+            polynomialCurveParam pCurveParam = (polynomialCurveParam)curveParam;
+            if (pCurveParam.PolynomialCurveType == polynomialCurveType.Lagrange_Linear)
+            {
+                return new polynomialCurveInterpolatedData(pCurveParam.PointList, polynomialCurveType.Lagrange_Linear);
+            }
+            return new polynomialCurveInterpolatedData(generatePolynomialCurves(pCurveParam), pCurveParam.PolynomialCurveType);
         }
 
         public Dictionary<PointPairList, DrawType> sampleCurve(ICurveInterpolatedData curveInterpolatedData)
@@ -80,13 +86,23 @@ namespace CurveDraw.Curve
             }
             polynomialCurveInterpolatedData data = (polynomialCurveInterpolatedData)curveInterpolatedData;
             PointPairList list = new PointPairList();
-            foreach (PolynomialCurve curve in data.Curves)
-            {
-                list.AddRange(sampleACurve(curve));
-            }
-            Util.Variable.DataPoint lastDataPoint = curveInterpolatedData.getLastPoint();
-            list.Add(new PointPair(lastDataPoint.X.CoordinateValue, lastDataPoint.Y.CoordinateValue));
             Dictionary<PointPairList, DrawType> result = new Dictionary<PointPairList, DrawType>();
+            if (data.PointList != null)
+            {
+                foreach (Util.Variable.DataPoint item in data.PointList)
+                {
+                    list.Add(new PointPair(item.X.CoordinateValue, item.Y.CoordinateValue));
+                }
+            }
+            else if (data.Curves != null)
+            {
+                foreach (PolynomialCurve curve in data.Curves)
+                {
+                    list.AddRange(sampleACurve(curve));
+                }
+                Util.Variable.DataPoint lastDataPoint = curveInterpolatedData.getLastPoint();
+                list.Add(new PointPair(lastDataPoint.X.CoordinateValue, lastDataPoint.Y.CoordinateValue));
+            }
             result.Add(list, DrawType.LineNoDot);
             return result;
         }
@@ -109,7 +125,11 @@ namespace CurveDraw.Curve
                     }
                     break;
                 case polynomialCurveType.Lagrange_Quadratic:
-                    //TODO: generate Polynomial Curves for Lagrange_Quadratic
+                    for (int i = 2; i < pointList.Count; i = i + 2)
+                    {
+                        coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
+                        polynomialCurve.Add(new PolynomialCurve(coefficients, 3, pointList[i - 2].X, pointList[i].X));
+                    }
                     break;
                 case polynomialCurveType.Newton:
                     //TODO: generate Polynomial Curves for Newton
@@ -125,7 +145,7 @@ namespace CurveDraw.Curve
             if (curve.Interval.Length.CoordinateValue > 0.05)
             {
                 stepSize = curve.Interval.Length.CoordinateValue / 50;
-                step = 5;
+                step = 50;
             }
             else
             {

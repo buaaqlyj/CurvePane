@@ -20,10 +20,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using ZedGraph;
+
 namespace CurvePane
 {
     public partial class MainForm : Form
     {
+        private GraphPane masterPane = null;
+        
         public MainForm()
         {
             InitializeComponent();
@@ -55,11 +59,22 @@ namespace CurvePane
             setCurveTypeComboBox(curveTypeTabControl.SelectedIndex);
         }
         #endregion
+        #region ZedGraph
+        public bool masterZedGraphControl_DoubleClickEvent(object sender, MouseEventArgs e)
+        {
+            double xVal, yVal;
+            masterPane.ReverseTransform(e.Location, out xVal, out yVal);
+            textBox3.Text = xVal.ToString("0.000") + ", " + yVal.ToString("0.000");
+            return true;
+        }
+        #endregion
         #endregion
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             curveTypeComboBox.SelectedIndex = 0;
+            masterPane = masterZedGraphControl.GraphPane;
+            masterZedGraphControl.DoubleClickEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(masterZedGraphControl_DoubleClickEvent);
         }
 
     }

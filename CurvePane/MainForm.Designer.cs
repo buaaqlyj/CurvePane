@@ -42,9 +42,10 @@ namespace CurvePane
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.curveTypeTabControl = new System.Windows.Forms.TabControl();
             this.pcTabPage = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.csiTabPage = new System.Windows.Forms.TabPage();
             this.pcsiTabPage = new System.Windows.Forms.TabPage();
             this.bezierTabPage = new System.Windows.Forms.TabPage();
@@ -57,21 +58,19 @@ namespace CurvePane
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.clearButton = new System.Windows.Forms.Button();
             this.drawButton = new System.Windows.Forms.Button();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
+            this.masterZedGraphControl = new ZedGraph.ZedGraphControl();
             this.infoLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.fetchControlButton = new System.Windows.Forms.Button();
-            this.clearPointsButton = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.idColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.xColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.yColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.clearPointsButton = new System.Windows.Forms.Button();
+            this.fetchControlButton = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -105,6 +104,28 @@ namespace CurvePane
             this.pcTabPage.TabIndex = 0;
             this.pcTabPage.Text = "多项式插值曲线";
             this.pcTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(37, 34);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "插值方法：";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "拉格朗日一次插值",
+            "拉格朗日二次插值",
+            "牛顿一次插值"});
+            this.comboBox1.Location = new System.Drawing.Point(108, 31);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 0;
             // 
             // csiTabPage
             // 
@@ -228,19 +249,19 @@ namespace CurvePane
             this.drawButton.Text = "绘制曲线";
             this.drawButton.UseVisualStyleBackColor = true;
             // 
-            // zedGraphControl1
+            // masterZedGraphControl
             // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(12, 199);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.ScrollGrace = 0D;
-            this.zedGraphControl1.ScrollMaxX = 0D;
-            this.zedGraphControl1.ScrollMaxY = 0D;
-            this.zedGraphControl1.ScrollMaxY2 = 0D;
-            this.zedGraphControl1.ScrollMinX = 0D;
-            this.zedGraphControl1.ScrollMinY = 0D;
-            this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(781, 434);
-            this.zedGraphControl1.TabIndex = 2;
+            this.masterZedGraphControl.Location = new System.Drawing.Point(12, 199);
+            this.masterZedGraphControl.Name = "masterZedGraphControl";
+            this.masterZedGraphControl.ScrollGrace = 0D;
+            this.masterZedGraphControl.ScrollMaxX = 0D;
+            this.masterZedGraphControl.ScrollMaxY = 0D;
+            this.masterZedGraphControl.ScrollMaxY2 = 0D;
+            this.masterZedGraphControl.ScrollMinX = 0D;
+            this.masterZedGraphControl.ScrollMinY = 0D;
+            this.masterZedGraphControl.ScrollMinY2 = 0D;
+            this.masterZedGraphControl.Size = new System.Drawing.Size(781, 434);
+            this.masterZedGraphControl.TabIndex = 2;
             // 
             // infoLabel
             // 
@@ -267,6 +288,70 @@ namespace CurvePane
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "型值点";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "消息：";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(53, 49);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(215, 21);
+            this.textBox3.TabIndex = 3;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.idColumnHeader,
+            this.xColumnHeader,
+            this.yColumnHeader});
+            this.listView1.GridLines = true;
+            this.listView1.Location = new System.Drawing.Point(6, 76);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(262, 226);
+            this.listView1.TabIndex = 2;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // idColumnHeader
+            // 
+            this.idColumnHeader.Text = "序号";
+            this.idColumnHeader.Width = 53;
+            // 
+            // xColumnHeader
+            // 
+            this.xColumnHeader.Text = "X";
+            this.xColumnHeader.Width = 93;
+            // 
+            // yColumnHeader
+            // 
+            this.yColumnHeader.Text = "Y";
+            this.yColumnHeader.Width = 91;
+            // 
+            // clearPointsButton
+            // 
+            this.clearPointsButton.Location = new System.Drawing.Point(166, 20);
+            this.clearPointsButton.Name = "clearPointsButton";
+            this.clearPointsButton.Size = new System.Drawing.Size(75, 23);
+            this.clearPointsButton.TabIndex = 1;
+            this.clearPointsButton.Text = "清空点集";
+            this.clearPointsButton.UseVisualStyleBackColor = true;
+            // 
+            // fetchControlButton
+            // 
+            this.fetchControlButton.Location = new System.Drawing.Point(35, 20);
+            this.fetchControlButton.Name = "fetchControlButton";
+            this.fetchControlButton.Size = new System.Drawing.Size(75, 23);
+            this.fetchControlButton.TabIndex = 0;
+            this.fetchControlButton.Text = "开始抓取";
+            this.fetchControlButton.UseVisualStyleBackColor = true;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.textBox2);
@@ -286,92 +371,6 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
-            // fetchControlButton
-            // 
-            this.fetchControlButton.Location = new System.Drawing.Point(35, 20);
-            this.fetchControlButton.Name = "fetchControlButton";
-            this.fetchControlButton.Size = new System.Drawing.Size(75, 23);
-            this.fetchControlButton.TabIndex = 0;
-            this.fetchControlButton.Text = "开始抓取";
-            this.fetchControlButton.UseVisualStyleBackColor = true;
-            // 
-            // clearPointsButton
-            // 
-            this.clearPointsButton.Location = new System.Drawing.Point(166, 20);
-            this.clearPointsButton.Name = "clearPointsButton";
-            this.clearPointsButton.Size = new System.Drawing.Size(75, 23);
-            this.clearPointsButton.TabIndex = 1;
-            this.clearPointsButton.Text = "清空点集";
-            this.clearPointsButton.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.idColumnHeader,
-            this.xColumnHeader,
-            this.yColumnHeader});
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(6, 76);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(262, 226);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(53, 49);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(215, 21);
-            this.textBox3.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "消息：";
-            // 
-            // idColumnHeader
-            // 
-            this.idColumnHeader.Text = "序号";
-            this.idColumnHeader.Width = 53;
-            // 
-            // xColumnHeader
-            // 
-            this.xColumnHeader.Text = "X";
-            this.xColumnHeader.Width = 93;
-            // 
-            // yColumnHeader
-            // 
-            this.yColumnHeader.Text = "Y";
-            this.yColumnHeader.Width = 91;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "拉格朗日一次插值",
-            "拉格朗日二次插值",
-            "牛顿一次插值"});
-            this.comboBox1.Location = new System.Drawing.Point(108, 31);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(37, 34);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "插值方法：";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -380,7 +379,7 @@ namespace CurvePane
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.infoLabel);
-            this.Controls.Add(this.zedGraphControl1);
+            this.Controls.Add(this.masterZedGraphControl);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainForm";
             this.Text = "产品建模技术实践类大作业 - 曲线画布";
@@ -409,7 +408,7 @@ namespace CurvePane
         private System.Windows.Forms.TabPage bsTabPage;
         private System.Windows.Forms.TabPage nurbsTabPage;
         private System.Windows.Forms.GroupBox groupBox1;
-        private ZedGraph.ZedGraphControl zedGraphControl1;
+        private ZedGraph.ZedGraphControl masterZedGraphControl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox curveTypeComboBox;
         private System.Windows.Forms.Label label1;
