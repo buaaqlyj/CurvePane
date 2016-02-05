@@ -19,74 +19,70 @@ using System.Text;
 
 using Util.Variable;
 
-namespace CurveBase.CurveElements.PointList
+namespace Util.Variable.PointList
 {
-    public class OrderedCurvePointList : ICurvePointList
+    public class NormalCurvePointList : ICurvePointList
     {
-        private SortedList<DoubleExtension, DataPoint> sortedPointList;
+        protected List<DataPoint> points;
 
         #region Constructor
-        public OrderedCurvePointList(List<DataPoint> points)
+        public NormalCurvePointList(List<DataPoint> points)
         {
-            sortedPointList = new SortedList<DoubleExtension, DataPoint>();
-            foreach (DataPoint pt in points)
-            {
-                sortedPointList.Add(pt.X, pt);
-            }
+            this.points = points;
         }
 
-        public OrderedCurvePointList()
+        public NormalCurvePointList()
         {
-            sortedPointList = new SortedList<DoubleExtension, DataPoint>();
+            points = new List<DataPoint>();
         }
         #endregion
 
         #region ICurvePointList
         public int IndexOf(DataPoint item)
         {
-            return sortedPointList.IndexOfValue(item);
+            return points.IndexOf(item);
         }
 
         public void RemoveAt(int index)
         {
-            sortedPointList.RemoveAt(index);
+            points.RemoveAt(index);
         }
 
         public DataPoint this[int index]
         {
             get
             {
-                return sortedPointList.Values[index];
+                return points[index];
             }
             set
             {
-                sortedPointList.Values[index] = value;
+                points[index] = value;
             }
         }
 
         public void Add(DataPoint item)
         {
-            sortedPointList.Add(item.X, item);
+            points.Add(item);
         }
 
         public void Clear()
         {
-            sortedPointList.Clear();
+            points.Clear();
         }
 
         public bool Contains(DataPoint item)
         {
-            return sortedPointList.Values.Contains(item);
+            return points.Contains(item);
         }
 
         public void CopyTo(DataPoint[] array, int arrayIndex)
         {
-            sortedPointList.Values.CopyTo(array, arrayIndex);
+            points.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return sortedPointList.Count; }
+            get { return points.Count; }
         }
 
         public bool IsReadOnly
@@ -96,33 +92,22 @@ namespace CurveBase.CurveElements.PointList
 
         public bool Remove(DataPoint item)
         {
-            return sortedPointList.Remove(sortedPointList.Keys[sortedPointList.IndexOfValue(item)]);
+            return points.Remove(item);
         }
 
         public IEnumerator<DataPoint> GetEnumerator()
         {
-            return sortedPointList.Values.GetEnumerator();
+            return points.GetEnumerator();
         }
         #endregion
 
         #region Public.Interface
-        public int IndexOf(DoubleExtension item)
+        
+        public void Insert(int index, DataPoint item)
         {
-            return sortedPointList.IndexOfKey(item);
+            points.Insert(index, item);
         }
 
-        public bool noDuplicatedX()
-        {
-            if (sortedPointList.Count < 2) return true;
-            for (int i = 1; i < sortedPointList.Count; i++)
-            {
-                if (DataPoint.hasSameX(sortedPointList.Values[i - 1], sortedPointList.Values[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
         #endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using CurveBase.CurveElements.IntervalCurve;
+using Util.Variable;
 
 namespace CurveBase.CurveData.CurveInterpolatedData
 {
@@ -34,6 +35,14 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         {
             return CurveType.polynomialCurve;
         }
+
+        public DataPoint getLastPoint()
+        {
+            return polynomialInterpolatedCurves[polynomialInterpolatedCurves.Count - 1].LastPoint;
+        }
         #endregion
+
+
+        
     }
 }

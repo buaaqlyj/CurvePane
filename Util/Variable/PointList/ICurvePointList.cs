@@ -17,9 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-using Util.Variable;
-
-namespace CurveBase.CurveElements.PointList
+namespace Util.Variable.PointList
 {
     public interface ICurvePointList
     {

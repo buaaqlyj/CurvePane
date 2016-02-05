@@ -13,6 +13,7 @@
 /// limitations under the License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -30,6 +31,6 @@ namespace CurveDraw.Curve
 
         ICurveInterpolatedData interpolateCurve(ICurveParam curveParam);
 
-        PointPairList sampleCurve(ICurveInterpolatedData curveInterpolatedData);
+        Dictionary<PointPairList, DrawType> sampleCurve(ICurveInterpolatedData curveInterpolatedData);
     }
 }

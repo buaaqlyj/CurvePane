@@ -90,6 +90,10 @@
       <Project>{116AA068-48F5-488E-A4FC-CADFC9DD78B3}</Project>
       <Name>CurveBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CurveDraw\CurveDraw.csproj">
+      <Project>{62C75B93-1AB6-47DD-995A-BBF52416F182}</Project>
+      <Name>CurveDraw</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Util\Util.csproj">
       <Project>{F466F1FB-CCBE-4E10-9ABE-91E009AEF1E1}</Project>
       <Name>Util</Name>

@@ -19,12 +19,12 @@ using System.Text;
 using CurveBase;
 using CurveBase.CurveElements;
 using CurveBase.CurveElements.IntervalCurve;
-using CurveBase.CurveElements.PointList;
 using CurveBase.CurveException;
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
 using Util.Tool;
 using Util.Variable;
+using Util.Variable.PointList;
 using ZedGraph;
 
 namespace CurveDraw.Curve
@@ -72,7 +72,7 @@ namespace CurveDraw.Curve
             return new polynomialCurveInterpolatedData(generatePolynomialCurves((polynomialCurveParam)curveParam));
         }
 
-        public PointPairList sampleCurve(ICurveInterpolatedData curveInterpolatedData)
+        public Dictionary<PointPairList, DrawType> sampleCurve(ICurveInterpolatedData curveInterpolatedData)
         {
             if (curveInterpolatedData.getCurveType() != CurveType.polynomialCurve)
             {
@@ -84,7 +84,11 @@ namespace CurveDraw.Curve
             {
                 list.AddRange(sampleACurve(curve));
             }
-            return list;
+            Util.Variable.DataPoint lastDataPoint = curveInterpolatedData.getLastPoint();
+            list.Add(new PointPair(lastDataPoint.X.CoordinateValue, lastDataPoint.Y.CoordinateValue));
+            Dictionary<PointPairList, DrawType> result = new Dictionary<PointPairList, DrawType>();
+            result.Add(list, DrawType.LineNoDot);
+            return result;
         }
         #endregion
 

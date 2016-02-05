@@ -96,6 +96,14 @@ namespace CurveBase.CurveElements.IntervalCurve
                 return interval;
             }
         }
+
+        public DataPoint LastPoint
+        {
+            get
+            {
+                return new DataPoint(Interval.RightBorder.CoordinateValue, calculate(Interval.RightBorder.CoordinateValue));
+            }
+        }
         #endregion
     }
 }

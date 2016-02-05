@@ -42,6 +42,9 @@
     <Compile Include="Variable\DataInterval.cs" />
     <Compile Include="Variable\DataPoint.cs" />
     <Compile Include="Variable\DoubleExtension.cs" />
+    <Compile Include="Variable\PointList\ICurvePointList.cs" />
+    <Compile Include="Variable\PointList\NormalCurvePointList.cs" />
+    <Compile Include="Variable\PointList\OrderedCurvePointList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

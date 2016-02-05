@@ -17,8 +17,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 
-using CurveBase.CurveElements.PointList;
 using Util.Variable;
+using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveParamData
 {

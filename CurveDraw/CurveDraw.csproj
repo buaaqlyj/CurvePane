@@ -39,6 +39,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Curve\DrawType.cs" />
     <Compile Include="Curve\ICurve.cs" />
     <Compile Include="Curve\polynomialCurve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

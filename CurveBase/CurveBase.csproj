@@ -38,9 +38,6 @@
   <ItemGroup>
     <Compile Include="CurveData\CurveInterpolatedData\polynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveElement\IntervalCurve\PolynomialCurve.cs" />
-    <Compile Include="CurveElement\PointList\ICurvePointList.cs" />
-    <Compile Include="CurveElement\PointList\NormalCurvePointList.cs" />
-    <Compile Include="CurveElement\PointList\OrderedCurvePointList.cs" />
     <Compile Include="CurveException\SameXInOrderedCurvePointListException.cs" />
     <Compile Include="CurveException\UnmatchedCurveParamTypeException.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\ICurveInterpolatedData.cs" />
