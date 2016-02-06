@@ -26,7 +26,7 @@ namespace CurvePane
 {
     public partial class MainForm : Form
     {
-        private GraphPane masterPane = null;
+        private CurveManager masterCurveManager = null;
         
         public MainForm()
         {
@@ -34,7 +34,38 @@ namespace CurvePane
         }
 
         #region Control_EventHandler
+        #region PolynomialCurve
 
+        #endregion
+        #region Draw
+
+        private void drawButton_Click(object sender, EventArgs e)
+        {
+            switch (curveTypeComboBox.SelectedIndex)
+            {
+                case 0:
+                    //Polynomial Curve 多项式插值曲线
+                    masterCurveManager.DrawPolynomialCurve(textBox1.Text, comboBox1.SelectedIndex + 1);
+                    break;
+                case 1:
+                    //三次样条插值曲线
+                    break;
+                case 2:
+                    //参数样条曲线
+                    break;
+                case 3:
+                    //Bezier曲线
+                    break;
+                case 4:
+                    //B样条曲线
+                    break;
+                case 5:
+                    //NURBS曲线
+                    break;
+            }
+        }
+
+        #endregion
         #region Github Info
         private void infoLabel_Click(object sender, EventArgs e)
         {
@@ -59,22 +90,75 @@ namespace CurvePane
             setCurveTypeComboBox(curveTypeTabControl.SelectedIndex);
         }
         #endregion
-        #region ZedGraph
-        public bool masterZedGraphControl_DoubleClickEvent(object sender, MouseEventArgs e)
+        #region FetchBasePoints
+
+        private void fetchControlButton_Click(object sender, EventArgs e)
         {
-            double xVal, yVal;
-            masterPane.ReverseTransform(e.Location, out xVal, out yVal);
-            textBox3.Text = xVal.ToString("0.000") + ", " + yVal.ToString("0.000");
-            return true;
+            if (fetchControlButton.Text == "开始抓取")
+            {
+                masterCurveManager.CaptureSwitch = true;
+                fetchControlButton.Text = "停止抓取";
+            }
+            else if (fetchControlButton.Text == "停止抓取")
+            {
+                masterCurveManager.CaptureSwitch = false;
+                fetchControlButton.Text = "开始抓取";
+            }
         }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                double xVal, yVal;
+                int index;
+                for (int i = listView1.SelectedItems.Count - 1; i > -1; i--)
+                {
+                    index = listView1.SelectedItems[i].Index;
+                    if (double.TryParse(listView1.Items[index].SubItems[1].Text, out xVal) && double.TryParse(listView1.Items[index].SubItems[2].Text, out yVal))
+                    {
+                        masterCurveManager.RemoveBasePoint(new Util.Variable.DataPoint(xVal, yVal));
+                    }
+                    listView1.Items.Remove(listView1.Items[index]);
+                }
+            }
+        }
+
+        private void clearPointsButton_Click(object sender, EventArgs e)
+        {
+            masterCurveManager.ClearBasePoint();
+            listView1.Items.Clear();
+        }
+
+        private void AddBasePoint(Util.Variable.DataPoint point)
+        {
+            if (masterCurveManager.CaptureSwitch)
+            {
+                listView1.Items.Add(new ListViewItem(new string[] {masterCurveManager.BaseNumber.ToString(), point.X.CoordinateString, point.Y.CoordinateString}, -1));
+            }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            masterCurveManager.RemoveAllLines();
+        }
+
+        #endregion
+        #region CurveManager
+
         #endregion
         #endregion
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             curveTypeComboBox.SelectedIndex = 0;
-            masterPane = masterZedGraphControl.GraphPane;
-            masterZedGraphControl.DoubleClickEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(masterZedGraphControl_DoubleClickEvent);
+            masterCurveManager = new CurveManager(masterZedGraphControl);
+            CurveManager.AddBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DoubleClickEventHandler(AddBasePoint);
+
+            listView1.ListViewItemSorter = new ListViewColumnSorter();
+            listView1.ColumnClick += new ColumnClickEventHandler(ListViewHelper.ListView_ColumnClick);
+
+            comboBox1.SelectedIndex = 0;
         }
 
     }

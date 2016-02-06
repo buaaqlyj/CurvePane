@@ -26,72 +26,35 @@ using CurveBase.CurveData.CurveInterpolatedData;
 using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
-using ZedGraph;
 
 namespace CurveDraw.Curve
 {
     public class polynomialCurve : ICurve
     {
+        private polynomialCurveParam curveParam;
+        private bool canDraw = false;
+
         #region ICurve Member
 
-        public bool initial(ICurveParam curveParam)
+        public polynomialCurve(ICurveParam curveParam)
         {
-            throw new NotImplementedException();
+            if (canDrawCurve(curveParam))
+            {
+                canDraw = true;
+                this.curveParam = (polynomialCurveParam)curveParam;
+            }
         }
 
-        public bool canDrawCurve(ICurveParam curveParam)
+        public Dictionary<ICurvePointList, DrawType> sampleCurvePoints()
         {
-            if (curveParam.getCurveType() == CurveType.polynomialCurve)
-            {
-                polynomialCurveParam param = (polynomialCurveParam)curveParam;
-                if (!param.PointList.noDuplicatedX())
-                    throw new SameXInOrderedCurvePointListException(CurveType.polynomialCurve);
-            }
-            else
-            {
-                throw new UnmatchedCurveParamTypeException(CurveType.polynomialCurve, curveParam.getCurveType());
-            }
-            return true;
-        }
-
-        public ICurveInterpolatedData interpolateCurve(ICurveParam curveParam)
-        {
-            try
-            {
-                canDrawCurve(curveParam);
-            }
-            catch (UnmatchedCurveParamTypeException ex)
-            {
-                //TODO: handle UnmatchedCurveParamTypeException
-                return null;
-            }
-            catch (SameXInOrderedCurvePointListException ex)
-            {
-                //TODO: handle SameXInOrderedCurvePointListException
-                return null;
-            }
-            polynomialCurveParam pCurveParam = (polynomialCurveParam)curveParam;
-            if (pCurveParam.PolynomialCurveType == polynomialCurveType.Lagrange_Linear)
-            {
-                return new polynomialCurveInterpolatedData(pCurveParam.PointList, polynomialCurveType.Lagrange_Linear);
-            }
-            return new polynomialCurveInterpolatedData(generatePolynomialCurves(pCurveParam), pCurveParam.PolynomialCurveType);
-        }
-
-        public Dictionary<PointPairList, DrawType> sampleCurve(ICurveInterpolatedData curveInterpolatedData)
-        {
-            if (curveInterpolatedData.getCurveType() != CurveType.polynomialCurve)
-            {
-                throw new UnmatchedCurveParamTypeException(CurveType.polynomialCurve, curveInterpolatedData.getCurveType());
-            }
-            polynomialCurveInterpolatedData data = (polynomialCurveInterpolatedData)curveInterpolatedData;
-            PointPairList list = new PointPairList();
-            Dictionary<PointPairList, DrawType> result = new Dictionary<PointPairList, DrawType>();
+            polynomialCurveInterpolatedData data = interpolateCurve();
+            OrderedCurvePointList list = new OrderedCurvePointList();
+            Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
             if (data.PointList != null)
             {
                 foreach (Util.Variable.DataPoint item in data.PointList)
                 {
-                    list.Add(new PointPair(item.X.CoordinateValue, item.Y.CoordinateValue));
+                    list.Add(item);
                 }
             }
             else if (data.Curves != null)
@@ -100,11 +63,16 @@ namespace CurveDraw.Curve
                 {
                     list.AddRange(sampleACurve(curve));
                 }
-                Util.Variable.DataPoint lastDataPoint = curveInterpolatedData.getLastPoint();
-                list.Add(new PointPair(lastDataPoint.X.CoordinateValue, lastDataPoint.Y.CoordinateValue));
+                list.Add(data.getLastPoint());
             }
+            list.Label = "P";
             result.Add(list, DrawType.LineNoDot);
             return result;
+        }
+
+        public bool CanDraw
+        {
+            get { return canDraw; }
         }
         #endregion
 
@@ -138,7 +106,31 @@ namespace CurveDraw.Curve
             return polynomialCurve;
         }
 
-        private List<PointPair> sampleACurve(PolynomialCurve curve)
+        private bool canDrawCurve(ICurveParam curveParam)
+        {
+            if (curveParam.getCurveType() == CurveType.polynomialCurve)
+            {
+                polynomialCurveParam param = (polynomialCurveParam)curveParam;
+                if (!param.PointList.noDuplicatedX())
+                    throw new SameXInOrderedCurvePointListException(CurveType.polynomialCurve);
+            }
+            else
+            {
+                throw new UnmatchedCurveParamTypeException(CurveType.polynomialCurve, curveParam.getCurveType());
+            }
+            return true;
+        }
+
+        private polynomialCurveInterpolatedData interpolateCurve()
+        {
+            if (curveParam.PolynomialCurveType == polynomialCurveType.Lagrange_Linear)
+            {
+                return new polynomialCurveInterpolatedData(curveParam.PointList, polynomialCurveType.Lagrange_Linear);
+            }
+            return new polynomialCurveInterpolatedData(generatePolynomialCurves(curveParam), curveParam.PolynomialCurveType);
+        }
+
+        private List<DataPoint> sampleACurve(PolynomialCurve curve)
         {
             double stepSize;
             int step;
@@ -153,17 +145,19 @@ namespace CurveDraw.Curve
                 step = (int)(curve.Interval.Length.CoordinateValue * 1000);
             }
             double xValue = curve.Interval.LeftBorder.CoordinateValue;
-            PointPair pt;
-            List<PointPair> pts = new List<PointPair>();
-            while (xValue <= curve.Interval.RightBorder)
+            List<DataPoint> pts = new List<DataPoint>();
+            int count = 0;
+            while (count < step)
             {
-                pt = new PointPair(xValue, curve.calculate(xValue));
-                pts.Add(pt);
+                pts.Add(new DataPoint(xValue, curve.calculate(xValue)));
                 xValue += stepSize;
+                count++;
             }
             return pts;
         }
         #endregion
+
+
 
     }
 }

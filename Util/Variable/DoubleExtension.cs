@@ -18,7 +18,7 @@ using System.Text;
 
 namespace Util.Variable
 {
-    public class DoubleExtension : IEquatable<DoubleExtension>
+    public class DoubleExtension : IEquatable<DoubleExtension>, IComparer<DoubleExtension>, IComparable<DoubleExtension>
     {
         private double va;
 
@@ -222,7 +222,23 @@ namespace Util.Variable
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return CoordinateString.GetHashCode();
+        }
+        #endregion
+
+        #region IComparer<DoubleExtension> Member
+        public int Compare(DoubleExtension x, DoubleExtension y)
+        {
+            if (x > y) return 1;
+            else if (x < y) return -1;
+            else return 0;
+        }
+        #endregion
+
+        #region IComparable<DoubleExtension> Member
+        public int CompareTo(DoubleExtension other)
+        {
+            return Compare(this, other);
         }
         #endregion
     }

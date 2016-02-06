@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 
 using CurveDraw.Curve;
+using Util.Variable;
 using Util.Variable.PointList;
 using ZedGraph;
 
@@ -13,95 +15,112 @@ namespace CurvePane.ZedGraphTool
     {
         private ZedGraphControl zedGraphControl = null;
         private GraphPane masterPane = null;
-
-        private BaseDataPointList basePoints = null;
         private LineItem baseLine = null;
 
-        public ZedGraphWrapper(ZedGraphControl zedGraphControl)
+        public ZedGraphWrapper(ZedGraphControl zedGraphControl, string baseName)
         {
             this.zedGraphControl = zedGraphControl;
             this.masterPane = zedGraphControl.GraphPane;
-            basePoints = new BaseDataPointList();
-            baseLine = DrawCurve("BaseLine", new PointPairList(), DrawType.DotNoLine, Color.Purple);
+            baseLine = AddDots(baseName, new PointPairList(), Color.Purple);
+            zedGraphControl.DoubleClickEvent += new ZedGraphControl.ZedMouseEventHandler(zedGraphControl_DoubleClickEvent);
         }
 
+        #region EventHandler
+        public delegate void DoubleClickEventHandler(Util.Variable.DataPoint point);
+        public static event DoubleClickEventHandler DoubleClick;
+        public bool zedGraphControl_DoubleClickEvent(object sender, MouseEventArgs e)
+        {
+            double xVal, yVal;
+            masterPane.ReverseTransform(e.Location, out xVal, out yVal);
+            DoubleClick(new Util.Variable.DataPoint(xVal, yVal));
+            return true;
+        }
+        #endregion
 
-        #region BasePoints
+        #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
         {
-            basePoints.Add(point);
             baseLine.AddPoint(transformDataPointToPointPair(point));
             zedGraphControl.Refresh();
         }
 
         public void ClearBasePoint()
         {
-            basePoints.Clear();
             baseLine.Clear();
             zedGraphControl.Refresh();
         }
 
-        public void RemoveBasePointAt(int index)
+        public void RemoveBasePoint(Util.Variable.DataPoint point)
         {
-            basePoints.RemoveAt(index);
-            baseLine.RemovePoint(index);
+            Util.Variable.DataPoint localPoint;
+            for (int i = 0; i < baseLine.Points.Count; i++ )
+            {
+                localPoint = new Util.Variable.DataPoint(baseLine.Points[i].X, baseLine.Points[i].Y);
+                if (localPoint == point)
+                {
+                    baseLine.RemovePoint(i);
+                    zedGraphControl.Refresh();
+                    return;
+                }
+            }
+        }
+
+        #endregion
+        
+        #region Line Operation
+        public LineItem AddDots(string curveName, PointPairList pointPairList, Color color)
+        {
+            LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
+            line.Line.IsVisible = false;
+            zedGraphControl.Refresh();
+            return line;
+        }
+
+        public LineItem AddLineWithoutDots(string curveName, PointPairList pointPairList, Color color)
+        {
+            LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.None);
+            zedGraphControl.Refresh();
+            return line;
+        }
+
+        public LineItem AddLineWithDots(string curveName, PointPairList pointPairList, Color color)
+        {
+            LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
+            zedGraphControl.Refresh();
+            return line;
+        }
+
+        public void RemoveLine(string lineName)
+        {
+            masterPane.CurveList.Remove(masterPane.CurveList[masterPane.CurveList.IndexOf(lineName)]);
             zedGraphControl.Refresh();
         }
 
-        public List<Util.Variable.DataPoint> getList()
+        public void RemoveLines(string keyword)
         {
-            return basePoints.Points;
+            masterPane.CurveList.RemoveAll((c) => { return c.Label.Text.Contains(keyword); });
+            zedGraphControl.Refresh();
         }
 
-        public List<Util.Variable.DataPoint> getOrderedList()
+        public void RemoveAllLinesExceptCertainLine(string lineName)
         {
-            return basePoints.SortedPointList;
-        }
-        #endregion
-
-        #region Draw
-        public void DrawCurves(string curveName, Dictionary<PointPairList, DrawType> pointPairListData, Color color)
-        {
-            //TODO: Draw curves.
-            List<LineItem> lines = new List<LineItem>();
-            LineItem line;
-            int index = 1;
-            foreach (KeyValuePair<PointPairList, DrawType> item in pointPairListData)
-            {
-                line = DrawCurve(curveName + index.ToString(), item.Key, item.Value, color);
-                if (line != null)
-                {
-                    lines.Add(line);
-                }
-                index++;
-            }
+            masterPane.CurveList.RemoveAll((c) => { return c.Label.Text != lineName; });
+            zedGraphControl.Refresh();
         }
 
-        public LineItem DrawCurve(string curveName, PointPairList pointPairList, DrawType drawType, Color color)
+        public void RemoveAllLines()
         {
-            if (!hasInitialized)
-                throw new Exception("ZedGraphHelper hasn't been initialized!");
-            switch (drawType)
-            {
-                case DrawType.DotNoLine:
-                    LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
-                    line.Line.IsVisible = false;
-                    return line;
-                case DrawType.DotLine:
-                    return masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
-                case DrawType.LineNoDot:
-                    return masterPane.AddCurve(curveName, pointPairList, color, SymbolType.None);
-            }
-            return null;
+            masterPane.CurveList.Clear();
+            zedGraphControl.Refresh();
         }
         #endregion
-
+        
         #region Property
-        public bool hasInitialized
+        public bool HasInitialized
         {
             get
             {
-                return zedGraphControl == null;
+                return zedGraphControl != null;
             }
         }
 
@@ -120,7 +139,7 @@ namespace CurvePane.ZedGraphTool
             return new PointPair(point.X.CoordinateValue, point.Y.CoordinateValue);
         }
 
-        public static PointPairList transformDataPointListToPointPairList(List<Util.Variable.DataPoint> points)
+        public static PointPairList transformDataPointListToPointPairList(ICurvePointList points)
         {
             PointPairList list = new PointPairList();
             foreach (Util.Variable.DataPoint item in points)

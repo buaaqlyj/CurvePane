@@ -61,6 +61,7 @@ namespace CurvePane
             this.masterZedGraphControl = new ZedGraph.ZedGraphControl();
             this.infoLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -239,6 +240,7 @@ namespace CurvePane
             this.clearButton.TabIndex = 2;
             this.clearButton.Text = "清空画布";
             this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // drawButton
             // 
@@ -248,6 +250,7 @@ namespace CurvePane
             this.drawButton.TabIndex = 1;
             this.drawButton.Text = "绘制曲线";
             this.drawButton.UseVisualStyleBackColor = true;
+            this.drawButton.Click += new System.EventHandler(this.drawButton_Click);
             // 
             // masterZedGraphControl
             // 
@@ -276,6 +279,7 @@ namespace CurvePane
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.deleteButton);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.listView1);
@@ -287,6 +291,16 @@ namespace CurvePane
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "型值点";
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(100, 20);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 5;
+            this.deleteButton.Text = "删除该点";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // label3
             // 
@@ -311,6 +325,7 @@ namespace CurvePane
             this.idColumnHeader,
             this.xColumnHeader,
             this.yColumnHeader});
+            this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(6, 76);
             this.listView1.Name = "listView1";
@@ -336,21 +351,23 @@ namespace CurvePane
             // 
             // clearPointsButton
             // 
-            this.clearPointsButton.Location = new System.Drawing.Point(166, 20);
+            this.clearPointsButton.Location = new System.Drawing.Point(193, 20);
             this.clearPointsButton.Name = "clearPointsButton";
             this.clearPointsButton.Size = new System.Drawing.Size(75, 23);
             this.clearPointsButton.TabIndex = 1;
             this.clearPointsButton.Text = "清空点集";
             this.clearPointsButton.UseVisualStyleBackColor = true;
+            this.clearPointsButton.Click += new System.EventHandler(this.clearPointsButton_Click);
             // 
             // fetchControlButton
             // 
-            this.fetchControlButton.Location = new System.Drawing.Point(35, 20);
+            this.fetchControlButton.Location = new System.Drawing.Point(8, 20);
             this.fetchControlButton.Name = "fetchControlButton";
             this.fetchControlButton.Size = new System.Drawing.Size(75, 23);
             this.fetchControlButton.TabIndex = 0;
             this.fetchControlButton.Text = "开始抓取";
             this.fetchControlButton.UseVisualStyleBackColor = true;
+            this.fetchControlButton.Click += new System.EventHandler(this.fetchControlButton_Click);
             // 
             // groupBox3
             // 
@@ -429,6 +446,7 @@ namespace CurvePane
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button deleteButton;
     }
 }
 

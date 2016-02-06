@@ -19,18 +19,14 @@ using System.Text;
 
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
-using ZedGraph;
+using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
 {
     public interface ICurve
     {
-        bool initial(ICurveParam curveParam);
+        Dictionary<ICurvePointList, DrawType> sampleCurvePoints();
 
-        bool canDrawCurve(ICurveParam curveParam);
-
-        ICurveInterpolatedData interpolateCurve(ICurveParam curveParam);
-
-        Dictionary<PointPairList, DrawType> sampleCurve(ICurveInterpolatedData curveInterpolatedData);
+        bool CanDraw { get; }
     }
 }

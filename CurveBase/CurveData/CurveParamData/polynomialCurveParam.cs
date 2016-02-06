@@ -122,7 +122,21 @@ namespace CurveBase.CurveData.CurveParamData
         {
             return pointsList.GetEnumerator();
         }
+
+        public string Label
+        {
+            get
+            {
+                return pointsList.Label;
+            }
+            set
+            {
+                pointsList.Label = value;
+            }
+        }
         #endregion
+
+
     }
 
     public enum polynomialCurveType

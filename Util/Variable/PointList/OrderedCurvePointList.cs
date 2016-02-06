@@ -24,6 +24,7 @@ namespace Util.Variable.PointList
     public class OrderedCurvePointList : ICurvePointList
     {
         protected SortedList<DoubleExtension, DataPoint> sortedPointList;
+        protected string label = "";
 
         #region Constructor
         public OrderedCurvePointList(List<DataPoint> points)
@@ -103,6 +104,18 @@ namespace Util.Variable.PointList
         {
             return sortedPointList.Values.GetEnumerator();
         }
+
+        public string Label
+        {
+            get
+            {
+                return label;
+            }
+            set
+            {
+                label = value;
+            }
+        }
         #endregion
 
         #region Public.Interface
@@ -122,6 +135,14 @@ namespace Util.Variable.PointList
                 }
             }
             return true;
+        }
+
+        public void AddRange(List<DataPoint> points)
+        {
+            foreach (DataPoint item in points)
+            {
+                sortedPointList.Add(item.X, item);
+            }
         }
         #endregion
     }

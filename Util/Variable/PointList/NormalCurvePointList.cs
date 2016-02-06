@@ -24,6 +24,7 @@ namespace Util.Variable.PointList
     public class NormalCurvePointList : ICurvePointList
     {
         protected List<DataPoint> points;
+        protected string label = "";
 
         #region Constructor
         public NormalCurvePointList(List<DataPoint> points)
@@ -98,6 +99,18 @@ namespace Util.Variable.PointList
         public IEnumerator<DataPoint> GetEnumerator()
         {
             return points.GetEnumerator();
+        }
+
+        public string Label
+        {
+            get
+            {
+                return label;
+            }
+            set
+            {
+                label = value;
+            }
         }
         #endregion
 

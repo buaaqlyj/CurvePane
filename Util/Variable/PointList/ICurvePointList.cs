@@ -42,5 +42,7 @@ namespace Util.Variable.PointList
         bool Remove(DataPoint item);
 
         IEnumerator<DataPoint> GetEnumerator();
+
+        string Label { get; set; }
     }
 }

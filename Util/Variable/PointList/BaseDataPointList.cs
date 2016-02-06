@@ -10,6 +10,7 @@ namespace Util.Variable.PointList
     {
         protected List<DataPoint> points;
         protected SortedList<DoubleExtension, DataPoint> sortedPointList;
+        protected string label = "";
 
         #region Constructor
         public BaseDataPointList()
@@ -51,6 +52,7 @@ namespace Util.Variable.PointList
         {
             get { return false; }
         }
+
         public DataPoint this[int index]
         {
             get
@@ -65,8 +67,11 @@ namespace Util.Variable.PointList
 
         public void Add(DataPoint item)
         {
-            points.Add(item);
-            sortedPointList.Add(item.X, item);
+            if (!sortedPointList.Keys.Contains(item.X))
+            {
+                points.Add(item);
+                sortedPointList.Add(item.X, item);
+            }
         }
 
         public void Clear()
@@ -89,6 +94,18 @@ namespace Util.Variable.PointList
         {
             return points.GetEnumerator();
         }
+
+        public string Label
+        {
+            get
+            {
+                return label;
+            }
+            set
+            {
+                label = value;
+            }
+        }
         #endregion
 
         #region Property
@@ -104,7 +121,9 @@ namespace Util.Variable.PointList
         {
             get
             {
-                return (List<DataPoint>)sortedPointList.Values;
+                List<DataPoint> list = new List<DataPoint>();
+                list.AddRange(sortedPointList.Values);
+                return list;
             }
         }
         #endregion
@@ -130,7 +149,5 @@ namespace Util.Variable.PointList
             return sortedPointList.Values.GetEnumerator();
         }
         #endregion
-
-
     }
 }
