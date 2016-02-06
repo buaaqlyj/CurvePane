@@ -28,74 +28,46 @@ using Util.Variable.PointList;
 
 namespace CurvePane.ZedGraphTool
 {
-    public static class ZedGraphHelpler
+    public class ZedGraphHelpler
     {
-        private static GraphPane masterPane = null;
-        private static BaseDataPointList basePoints = null;
+        private static ZedGraphWrapper zedGraph;
 
-        public static void Initialize(GraphPane masterPane)
+        public static void Initialize(ZedGraphControl zedGraphControl)
         {
-            ZedGraphHelpler.masterPane = masterPane;
-            basePoints = new BaseDataPointList();
+            zedGraph = new ZedGraphWrapper(zedGraphControl);
+            
         }
 
         #region BasePoints
-
-        #endregion
-
-        #region Draw
-        public static void DrawCurves(string curveName, Dictionary<PointPairList, DrawType> pointPairListData, Color color)
+        public void AddBasePoint(Util.Variable.DataPoint point)
         {
-            //TODO: Draw curves.
-            List<LineItem> lines = new List<LineItem>();
-            LineItem line;
-            int index = 1;
-            foreach (KeyValuePair<PointPairList, DrawType> item in pointPairListData)
-            {
-                line = DrawCurve(curveName + index.ToString(), item.Key, item.Value, color);
-                if (line != null)
-                {
-                    lines.Add(line);
-                }
-                index++;
-            }
+            zedGraph.AddBasePoint(point);
         }
 
-        public static LineItem DrawCurve(string curveName, PointPairList pointPairList, DrawType drawType, Color color)
+        public void ClearBasePoint()
         {
-            if (!hasInitialized)
-                throw new Exception("ZedGraphHelper hasn't been initialized!");
-            switch (drawType)
-            {
-                case DrawType.DotNoLine:
-                    LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
-                    line.Line.IsVisible = false;
-                    return line;
-                case DrawType.DotLine:
-                    return masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
-                case DrawType.LineNoDot:
-                    return masterPane.AddCurve(curveName, pointPairList, color, SymbolType.None);
-            }
-            return null;
+            zedGraph.ClearBasePoint();
+        }
+
+        public void RemoveBasePointAt(int index)
+        {
+            zedGraph.RemoveBasePointAt(index);
+        }
+
+        public List<Util.Variable.DataPoint> getList()
+        {
+            return zedGraph.getList();
+        }
+
+        public List<Util.Variable.DataPoint> getOrderedList()
+        {
+            return zedGraph.getOrderedList();
         }
         #endregion
 
         #region Property
-        public static bool hasInitialized
-        {
-            get
-            {
-                return masterPane == null;
-            }
-        }
         
-        public static GraphPane MasterPane
-        {
-            get
-            {
-                return masterPane;
-            }
-        }
         #endregion
+
     }
 }

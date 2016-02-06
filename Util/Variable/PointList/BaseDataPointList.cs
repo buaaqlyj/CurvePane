@@ -100,11 +100,11 @@ namespace Util.Variable.PointList
             }
         }
 
-        public SortedList<DoubleExtension, DataPoint> SortedPointList
+        public List<DataPoint> SortedPointList
         {
             get
             {
-                return sortedPointList;
+                return (List<DataPoint>)sortedPointList.Values;
             }
         }
         #endregion
