@@ -18,6 +18,7 @@ using System.Drawing;
 
 using CurveBase.CurveData.CurveParamData;
 using CurveDraw.Curve;
+using CurveDraw.Draw;
 using CurvePane.ZedGraphTool;
 using Util.Variable.PointList;
 using ZedGraph;

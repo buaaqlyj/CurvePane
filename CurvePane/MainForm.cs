@@ -13,14 +13,7 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
-using ZedGraph;
 
 namespace CurvePane
 {
@@ -41,27 +34,39 @@ namespace CurvePane
 
         private void drawButton_Click(object sender, EventArgs e)
         {
-            switch (curveTypeComboBox.SelectedIndex)
+            try
             {
-                case 0:
-                    //Polynomial Curve 多项式插值曲线
-                    masterCurveManager.DrawPolynomialCurve(textBox1.Text, comboBox1.SelectedIndex + 1);
-                    break;
-                case 1:
-                    //三次样条插值曲线
-                    break;
-                case 2:
-                    //参数样条曲线
-                    break;
-                case 3:
-                    //Bezier曲线
-                    break;
-                case 4:
-                    //B样条曲线
-                    break;
-                case 5:
-                    //NURBS曲线
-                    break;
+                if (textBox1.Text == "")
+                {
+                    MessageBox.Show("Please type the curve's name before draw!");
+                    return;
+                }
+                switch (curveTypeComboBox.SelectedIndex)
+                {
+                    case 0:
+                        //Polynomial Curve 多项式插值曲线
+                        masterCurveManager.DrawPolynomialCurve(textBox1.Text, comboBox1.SelectedIndex + 1);
+                        break;
+                    case 1:
+                        //三次样条插值曲线
+                        break;
+                    case 2:
+                        //参数样条曲线
+                        break;
+                    case 3:
+                        //Bezier曲线
+                        break;
+                    case 4:
+                        //B样条曲线
+                        break;
+                    case 5:
+                        //NURBS曲线
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -98,11 +103,15 @@ namespace CurvePane
             {
                 masterCurveManager.CaptureSwitch = true;
                 fetchControlButton.Text = "停止抓取";
+                drawButton.Enabled = false;
+                clearButton.Enabled = false;
             }
             else if (fetchControlButton.Text == "停止抓取")
             {
                 masterCurveManager.CaptureSwitch = false;
                 fetchControlButton.Text = "开始抓取";
+                drawButton.Enabled = true;
+                clearButton.Enabled = true;
             }
         }
 

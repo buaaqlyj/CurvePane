@@ -37,7 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Curve\DrawType.cs" />
+    <Compile Include="Draw\DrawType.cs" />
     <Compile Include="Curve\ICurve.cs" />
     <Compile Include="Curve\polynomialCurve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,9 +52,7 @@
       <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Draw\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

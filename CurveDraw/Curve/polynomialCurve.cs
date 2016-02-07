@@ -12,17 +12,14 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 using CurveBase;
-using CurveBase.CurveElements;
 using CurveBase.CurveElements.IntervalCurve;
 using CurveBase.CurveException;
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
+using CurveDraw.Draw;
 using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
@@ -65,7 +62,7 @@ namespace CurveDraw.Curve
                 }
                 list.Add(data.getLastPoint());
             }
-            list.Label = "P";
+            list.Label = "[P]";
             result.Add(list, DrawType.LineNoDot);
             return result;
         }
@@ -156,8 +153,5 @@ namespace CurveDraw.Curve
             return pts;
         }
         #endregion
-
-
-
     }
 }

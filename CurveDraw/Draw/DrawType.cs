@@ -12,10 +12,19 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-namespace CurveBase.CurveData.CurveParamData
+using System.ComponentModel;
+
+namespace CurveDraw.Draw
 {
-    public interface ICurveParam
+    public enum DrawType
     {
-        CurveType getCurveType();
+        [Description("This PointList won't be drawn!")]
+        None = 0,
+        [Description("Only dots of this PointList will be drawn!")]
+        DotNoLine = 1,
+        [Description("Dots and lines of this PointList will be both drawn!")]
+        DotLine = 2,
+        [Description("Only lines of this PointList will be drawn!")]
+        LineNoDot = 3
     }
 }

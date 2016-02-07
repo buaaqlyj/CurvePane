@@ -12,13 +12,9 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
-using CurveBase.CurveData.CurveParamData;
-using CurveBase.CurveData.CurveInterpolatedData;
+using CurveDraw.Draw;
 using Util.Variable.PointList;
 
 namespace CurveDraw.Curve

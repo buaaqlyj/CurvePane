@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Util.Variable
 {
@@ -52,6 +51,14 @@ namespace Util.Variable
             get
             {
                 return va.ToString("0.000");
+            }
+        }
+
+        public int ApproximateValue
+        {
+            get
+            {
+                return (int)(1000 * double.Parse(CoordinateString));
             }
         }
         #endregion
@@ -123,57 +130,57 @@ namespace Util.Variable
         #region <
         public static bool operator <(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateValue < v2.CoordinateValue;
+            return v1.ApproximateValue < v2.ApproximateValue;
         }
         public static bool operator <(double v1, DoubleExtension v2)
         {
-            return v1 < v2.CoordinateValue;
+            return (int)(1000 * v1) < v2.ApproximateValue;
         }
         public static bool operator <(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateValue < v2;
+            return v1.ApproximateValue < (int)(1000 * v2);
         }
         #endregion
         #region >
         public static bool operator >(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateValue > v2.CoordinateValue;
+            return v1.ApproximateValue > v2.ApproximateValue;
         }
         public static bool operator >(double v1, DoubleExtension v2)
         {
-            return v1 > v2.CoordinateValue;
+            return (int)(1000 * v1) > v2.ApproximateValue;
         }
         public static bool operator >(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateValue > v2;
+            return v1.ApproximateValue > (int)(1000 * v2);
         }
         #endregion
         #region <=
         public static bool operator <=(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateValue <= v2.CoordinateValue;
+            return v1.ApproximateValue <= v2.ApproximateValue;
         }
         public static bool operator <=(double v1, DoubleExtension v2)
         {
-            return v1 <= v2.CoordinateValue;
+            return (int)(1000 * v1) <= v2.ApproximateValue;
         }
         public static bool operator <=(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateValue <= v2;
+            return v1.ApproximateValue <= (int)(1000 * v2);
         }
         #endregion
         #region >=
         public static bool operator >=(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateValue >= v2.CoordinateValue;
+            return v1.ApproximateValue >= v2.ApproximateValue;
         }
         public static bool operator >=(double v1, DoubleExtension v2)
         {
-            return v1 >= v2.CoordinateValue;
+            return (int)(1000 * v1) >= v2.ApproximateValue;
         }
         public static bool operator >=(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateValue >= v2;
+            return v1.ApproximateValue >= (int)(1000 * v2);
         }
         #endregion
         #region ==

@@ -13,12 +13,8 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Serialization;
-using System.Text;
 
-using CurveBase.CurveData.CurveParamData;
 using Util.Tool;
 
 namespace CurveBase.CurveException

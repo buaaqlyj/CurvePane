@@ -13,12 +13,10 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Util.Variable
 {
-    public class DataPoint
+    public class DataPoint : IEquatable<DataPoint>
     {
         private DoubleExtension x;
         private DoubleExtension y;
@@ -69,6 +67,17 @@ namespace Util.Variable
         public static double distance(DataPoint pt1, DataPoint pt2)
         {
             return Math.Sqrt(Math.Pow((pt1.X - pt2.X).CoordinateValue, 2) + Math.Pow((pt1.Y - pt2.Y).CoordinateValue, 2));
+        }
+        #endregion
+
+        #region IEquatable<DataPoint>
+        public bool Equals(DataPoint other)
+        {
+            if (this.X.CoordinateString == other.X.CoordinateString && this.Y.CoordinateString == other.Y.CoordinateString)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
     }
