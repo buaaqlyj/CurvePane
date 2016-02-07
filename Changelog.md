@@ -1,4 +1,16 @@
 ****
+# CurvePane_v0.1.5
+
+## Release Note
+
+I've finished the Lagarange Polynomial Interpolation.
+
+## Changelog
+
+* Implemented the Lagarange Polynomial Interpolation.
+* Extracted some classes to individual libraries.
+
+****
 # CurvePane_v0.0.1
 
 ## Release Note
