@@ -132,8 +132,6 @@ namespace CurveBase.CurveData.CurveParamData
             }
         }
         #endregion
-
-
     }
 
     public enum polynomialCurveType

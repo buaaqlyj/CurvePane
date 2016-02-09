@@ -54,7 +54,7 @@ namespace Util.Variable
             }
         }
 
-        public int ApproximateValue
+        public int IdentificationValue
         {
             get
             {
@@ -130,57 +130,57 @@ namespace Util.Variable
         #region <
         public static bool operator <(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.ApproximateValue < v2.ApproximateValue;
+            return v1.IdentificationValue < v2.IdentificationValue;
         }
         public static bool operator <(double v1, DoubleExtension v2)
         {
-            return (int)(1000 * v1) < v2.ApproximateValue;
+            return (int)(1000 * v1) < v2.IdentificationValue;
         }
         public static bool operator <(DoubleExtension v1, double v2)
         {
-            return v1.ApproximateValue < (int)(1000 * v2);
+            return v1.IdentificationValue < (int)(1000 * v2);
         }
         #endregion
         #region >
         public static bool operator >(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.ApproximateValue > v2.ApproximateValue;
+            return v1.IdentificationValue > v2.IdentificationValue;
         }
         public static bool operator >(double v1, DoubleExtension v2)
         {
-            return (int)(1000 * v1) > v2.ApproximateValue;
+            return (int)(1000 * v1) > v2.IdentificationValue;
         }
         public static bool operator >(DoubleExtension v1, double v2)
         {
-            return v1.ApproximateValue > (int)(1000 * v2);
+            return v1.IdentificationValue > (int)(1000 * v2);
         }
         #endregion
         #region <=
         public static bool operator <=(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.ApproximateValue <= v2.ApproximateValue;
+            return v1.IdentificationValue <= v2.IdentificationValue;
         }
         public static bool operator <=(double v1, DoubleExtension v2)
         {
-            return (int)(1000 * v1) <= v2.ApproximateValue;
+            return (int)(1000 * v1) <= v2.IdentificationValue;
         }
         public static bool operator <=(DoubleExtension v1, double v2)
         {
-            return v1.ApproximateValue <= (int)(1000 * v2);
+            return v1.IdentificationValue <= (int)(1000 * v2);
         }
         #endregion
         #region >=
         public static bool operator >=(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.ApproximateValue >= v2.ApproximateValue;
+            return v1.IdentificationValue >= v2.IdentificationValue;
         }
         public static bool operator >=(double v1, DoubleExtension v2)
         {
-            return (int)(1000 * v1) >= v2.ApproximateValue;
+            return (int)(1000 * v1) >= v2.IdentificationValue;
         }
         public static bool operator >=(DoubleExtension v1, double v2)
         {
-            return v1.ApproximateValue >= (int)(1000 * v2);
+            return v1.IdentificationValue >= (int)(1000 * v2);
         }
         #endregion
         #region ==

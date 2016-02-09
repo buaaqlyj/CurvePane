@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 
 using CurveBase;
-using CurveBase.CurveElements.IntervalCurve;
+using CurveBase.CurveElement.IntervalCurve;
 using CurveBase.CurveException;
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
@@ -44,25 +44,35 @@ namespace CurveDraw.Curve
 
         public Dictionary<ICurvePointList, DrawType> sampleCurvePoints()
         {
-            polynomialCurveInterpolatedData data = interpolateCurve();
             OrderedCurvePointList list = new OrderedCurvePointList();
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
-            if (data.PointList != null)
+            
+            if (curveParam.PolynomialCurveType == polynomialCurveType.Newton)
             {
-                foreach (Util.Variable.DataPoint item in data.PointList)
-                {
-                    list.Add(item);
-                }
+                NewtonPolynomialCurveInterpolatedData data = new NewtonPolynomialCurveInterpolatedData(curveParam);
+
+                list.Label = "[NP]";
             }
-            else if (data.Curves != null)
+            else
             {
-                foreach (PolynomialCurve curve in data.Curves)
+                LagarangePolynomialCurveInterpolatedData data = new LagarangePolynomialCurveInterpolatedData(curveParam);
+                if (data.PointList != null)
                 {
-                    list.AddRange(sampleACurve(curve));
+                    foreach (Util.Variable.DataPoint item in data.PointList)
+                    {
+                        list.Add(item);
+                    }
                 }
-                list.Add(data.getLastPoint());
+                else if (data.Curves != null)
+                {
+                    foreach (LagarangePolynomialCurve curve in data.Curves)
+                    {
+                        list.AddRange(sampleAPolynomialCurve(curve));
+                    }
+                    list.Add(data.getLastPoint());
+                }
+                list.Label = "[LP]";
             }
-            list.Label = "[P]";
             result.Add(list, DrawType.LineNoDot);
             return result;
         }
@@ -74,35 +84,6 @@ namespace CurveDraw.Curve
         #endregion
 
         #region Private.Methods
-        private List<PolynomialCurve> generatePolynomialCurves(polynomialCurveParam param)
-        {
-            polynomialCurveType curveType = param.PolynomialCurveType;
-            OrderedCurvePointList pointList = param.PointList;
-            List<PolynomialCurve> polynomialCurve = new List<PolynomialCurve>();
-            List<double> coefficients;
-            switch (curveType)
-            {
-                case polynomialCurveType.Lagrange_Linear:
-                    for (int i = 1; i < pointList.Count; i++)
-                    {
-                        coefficients = MathExtension.calculateLinearPolynomialCoefficients(pointList[i - 1], pointList[i]);
-                        polynomialCurve.Add(new PolynomialCurve(coefficients, 2, pointList[i - 1].X, pointList[i].X));
-                    }
-                    break;
-                case polynomialCurveType.Lagrange_Quadratic:
-                    for (int i = 2; i < pointList.Count; i = i + 2)
-                    {
-                        coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
-                        polynomialCurve.Add(new PolynomialCurve(coefficients, 3, pointList[i - 2].X, pointList[i].X));
-                    }
-                    break;
-                case polynomialCurveType.Newton:
-                    //TODO: generate Polynomial Curves for Newton
-                    break;
-            }
-            return polynomialCurve;
-        }
-
         private bool canDrawCurve(ICurveParam curveParam)
         {
             if (curveParam.getCurveType() == CurveType.polynomialCurve)
@@ -118,16 +99,7 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private polynomialCurveInterpolatedData interpolateCurve()
-        {
-            if (curveParam.PolynomialCurveType == polynomialCurveType.Lagrange_Linear)
-            {
-                return new polynomialCurveInterpolatedData(curveParam.PointList, polynomialCurveType.Lagrange_Linear);
-            }
-            return new polynomialCurveInterpolatedData(generatePolynomialCurves(curveParam), curveParam.PolynomialCurveType);
-        }
-
-        private List<DataPoint> sampleACurve(PolynomialCurve curve)
+        private List<DataPoint> sampleAPolynomialCurve(LagarangePolynomialCurve curve)
         {
             double stepSize;
             int step;

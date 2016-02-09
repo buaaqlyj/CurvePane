@@ -39,6 +39,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool\EnumExtension.cs" />
     <Compile Include="Tool\MathExtension.cs" />
+    <Compile Include="Variable\Dynamic2DArray.cs" />
     <Compile Include="Variable\PointList\BaseDataPointList.cs" />
     <Compile Include="Variable\DataInterval.cs" />
     <Compile Include="Variable\DataPoint.cs" />

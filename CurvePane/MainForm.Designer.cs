@@ -122,7 +122,7 @@ namespace CurvePane
             this.comboBox1.Items.AddRange(new object[] {
             "拉格朗日一次插值",
             "拉格朗日二次插值",
-            "牛顿一次插值"});
+            "牛顿插值"});
             this.comboBox1.Location = new System.Drawing.Point(108, 31);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
