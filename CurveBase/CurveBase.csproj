@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="CurveData\CurveInterpolatedData\LagarangePolynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\NewtonPolynomialCurveInterpolatedData.cs" />
+    <Compile Include="CurveElement\IntervalCurve\IntervalPolynomialCurve.cs" />
     <Compile Include="CurveElement\IntervalCurve\LagarangePolynomialCurve.cs" />
     <Compile Include="CurveElement\IntervalCurve\NewtonPolynomialCurve.cs" />
     <Compile Include="CurveException\SameXInOrderedCurvePointListException.cs" />

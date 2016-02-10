@@ -140,5 +140,27 @@ namespace Util.Variable.PointList
             }
         }
         #endregion
+
+        #region Property
+        public DataPoint LeftBorderPoint
+        {
+            get
+            {
+                if (sortedPointList.Count > 0)
+                    return sortedPointList.Values[0];
+                return null;
+            }
+        }
+
+        public DataPoint RightBorderPoint
+        {
+            get
+            {
+                if (sortedPointList.Count > 0)
+                    return sortedPointList.Values[sortedPointList.Count - 1];
+                return null;
+            }
+        }
+        #endregion
     }
 }

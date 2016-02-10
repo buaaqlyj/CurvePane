@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
 
 using CurveBase;
@@ -50,7 +51,7 @@ namespace CurveDraw.Curve
             if (curveParam.PolynomialCurveType == polynomialCurveType.Newton)
             {
                 NewtonPolynomialCurveInterpolatedData data = new NewtonPolynomialCurveInterpolatedData(curveParam);
-
+                list.AddRange(sampleAPolynomialCurve(data.Curve, 200));
                 list.Label = "[NP]";
             }
             else
@@ -67,7 +68,7 @@ namespace CurveDraw.Curve
                 {
                     foreach (LagarangePolynomialCurve curve in data.Curves)
                     {
-                        list.AddRange(sampleAPolynomialCurve(curve));
+                        list.AddRange(sampleAPolynomialCurve(curve, 50));
                     }
                     list.Add(data.getLastPoint());
                 }
@@ -99,14 +100,16 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleAPolynomialCurve(LagarangePolynomialCurve curve)
+        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurve curve, int maxPointCount)
         {
+            if (maxPointCount < 2)
+                throw new ArgumentOutOfRangeException("maxPointCount", "The parameter of sampleAPolynomialCurve is out of range.");
             double stepSize;
             int step;
-            if (curve.Interval.Length.CoordinateValue > 0.05)
+            if (curve.Interval.Length.CoordinateValue > 0.001 * maxPointCount)
             {
-                stepSize = curve.Interval.Length.CoordinateValue / 50;
-                step = 50;
+                stepSize = curve.Interval.Length.CoordinateValue / maxPointCount;
+                step = maxPointCount;
             }
             else
             {

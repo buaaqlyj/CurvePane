@@ -23,11 +23,9 @@ namespace CurveBase.CurveElement.IntervalCurve
     /// Polynomial Curve:
     /// P(x) = a[0] * x^0 + a[1] * x^1 + a[2] * x^2 + a[3] * x^3 + a[4] * x^4
     /// </summary>
-    public class LagarangePolynomialCurve
+    public class LagarangePolynomialCurve : IntervalPolynomialCurve
     {
-        protected DataInterval interval;
         protected List<double> coefficients;
-        protected int degree;
 
         protected static LagarangePolynomialCurve nullLagarangePolynomialCurve = new LagarangePolynomialCurve();
 
@@ -54,7 +52,7 @@ namespace CurveBase.CurveElement.IntervalCurve
         #endregion
 
         #region Public.Interface
-        public DoubleExtension calculate(DoubleExtension doubleExtension)
+        public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))
                 throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.CoordinateString + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
@@ -68,7 +66,7 @@ namespace CurveBase.CurveElement.IntervalCurve
             return new DoubleExtension(result);
         }
 
-        public double calculate(double doubleValue)
+        public override double calculate(double doubleValue)
         {
             if (!interval.isBetweenBordersCloseInterval(new DoubleExtension(doubleValue)))
                 throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
@@ -80,32 +78,6 @@ namespace CurveBase.CurveElement.IntervalCurve
                 poweredX *= doubleValue;
             }
             return result;
-        }
-        #endregion
-
-        #region Property
-        public int Degree
-        {
-            get
-            {
-                return degree;
-            }
-        }
-
-        public DataInterval Interval
-        {
-            get
-            {
-                return interval;
-            }
-        }
-
-        public DataPoint LastPoint
-        {
-            get
-            {
-                return new DataPoint(Interval.RightBorder.CoordinateValue, calculate(Interval.RightBorder.CoordinateValue));
-            }
         }
         #endregion
     }

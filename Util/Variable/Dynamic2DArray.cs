@@ -57,7 +57,7 @@ namespace Util.Variable
             }
             if (array[index1].Count <= index2)
             {
-                for (int i = array[index1].Count; i < index2; i++)
+                for (int i = array[index1].Count; i <= index2; i++)
                 {
                     array[index1].Add(default(T));
                 }

@@ -25,24 +25,20 @@ namespace CurveBase.CurveElement.IntervalCurve
     /// Polynomial Curve:
     /// P(x) = a[0] + a[1] * (x - x0) + a[2] * (x - x0) * (x - x1) + a[3] * (x - x0) * (x - x1) * (x - x2)
     /// </summary>
-    public class NewtonPolynomialCurve
+    public class NewtonPolynomialCurve : IntervalPolynomialCurve
     {
-        protected DataInterval interval;
-        protected List<double> coefficients;
-        protected int degree;
-
         protected static Dynamic2DArray<DoubleExtension> fullCoefficents = new Dynamic2DArray<DoubleExtension>();
         //protected static List<List<DoubleExtension>> fullCoefficents = new List<List<DoubleExtension>>();
         //protected static int currentSize = 0;
         //protected static string hashCode = "";
         //protected static List<DataPoint> points = new List<DataPoint>();
 
-        protected ICurvePointList list = null;
+        protected OrderedCurvePointList list = null;
         
         protected static NewtonPolynomialCurve nullNewtonPolynomialCurve = new NewtonPolynomialCurve();
 
         #region Constructor
-        public NewtonPolynomialCurve(ICurvePointList pointList, DoubleExtension borderVal1, DoubleExtension borderVal2)
+        public NewtonPolynomialCurve(OrderedCurvePointList pointList)
         {
             if (degree >= 0)
             {
@@ -50,20 +46,19 @@ namespace CurveBase.CurveElement.IntervalCurve
                 UpdateCoefficients(pointList);
             }
             list = pointList;
-            this.interval = new DataInterval(borderVal1, borderVal2);
+            this.interval = new DataInterval(list.LeftBorderPoint.X, list.RightBorderPoint.X);
         }
 
         private NewtonPolynomialCurve()
         {
             this.degree = 0;
-            this.coefficients = new List<double>();
-            this.coefficients.Add(0);
+            this.list = new OrderedCurvePointList();
             this.interval = DataInterval.nullDataInterval;
         }
         #endregion
 
         #region Public.Interface
-        public DoubleExtension calculate(DoubleExtension doubleExtension)
+        public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))
                 throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.CoordinateString + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
@@ -77,7 +72,7 @@ namespace CurveBase.CurveElement.IntervalCurve
             return new DoubleExtension(result);
         }
 
-        public double calculate(double doubleValue)
+        public override double calculate(double doubleValue)
         {
             if (!interval.isBetweenBordersCloseInterval(new DoubleExtension(doubleValue)))
                 throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
@@ -89,32 +84,6 @@ namespace CurveBase.CurveElement.IntervalCurve
                 poweredX *= doubleValue - list[i].X.CoordinateValue;
             }
             return result;
-        }
-        #endregion
-
-        #region Property
-        public int Degree
-        {
-            get
-            {
-                return degree;
-            }
-        }
-
-        public DataInterval Interval
-        {
-            get
-            {
-                return interval;
-            }
-        }
-
-        public DataPoint LastPoint
-        {
-            get
-            {
-                return new DataPoint(Interval.RightBorder.CoordinateValue, calculate(Interval.RightBorder.CoordinateValue));
-            }
         }
         #endregion
 
@@ -134,19 +103,19 @@ namespace CurveBase.CurveElement.IntervalCurve
                 fullCoefficents.SetArrayElement(0, i, pointList[i].Y);
             }
             for (int i = 1; i < degree; i++)
-                for (int j = i; j < degree; j++)
-                    fullCoefficents.SetArrayElement(i, j, new DoubleExtension(fullCoefficents.GetArrayElement(i - 1, j).CoordinateValue - fullCoefficents.GetArrayElement(i - 1, i - 1).CoordinateValue) / (pointList[j].X.CoordinateValue - pointList[i - 1].Y.CoordinateValue));
+                for (int j = 0; j < degree - i; j++)
+                    fullCoefficents.SetArrayElement(i, j, new DoubleExtension((fullCoefficents.GetArrayElement(i - 1, j + 1).CoordinateValue - fullCoefficents.GetArrayElement(i - 1, 0).CoordinateValue) / (pointList[i + j].X.CoordinateValue - pointList[i - 1].X.CoordinateValue)));
         }
 
-        private string getHashCode(List<DataPoint> points, int size)
-        {
-            string pointsText = "";
-            for (int i = 0; i < size && i < points.Count; i++)
-            {
-                pointsText += points[i].X.CoordinateString + points[i].Y.CoordinateString;
-            }
-            return pointsText.GetHashCode().ToString();
-        }
+        //private string getHashCode(List<DataPoint> points, int size)
+        //{
+        //    string pointsText = "";
+        //    for (int i = 0; i < size && i < points.Count; i++)
+        //    {
+        //        pointsText += points[i].X.CoordinateString + points[i].Y.CoordinateString;
+        //    }
+        //    return pointsText.GetHashCode().ToString();
+        //}
         #endregion
     }
 }
