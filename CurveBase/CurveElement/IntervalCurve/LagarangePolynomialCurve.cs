@@ -55,13 +55,13 @@ namespace CurveBase.CurveElement.IntervalCurve
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))
-                throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.CoordinateString + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
+                throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.ApproximateString + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             double result = 0;
             double poweredX = 1;
             for (int i = 0; i < degree; i++)
             {
                 result += poweredX * coefficients[i];
-                poweredX *= doubleExtension.CoordinateValue;
+                poweredX *= doubleExtension.AccurateValue;
             }
             return new DoubleExtension(result);
         }
@@ -69,7 +69,7 @@ namespace CurveBase.CurveElement.IntervalCurve
         public override double calculate(double doubleValue)
         {
             if (!interval.isBetweenBordersCloseInterval(new DoubleExtension(doubleValue)))
-                throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
+                throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             double result = 0;
             double poweredX = 1;
             for (int i = 0; i < degree; i++)

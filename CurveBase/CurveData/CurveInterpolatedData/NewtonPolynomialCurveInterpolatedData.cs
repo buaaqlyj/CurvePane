@@ -64,7 +64,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         public DataPoint getLastPoint()
         {
-            return new DataPoint(newtonCurve.Interval.RightBorder.CoordinateValue, newtonCurve.calculate(newtonCurve.Interval.RightBorder.CoordinateValue));
+            return new DataPoint(newtonCurve.Interval.RightBorder.AccurateValue, newtonCurve.calculate(newtonCurve.Interval.RightBorder.AccurateValue));
         }
         #endregion
     }

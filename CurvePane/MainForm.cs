@@ -143,7 +143,7 @@ namespace CurvePane
         {
             if (masterCurveManager.CaptureSwitch)
             {
-                listView1.Items.Add(new ListViewItem(new string[] {masterCurveManager.BaseNumber.ToString(), point.X.CoordinateString, point.Y.CoordinateString}, -1));
+                listView1.Items.Add(new ListViewItem(new string[] {masterCurveManager.BaseNumber.ToString(), point.X.ApproximateString, point.Y.ApproximateString}, -1));
             }
         }
 

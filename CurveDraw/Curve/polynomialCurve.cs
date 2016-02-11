@@ -52,6 +52,7 @@ namespace CurveDraw.Curve
             {
                 NewtonPolynomialCurveInterpolatedData data = new NewtonPolynomialCurveInterpolatedData(curveParam);
                 list.AddRange(sampleAPolynomialCurve(data.Curve, 200));
+                list.Add(data.getLastPoint());
                 list.Label = "[NP]";
             }
             else
@@ -106,17 +107,17 @@ namespace CurveDraw.Curve
                 throw new ArgumentOutOfRangeException("maxPointCount", "The parameter of sampleAPolynomialCurve is out of range.");
             double stepSize;
             int step;
-            if (curve.Interval.Length.CoordinateValue > 0.001 * maxPointCount)
+            if (curve.Interval.Length.AccurateValue > 0.001 * maxPointCount)
             {
-                stepSize = curve.Interval.Length.CoordinateValue / maxPointCount;
+                stepSize = curve.Interval.Length.AccurateValue / maxPointCount;
                 step = maxPointCount;
             }
             else
             {
                 stepSize = 0.001;
-                step = (int)(curve.Interval.Length.CoordinateValue * 1000);
+                step = (int)(curve.Interval.Length.AccurateValue * 1000);
             }
-            double xValue = curve.Interval.LeftBorder.CoordinateValue;
+            double xValue = curve.Interval.LeftBorder.AccurateValue;
             List<DataPoint> pts = new List<DataPoint>();
             int count = 0;
             while (count < step)

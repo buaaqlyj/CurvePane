@@ -34,7 +34,7 @@ namespace Util.Variable
         #endregion
 
         #region Property
-        public double CoordinateValue
+        public double AccurateValue
         {
             get
             {
@@ -46,7 +46,15 @@ namespace Util.Variable
             }
         }
 
-        public string CoordinateString
+        public double ApproximateValue
+        {
+            get
+            {
+                return double.Parse(ApproximateString);
+            }
+        }
+
+        public string ApproximateString
         {
             get
             {
@@ -58,7 +66,7 @@ namespace Util.Variable
         {
             get
             {
-                return (int)(1000 * double.Parse(CoordinateString));
+                return (int)(1000 * double.Parse(ApproximateString));
             }
         }
         #endregion
@@ -74,57 +82,57 @@ namespace Util.Variable
         #region +
         public static DoubleExtension operator +(DoubleExtension v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1.CoordinateValue + v2.CoordinateValue);
+            return new DoubleExtension(v1.AccurateValue + v2.AccurateValue);
         }
         public static DoubleExtension operator +(double v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1 + v2.CoordinateValue);
+            return new DoubleExtension(v1 + v2.AccurateValue);
         }
         public static DoubleExtension operator +(DoubleExtension v1, double v2)
         {
-            return new DoubleExtension(v1.CoordinateValue + v2);
+            return new DoubleExtension(v1.AccurateValue + v2);
         }
         #endregion
         #region -
         public static DoubleExtension operator -(DoubleExtension v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1.CoordinateValue - v2.CoordinateValue);
+            return new DoubleExtension(v1.AccurateValue - v2.AccurateValue);
         }
         public static DoubleExtension operator -(double v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1 - v2.CoordinateValue);
+            return new DoubleExtension(v1 - v2.AccurateValue);
         }
         public static DoubleExtension operator -(DoubleExtension v1, double v2)
         {
-            return new DoubleExtension(v1.CoordinateValue - v2);
+            return new DoubleExtension(v1.AccurateValue - v2);
         }
         #endregion
         #region *
         public static DoubleExtension operator *(DoubleExtension v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1.CoordinateValue * v2.CoordinateValue);
+            return new DoubleExtension(v1.AccurateValue * v2.AccurateValue);
         }
         public static DoubleExtension operator *(double v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1 * v2.CoordinateValue);
+            return new DoubleExtension(v1 * v2.AccurateValue);
         }
         public static DoubleExtension operator *(DoubleExtension v1, double v2)
         {
-            return new DoubleExtension(v1.CoordinateValue * v2);
+            return new DoubleExtension(v1.AccurateValue * v2);
         }
         #endregion
         #region /
         public static DoubleExtension operator /(DoubleExtension v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1.CoordinateValue / v2.CoordinateValue);
+            return new DoubleExtension(v1.AccurateValue / v2.AccurateValue);
         }
         public static DoubleExtension operator /(double v1, DoubleExtension v2)
         {
-            return new DoubleExtension(v1 / v2.CoordinateValue);
+            return new DoubleExtension(v1 / v2.AccurateValue);
         }
         public static DoubleExtension operator /(DoubleExtension v1, double v2)
         {
-            return new DoubleExtension(v1.CoordinateValue / v2);
+            return new DoubleExtension(v1.AccurateValue / v2);
         }
         #endregion
         #region <
@@ -186,29 +194,29 @@ namespace Util.Variable
         #region ==
         public static bool operator ==(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateString == v2.CoordinateString;
+            return v1.ApproximateString == v2.ApproximateString;
         }
         public static bool operator ==(double v1, DoubleExtension v2)
         {
-            return v1.ToString("0.000") == v2.CoordinateString;
+            return v1.ToString("0.000") == v2.ApproximateString;
         }
         public static bool operator ==(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateString == v2.ToString("0.000");
+            return v1.ApproximateString == v2.ToString("0.000");
         }
         #endregion
         #region !=
         public static bool operator !=(DoubleExtension v1, DoubleExtension v2)
         {
-            return v1.CoordinateString != v2.CoordinateString;
+            return v1.ApproximateString != v2.ApproximateString;
         }
         public static bool operator !=(double v1, DoubleExtension v2)
         {
-            return v1.ToString("0.000") != v2.CoordinateString;
+            return v1.ToString("0.000") != v2.ApproximateString;
         }
         public static bool operator !=(DoubleExtension v1, double v2)
         {
-            return v1.CoordinateString != v2.ToString("0.000");
+            return v1.ApproximateString != v2.ToString("0.000");
         }
         #endregion
         #endregion
@@ -229,7 +237,7 @@ namespace Util.Variable
 
         public override int GetHashCode()
         {
-            return CoordinateString.GetHashCode();
+            return ApproximateString.GetHashCode();
         }
         #endregion
 

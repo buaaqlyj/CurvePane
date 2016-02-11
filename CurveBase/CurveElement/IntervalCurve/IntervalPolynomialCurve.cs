@@ -38,7 +38,7 @@ namespace CurveBase.CurveElement.IntervalCurve
         {
             get
             {
-                return new DataPoint(Interval.RightBorder.CoordinateValue, calculate(Interval.RightBorder.CoordinateValue));
+                return new DataPoint(Interval.RightBorder.AccurateValue, calculate(Interval.RightBorder.AccurateValue));
             }
         }
         #endregion

@@ -61,13 +61,13 @@ namespace CurveBase.CurveElement.IntervalCurve
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))
-                throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.CoordinateString + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
+                throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.ApproximateString + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             double result = 0;
             double poweredX = 1;
             for (int i = 0; i < degree; i++)
             {
-                result += poweredX * fullCoefficents.GetArrayElement(i, 0).CoordinateValue;
-                poweredX *= doubleExtension.CoordinateValue - list[i].X.CoordinateValue;
+                result += poweredX * fullCoefficents.GetArrayElement(i, 0).AccurateValue;
+                poweredX *= doubleExtension.AccurateValue - list[i].X.AccurateValue;
             }
             return new DoubleExtension(result);
         }
@@ -75,13 +75,13 @@ namespace CurveBase.CurveElement.IntervalCurve
         public override double calculate(double doubleValue)
         {
             if (!interval.isBetweenBordersCloseInterval(new DoubleExtension(doubleValue)))
-                throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.CoordinateString + ", " + interval.RightBorder.CoordinateString + "].");
+                throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             double result = 0;
             double poweredX = 1;
             for (int i = 0; i < degree; i++)
             {
-                result += poweredX * fullCoefficents.GetArrayElement(i, 0).CoordinateValue;
-                poweredX *= doubleValue - list[i].X.CoordinateValue;
+                result += poweredX * fullCoefficents.GetArrayElement(i, 0).AccurateValue;
+                poweredX *= doubleValue - list[i].X.AccurateValue;
             }
             return result;
         }
@@ -104,7 +104,7 @@ namespace CurveBase.CurveElement.IntervalCurve
             }
             for (int i = 1; i < degree; i++)
                 for (int j = 0; j < degree - i; j++)
-                    fullCoefficents.SetArrayElement(i, j, new DoubleExtension((fullCoefficents.GetArrayElement(i - 1, j + 1).CoordinateValue - fullCoefficents.GetArrayElement(i - 1, 0).CoordinateValue) / (pointList[i + j].X.CoordinateValue - pointList[i - 1].X.CoordinateValue)));
+                    fullCoefficents.SetArrayElement(i, j, new DoubleExtension((fullCoefficents.GetArrayElement(i - 1, j + 1).AccurateValue - fullCoefficents.GetArrayElement(i - 1, 0).AccurateValue) / (pointList[i + j].X.AccurateValue - pointList[i - 1].X.AccurateValue)));
         }
 
         //private string getHashCode(List<DataPoint> points, int size)

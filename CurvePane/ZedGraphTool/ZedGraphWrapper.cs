@@ -143,7 +143,7 @@ namespace CurvePane.ZedGraphTool
         #region Public.Interface
         public static PointPair transformDataPointToPointPair(Util.Variable.DataPoint point)
         {
-            return new PointPair(point.X.CoordinateValue, point.Y.CoordinateValue);
+            return new PointPair(point.X.AccurateValue, point.Y.AccurateValue);
         }
 
         public static PointPairList transformDataPointListToPointPairList(ICurvePointList points)

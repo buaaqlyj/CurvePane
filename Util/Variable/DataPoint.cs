@@ -54,7 +54,7 @@ namespace Util.Variable
         #region Public.Interface
         public double distance(DataPoint pt)
         {
-            return Math.Sqrt(Math.Pow((pt.X - this.X).CoordinateValue, 2) + Math.Pow((pt.Y - this.Y).CoordinateValue, 2));
+            return Math.Sqrt(Math.Pow((pt.X - this.X).AccurateValue, 2) + Math.Pow((pt.Y - this.Y).AccurateValue, 2));
         }
         #endregion
 
@@ -66,14 +66,14 @@ namespace Util.Variable
 
         public static double distance(DataPoint pt1, DataPoint pt2)
         {
-            return Math.Sqrt(Math.Pow((pt1.X - pt2.X).CoordinateValue, 2) + Math.Pow((pt1.Y - pt2.Y).CoordinateValue, 2));
+            return Math.Sqrt(Math.Pow((pt1.X - pt2.X).AccurateValue, 2) + Math.Pow((pt1.Y - pt2.Y).AccurateValue, 2));
         }
         #endregion
 
         #region IEquatable<DataPoint>
         public bool Equals(DataPoint other)
         {
-            if (this.X.CoordinateString == other.X.CoordinateString && this.Y.CoordinateString == other.Y.CoordinateString)
+            if (this.X.ApproximateString == other.X.ApproximateString && this.Y.ApproximateString == other.Y.ApproximateString)
             {
                 return true;
             }
