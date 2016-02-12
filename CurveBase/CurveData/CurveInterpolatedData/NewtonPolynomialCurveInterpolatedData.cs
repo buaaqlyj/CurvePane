@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using CurveBase.CurveData.CurveParamData;
-using CurveBase.CurveElement.IntervalCurve;
+using CurveBase.CurveElement.IntervalPolynomialCurve;
 using Util.Variable;
 using Util.Variable.PointList;
 
@@ -25,16 +25,14 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 {
     public class NewtonPolynomialCurveInterpolatedData : ICurveInterpolatedData
     {
-        private int size = 0;
-        private NewtonPolynomialCurve newtonCurve = null;
+        private NewtonIntervalPolynomialCurve newtonCurve = null;
         private OrderedCurvePointList pointList = null;
 
         #region Constructor
         public NewtonPolynomialCurveInterpolatedData(polynomialCurveParam curveParam)
         {
-            size = curveParam.PointList.Count + 1;
             pointList = curveParam.PointList;
-            newtonCurve = new NewtonPolynomialCurve(curveParam.PointList);
+            newtonCurve = new NewtonIntervalPolynomialCurve(curveParam.PointList);
         }
         #endregion
 
@@ -47,7 +45,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             }
         }
 
-        public NewtonPolynomialCurve Curve
+        public NewtonIntervalPolynomialCurve Curve
         {
             get
             {

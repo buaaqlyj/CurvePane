@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 
 using CurveBase;
-using CurveBase.CurveElement.IntervalCurve;
+using CurveBase.CurveElement.IntervalPolynomialCurve;
 using CurveBase.CurveException;
 using CurveBase.CurveData.CurveParamData;
 using CurveBase.CurveData.CurveInterpolatedData;
@@ -67,7 +67,7 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    foreach (LagarangePolynomialCurve curve in data.Curves)
+                    foreach (LagarangeIntervalPolynomialCurve curve in data.Curves)
                     {
                         list.AddRange(sampleAPolynomialCurve(curve, 50));
                     }

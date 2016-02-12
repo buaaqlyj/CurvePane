@@ -19,13 +19,13 @@ using System.Text;
 using Util.Variable;
 using Util.Variable.PointList;
 
-namespace CurveBase.CurveElement.IntervalCurve
+namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
     /// <summary>
     /// Polynomial Curve:
     /// P(x) = a[0] + a[1] * (x - x0) + a[2] * (x - x0) * (x - x1) + a[3] * (x - x0) * (x - x1) * (x - x2)
     /// </summary>
-    public class NewtonPolynomialCurve : IntervalPolynomialCurve
+    public class NewtonIntervalPolynomialCurve : IntervalPolynomialCurve
     {
         protected static Dynamic2DArray<DoubleExtension> fullCoefficents = new Dynamic2DArray<DoubleExtension>();
         //protected static List<List<DoubleExtension>> fullCoefficents = new List<List<DoubleExtension>>();
@@ -35,10 +35,10 @@ namespace CurveBase.CurveElement.IntervalCurve
 
         protected OrderedCurvePointList list = null;
         
-        protected static NewtonPolynomialCurve nullNewtonPolynomialCurve = new NewtonPolynomialCurve();
+        protected static NewtonIntervalPolynomialCurve nullNewtonPolynomialCurve = new NewtonIntervalPolynomialCurve();
 
         #region Constructor
-        public NewtonPolynomialCurve(OrderedCurvePointList pointList)
+        public NewtonIntervalPolynomialCurve(OrderedCurvePointList pointList)
         {
             if (degree >= 0)
             {
@@ -49,7 +49,7 @@ namespace CurveBase.CurveElement.IntervalCurve
             this.interval = new DataInterval(list.LeftBorderPoint.X, list.RightBorderPoint.X);
         }
 
-        private NewtonPolynomialCurve()
+        private NewtonIntervalPolynomialCurve()
         {
             this.degree = 0;
             this.list = new OrderedCurvePointList();

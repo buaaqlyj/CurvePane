@@ -4,7 +4,7 @@ using System.Text;
 
 using Util.Variable;
 
-namespace CurveBase.CurveElement.IntervalCurve
+namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
     public abstract class IntervalPolynomialCurve
     {

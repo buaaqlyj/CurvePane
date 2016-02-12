@@ -36,11 +36,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurveData\CurveInterpolatedData\BezierCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\LagarangePolynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\NewtonPolynomialCurveInterpolatedData.cs" />
-    <Compile Include="CurveElement\IntervalCurve\IntervalPolynomialCurve.cs" />
-    <Compile Include="CurveElement\IntervalCurve\LagarangePolynomialCurve.cs" />
-    <Compile Include="CurveElement\IntervalCurve\NewtonPolynomialCurve.cs" />
+    <Compile Include="CurveData\CurveParamData\bezierCurveParam.cs" />
+    <Compile Include="CurveElement\ParametricCurve\BezierCurve.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\IntervalPolynomialCurve.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\LagarangeIntervalPolynomialCurve.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\NewtonIntervalPolynomialCurve.cs" />
     <Compile Include="CurveException\InvalidBasePointsException.cs" />
     <Compile Include="CurveException\UnmatchedCurveParamTypeException.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\ICurveInterpolatedData.cs" />
