@@ -1,4 +1,16 @@
 ****
+# CurvePane_v0.2.7
+
+## Release Note
+
+I've finished the Newton Polynomial Interpolation.
+
+## Changelog
+
+* Implemented the Newton Polynomial Interpolation.
+* Implemented the CurveName manager which can update the curve name automately after every draw.
+
+****
 # CurvePane_v0.1.5
 
 ## Release Note
