@@ -36,6 +36,8 @@ namespace CurvePane
 
         private bool captureSwitch = false;
 
+        private List<string> curveNames = null;
+
         public static event ZedGraphWrapper.DoubleClickEventHandler AddBasePointEvent;
         
         public CurveManager(ZedGraphControl zedGraphControl)
@@ -43,6 +45,7 @@ namespace CurvePane
             zedGraph = new ZedGraphWrapper(zedGraphControl, "BaseLine");
             basePoints = new BaseDataPointList();
             random = new Random();
+            curveNames = new List<string>();
             ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DoubleClickEventHandler(ZedGraphWrapper_DoubleClick);
         }
 
@@ -89,10 +92,20 @@ namespace CurvePane
         }
         #endregion
 
-        #region Color
+        #region Line Property
         private Color getNewColor()
         {
             return Color.FromArgb(random.Next(0, 256), random.Next(0, 256), random.Next(0, 256));
+        }
+
+        private string getNewName()
+        {
+            int i = 1;
+            while (curveNames.Contains("Curve" + i.ToString()))
+            {
+                i++;
+            }
+            return "Curve" + i.ToString();
         }
         #endregion
 
@@ -108,40 +121,58 @@ namespace CurvePane
             {
                 DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
             }
+            AddCurveName(curveName);
+        }
+        #endregion
+
+        #region CurveName Operation
+        private void AddCurveName(string curveName)
+        {
+            if (!curveNames.Contains(curveName))
+            {
+                curveNames.Add(curveName);
+            }
+        }
+
+        private void ClearCurveName()
+        {
+            curveNames.Clear();
+        }
+
+        public bool ContainCurveName(string curveName)
+        {
+            if (curveName == "BaseLine") return true;
+            else if (curveNames.Contains(curveName)) return true;
+            else return false;
         }
         #endregion
 
         #region Lines Operation
 
-        public LineItem DrawLine(string curveName, PointPairList pointPairList, DrawType drawType, Color color)
+        public void DrawLine(string curveName, PointPairList pointPairList, DrawType drawType, Color color)
         {
             if (!HasInitialized)
                 throw new Exception("ZedGraphHelper hasn't been initialized!");
             switch (drawType)
             {
                 case DrawType.DotNoLine:
-                    return zedGraph.AddDots(curveName, pointPairList, color);
+                    zedGraph.AddDots(curveName, pointPairList, color);
+                    break;
                 case DrawType.DotLine:
-                    return zedGraph.AddLineWithDots(curveName, pointPairList, color);
+                    zedGraph.AddLineWithDots(curveName, pointPairList, color);
+                    break;
                 case DrawType.LineNoDot:
-                    return zedGraph.AddLineWithoutDots(curveName, pointPairList, color);
+                    zedGraph.AddLineWithoutDots(curveName, pointPairList, color);
+                    break;
             }
-            return null;
         }
 
         public void DrawLines(string curveName, Dictionary<PointPairList, DrawType> pointPairListData, Color color)
         {
-            //TODO: Draw curves.
-            List<LineItem> lines = new List<LineItem>();
-            LineItem line;
             int index = 1;
             foreach (KeyValuePair<PointPairList, DrawType> item in pointPairListData)
             {
-                line = DrawLine(curveName + index.ToString(), item.Key, item.Value, color);
-                if (line != null)
-                {
-                    lines.Add(line);
-                }
+                DrawLine(curveName + index.ToString(), item.Key, item.Value, color);
                 index++;
             }
         }
@@ -149,6 +180,7 @@ namespace CurvePane
         public void RemoveAllLines()
         {
             zedGraph.RemoveAllLinesExceptCertainLine("BaseLine");
+            ClearCurveName();
         }
         #endregion
 
@@ -178,6 +210,14 @@ namespace CurvePane
             get
             {
                 return baseNumber;
+            }
+        }
+
+        public string NextAvailableName
+        {
+            get
+            {
+                return getNewName();
             }
         }
         #endregion

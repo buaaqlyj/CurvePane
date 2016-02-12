@@ -30,8 +30,7 @@ namespace CurvePane
         #region PolynomialCurve
 
         #endregion
-        #region Draw
-
+        #region Curve
         private void drawButton_Click(object sender, EventArgs e)
         {
             try
@@ -41,11 +40,17 @@ namespace CurvePane
                     MessageBox.Show("Please type the curve's name before draw!");
                     return;
                 }
+                if (masterCurveManager.ContainCurveName(textBox1.Text))
+                {
+                    MessageBox.Show("This curve's name has been used before! Please change another one.");
+                    return;
+                }
+                string curveName = textBox1.Text;
                 switch (curveTypeComboBox.SelectedIndex)
                 {
                     case 0:
                         //Polynomial Curve 多项式插值曲线
-                        masterCurveManager.DrawPolynomialCurve(textBox1.Text, comboBox1.SelectedIndex + 1);
+                        masterCurveManager.DrawPolynomialCurve(curveName, comboBox1.SelectedIndex + 1);
                         break;
                     case 1:
                         //三次样条插值曲线
@@ -63,11 +68,18 @@ namespace CurvePane
                         //NURBS曲线
                         break;
                 }
+                textBox1.Text = masterCurveManager.NextAvailableName;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            masterCurveManager.RemoveAllLines();
+            textBox1.Text = masterCurveManager.NextAvailableName;
         }
 
         #endregion
@@ -95,8 +107,7 @@ namespace CurvePane
             setCurveTypeComboBox(curveTypeTabControl.SelectedIndex);
         }
         #endregion
-        #region FetchBasePoints
-
+        #region BasePoints
         private void fetchControlButton_Click(object sender, EventArgs e)
         {
             if (fetchControlButton.Text == "开始抓取")
@@ -147,11 +158,6 @@ namespace CurvePane
             }
         }
 
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            masterCurveManager.RemoveAllLines();
-        }
-
         #endregion
         #region CurveManager
 
@@ -168,6 +174,7 @@ namespace CurvePane
             listView1.ColumnClick += new ColumnClickEventHandler(ListViewHelper.ListView_ColumnClick);
 
             comboBox1.SelectedIndex = 0;
+            textBox1.Text = masterCurveManager.NextAvailableName;
         }
 
     }

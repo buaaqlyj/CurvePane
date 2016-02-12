@@ -20,36 +20,40 @@ using Util.Tool;
 namespace CurveBase.CurveException
 {
     [Serializable]
-    public sealed class SameXInOrderedCurvePointListException : Exception, ISerializable
+    public sealed class InvalidBasePointsException : Exception, ISerializable
     {
         private CurveType curveType = CurveType.unknown;
+        private string additionalMessage = "";
 
         #region Constructor
-        public SameXInOrderedCurvePointListException()
+        public InvalidBasePointsException()
             : base() { }
 
-        public SameXInOrderedCurvePointListException(string message)
+        public InvalidBasePointsException(string message)
             : base(message) { }
 
-        public SameXInOrderedCurvePointListException(string message, Exception innerException)
+        public InvalidBasePointsException(string message, Exception innerException)
             : base(message, innerException) { }
 
-        public SameXInOrderedCurvePointListException(CurveType curveType)
+        public InvalidBasePointsException(CurveType curveType, string additionalMessage)
             : base() 
         {
             this.curveType = curveType;
+            this.additionalMessage = additionalMessage;
         }
 
-        public SameXInOrderedCurvePointListException(string message, CurveType curveType)
+        public InvalidBasePointsException(string message, CurveType curveType, string additionalMessage)
             : base(message)
         {
             this.curveType = curveType;
+            this.additionalMessage = additionalMessage;
         }
 
-        public SameXInOrderedCurvePointListException(string message, CurveType curveType, Exception innerException)
+        public InvalidBasePointsException(string message, CurveType curveType, string additionalMessage, Exception innerException)
             : base(message, innerException)
         {
             this.curveType = curveType;
+            this.additionalMessage = additionalMessage;
         }
         #endregion
 
@@ -60,22 +64,25 @@ namespace CurveBase.CurveException
             {
                 string msg = base.Message.Trim();
                 if (msg != "") msg += Environment.NewLine;
-                msg += "At least two points given have the same X value, so the " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType) + " can't be draw as request.";
+                msg += "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType) + " can't be draw as request.";
+                if (additionalMessage != "") msg += Environment.NewLine + additionalMessage;
                 return msg;
             }
         }
         #endregion
         
         #region ISerializable Member
-        private SameXInOrderedCurvePointListException(SerializationInfo info, StreamingContext context)
+        private InvalidBasePointsException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            additionalMessage = info.GetString("AdditionalMessage");
             curveType = (CurveType)info.GetInt32("DrawingType");
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("DrawingType", (int)curveType);
+            info.AddValue("AdditionalMessage", additionalMessage);
             base.GetObjectData(info, context);
         }
         #endregion

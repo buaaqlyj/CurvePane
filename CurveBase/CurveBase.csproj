@@ -41,7 +41,7 @@
     <Compile Include="CurveElement\IntervalCurve\IntervalPolynomialCurve.cs" />
     <Compile Include="CurveElement\IntervalCurve\LagarangePolynomialCurve.cs" />
     <Compile Include="CurveElement\IntervalCurve\NewtonPolynomialCurve.cs" />
-    <Compile Include="CurveException\SameXInOrderedCurvePointListException.cs" />
+    <Compile Include="CurveException\InvalidBasePointsException.cs" />
     <Compile Include="CurveException\UnmatchedCurveParamTypeException.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\ICurveInterpolatedData.cs" />
     <Compile Include="CurveType.cs" />

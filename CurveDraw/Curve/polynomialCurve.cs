@@ -91,8 +91,10 @@ namespace CurveDraw.Curve
             if (curveParam.getCurveType() == CurveType.polynomialCurve)
             {
                 polynomialCurveParam param = (polynomialCurveParam)curveParam;
+                if (param.Count < 2)
+                    throw new InvalidBasePointsException(CurveType.polynomialCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
                 if (!param.PointList.noDuplicatedX())
-                    throw new SameXInOrderedCurvePointListException(CurveType.polynomialCurve);
+                    throw new InvalidBasePointsException(CurveType.polynomialCurve, "At least two points given have the same X value.");
             }
             else
             {
