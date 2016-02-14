@@ -32,8 +32,7 @@ namespace CurveDraw.Curve
         private polynomialCurveParam curveParam;
         private bool canDraw = false;
 
-        #region ICurve Member
-
+        #region Constructor
         public polynomialCurve(ICurveParam curveParam)
         {
             if (canDrawCurve(curveParam))
@@ -42,7 +41,9 @@ namespace CurveDraw.Curve
                 this.curveParam = (polynomialCurveParam)curveParam;
             }
         }
+        #endregion
 
+        #region ICurve Member
         public Dictionary<ICurvePointList, DrawType> sampleCurvePoints()
         {
             OrderedCurvePointList list = new OrderedCurvePointList();
@@ -124,7 +125,7 @@ namespace CurveDraw.Curve
             int count = 0;
             while (count < step)
             {
-                pts.Add(new DataPoint(xValue, curve.calculate(xValue)));
+                pts.Add(new DataPoint(xValue, curve.calculate(new DoubleExtension(xValue)).AccurateValue));
                 xValue += stepSize;
                 count++;
             }

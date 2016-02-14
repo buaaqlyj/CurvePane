@@ -27,9 +27,6 @@ namespace CurvePane
         }
 
         #region Control_EventHandler
-        #region PolynomialCurve
-
-        #endregion
         #region Curve
         private void drawButton_Click(object sender, EventArgs e)
         {
@@ -60,6 +57,7 @@ namespace CurvePane
                         break;
                     case 3:
                         //Bezier曲线
+                        masterCurveManager.DrawBezierCurve(curveName);
                         break;
                     case 4:
                         //B样条曲线
@@ -158,6 +156,10 @@ namespace CurvePane
             }
         }
 
+        private void DisplayBasePoint(Util.Variable.DataPoint point)
+        {
+            textBox3.Text = point.String;
+        }
         #endregion
         #region CurveManager
 
@@ -168,7 +170,8 @@ namespace CurvePane
         {
             curveTypeComboBox.SelectedIndex = 0;
             masterCurveManager = new CurveManager(masterZedGraphControl);
-            CurveManager.AddBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DoubleClickEventHandler(AddBasePoint);
+            CurveManager.AddBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(AddBasePoint);
+            CurveManager.DisplayBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(DisplayBasePoint);
 
             listView1.ListViewItemSorter = new ListViewColumnSorter();
             listView1.ColumnClick += new ColumnClickEventHandler(ListViewHelper.ListView_ColumnClick);

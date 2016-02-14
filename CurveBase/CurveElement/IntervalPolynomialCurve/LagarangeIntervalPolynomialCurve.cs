@@ -65,20 +65,6 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
             return new DoubleExtension(result);
         }
-
-        public override double calculate(double doubleValue)
-        {
-            if (!interval.isBetweenBordersCloseInterval(new DoubleExtension(doubleValue)))
-                throw new ArgumentOutOfRangeException("doubleValue", "The value given is out of borders of intervals. Value: " + doubleValue.ToString("0.000") + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
-            double result = 0;
-            double poweredX = 1;
-            for (int i = 0; i < degree; i++)
-            {
-                result += poweredX * coefficients[i];
-                poweredX *= doubleValue;
-            }
-            return result;
-        }
         #endregion
     }
 }

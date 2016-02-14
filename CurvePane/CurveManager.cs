@@ -15,8 +15,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 using CurveBase.CurveData.CurveParamData;
+using CurveBase.CurveException;
 using CurveDraw.Curve;
 using CurveDraw.Draw;
 using CurvePane.ZedGraphTool;
@@ -38,7 +40,7 @@ namespace CurvePane
 
         private List<string> curveNames = null;
 
-        public static event ZedGraphWrapper.DoubleClickEventHandler AddBasePointEvent;
+        public static event ZedGraphWrapper.DataPointEventHandler AddBasePointEvent, DisplayBasePointEvent;
         
         public CurveManager(ZedGraphControl zedGraphControl)
         {
@@ -46,7 +48,8 @@ namespace CurvePane
             basePoints = new BaseDataPointList();
             random = new Random();
             curveNames = new List<string>();
-            ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DoubleClickEventHandler(ZedGraphWrapper_DoubleClick);
+            ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_DoubleClick);
+            ZedGraphWrapper.MouseMove += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_MouseMove);
         }
 
         #region EventHandler
@@ -55,7 +58,14 @@ namespace CurvePane
             if (captureSwitch)
             {
                 AddBasePoint(point);
-                AddBasePointEvent(point);
+            }
+        }
+
+        public void ZedGraphWrapper_MouseMove(Util.Variable.DataPoint point)
+        {
+            if (captureSwitch)
+            {
+                DisplayBasePointEvent(point);
             }
         }
         #endregion
@@ -63,9 +73,18 @@ namespace CurvePane
         #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
         {
+            foreach (Util.Variable.DataPoint item in basePoints)
+            {
+                if (item.Equals(point))
+                {
+                    MessageBox.Show("This point is very close to the other point!");
+                    return;
+                }
+            }
             basePoints.Add(point);
             zedGraph.AddBasePoint(point);
             baseNumber++;
+            AddBasePointEvent(point);
         }
 
         public void ClearBasePoint()
@@ -116,9 +135,25 @@ namespace CurvePane
             polynomialCurveParam curveParam = new polynomialCurveParam(pointList.SortedPointList, (polynomialCurveType)polynomialType);
             polynomialCurve curve = new polynomialCurve(curveParam);
             Dictionary<ICurvePointList, DrawType> interpolatedData = curve.sampleCurvePoints();
-            Color color = getNewColor();
+            Color color;
             foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
             {
+                color = getNewColor();
+                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
+            }
+            AddCurveName(curveName);
+        }
+
+        public void DrawBezierCurve(string curveName)
+        {
+            BaseDataPointList pointList = this.basePoints;
+            bezierCurveParam curveParam = new bezierCurveParam(pointList.Points);
+            bezierCurve curve = new bezierCurve(curveParam);
+            Dictionary<ICurvePointList, DrawType> interpolatedData = curve.sampleCurvePoints();
+            Color color;
+            foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
+            {
+                color = getNewColor();
                 DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
             }
             AddCurveName(curveName);
@@ -148,7 +183,6 @@ namespace CurvePane
         #endregion
 
         #region Lines Operation
-
         public void DrawLine(string curveName, PointPairList pointPairList, DrawType drawType, Color color)
         {
             if (!HasInitialized)
@@ -164,16 +198,6 @@ namespace CurvePane
                 case DrawType.LineNoDot:
                     zedGraph.AddLineWithoutDots(curveName, pointPairList, color);
                     break;
-            }
-        }
-
-        public void DrawLines(string curveName, Dictionary<PointPairList, DrawType> pointPairListData, Color color)
-        {
-            int index = 1;
-            foreach (KeyValuePair<PointPairList, DrawType> item in pointPairListData)
-            {
-                DrawLine(curveName + index.ToString(), item.Key, item.Value, color);
-                index++;
             }
         }
 

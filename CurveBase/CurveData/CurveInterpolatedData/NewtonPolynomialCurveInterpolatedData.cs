@@ -32,7 +32,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         public NewtonPolynomialCurveInterpolatedData(polynomialCurveParam curveParam)
         {
             pointList = curveParam.PointList;
-            newtonCurve = new NewtonIntervalPolynomialCurve(curveParam.PointList);
+            newtonCurve = new NewtonIntervalPolynomialCurve(pointList);
         }
         #endregion
 
@@ -62,7 +62,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         public DataPoint getLastPoint()
         {
-            return new DataPoint(newtonCurve.Interval.RightBorder.AccurateValue, newtonCurve.calculate(newtonCurve.Interval.RightBorder.AccurateValue));
+            return new DataPoint(newtonCurve.Interval.RightBorder.AccurateValue, newtonCurve.calculate(newtonCurve.Interval.RightBorder).AccurateValue);
         }
         #endregion
     }

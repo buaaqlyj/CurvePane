@@ -49,6 +49,13 @@ namespace Util.Variable
                 return y;
             }
         }
+        public string String
+        {
+            get
+            {
+                return X.ApproximateString + "," + Y.ApproximateString;
+            }
+        }
         #endregion
 
         #region Public.Interface

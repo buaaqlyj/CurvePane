@@ -33,6 +33,16 @@ namespace Util.Variable.PointList
         }
         #endregion
 
+        #region Property
+        public DataPoint LastPoint
+        {
+            get
+            {
+                return points[points.Count - 1];
+            }
+        }
+        #endregion
+
         #region ICurvePointList
         public int IndexOf(DataPoint item)
         {
@@ -110,12 +120,18 @@ namespace Util.Variable.PointList
         #endregion
 
         #region Public.Interface
-        
         public void Insert(int index, DataPoint item)
         {
             points.Insert(index, item);
         }
 
+        public void AddRange(List<DataPoint> points)
+        {
+            foreach (DataPoint item in points)
+            {
+                this.points.Add(item);
+            }
+        }
         #endregion
     }
 }

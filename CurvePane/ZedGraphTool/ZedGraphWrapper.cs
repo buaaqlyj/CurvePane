@@ -31,18 +31,30 @@ namespace CurvePane.ZedGraphTool
             this.zedGraphControl = zedGraphControl;
             this.masterPane = zedGraphControl.GraphPane;
             baseLine = AddDots(baseName, new PointPairList(), Color.Purple);
+
             zedGraphControl.DoubleClickEvent += new ZedGraphControl.ZedMouseEventHandler(zedGraphControl_DoubleClickEvent);
+            zedGraphControl.MouseMoveEvent += new ZedGraphControl.ZedMouseEventHandler(zedGraphControl_MouseMoveEvent);
         }
 
         #region EventHandler
-        public delegate void DoubleClickEventHandler(Util.Variable.DataPoint point);
-        public static event DoubleClickEventHandler DoubleClick;
+        public delegate void DataPointEventHandler(Util.Variable.DataPoint point);
+        public static event DataPointEventHandler DoubleClick;
+        public static event DataPointEventHandler MouseMove;
+
         public bool zedGraphControl_DoubleClickEvent(object sender, MouseEventArgs e)
         {
             double xVal, yVal;
             masterPane.ReverseTransform(e.Location, out xVal, out yVal);
             DoubleClick(new Util.Variable.DataPoint(xVal, yVal));
-            return true;
+            return false;
+        }
+
+        public bool zedGraphControl_MouseMoveEvent(object sender, MouseEventArgs e)
+        {
+            double xVal, yVal;
+            masterPane.ReverseTransform(e.Location, out xVal, out yVal);
+            MouseMove(new Util.Variable.DataPoint(xVal, yVal));
+            return false;
         }
         #endregion
 
@@ -71,7 +83,6 @@ namespace CurvePane.ZedGraphTool
                 }
             }
         }
-
         #endregion
         
         #region Line Operation

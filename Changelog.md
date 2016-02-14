@@ -1,4 +1,16 @@
 ****
+# CurvePane_v0.3.9-alpha
+
+## Release Note
+
+I've finished the Bezier Curve.
+
+## Changelog
+
+* Implemented the Bezier Curve.
+* Implemented the feature that the coordinate of the mouse is displayed on the program when the mouse is on the GraphPane.
+
+****
 # CurvePane_v0.2.7
 
 ## Release Note

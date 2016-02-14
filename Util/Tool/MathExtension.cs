@@ -21,6 +21,24 @@ namespace Util.Tool
 {
     public static class MathExtension
     {
+        public static int factorial(int number)
+        {
+            Debug.Assert(number > -1, "This method can't calculate factorial for negative numbers.");
+            if (number < 2) return 1;
+            int result = number;
+            while (number > 2)
+            {
+                result *= --number;
+            }
+            return result;
+        }
+
+        public static int combination(int big, int small)
+        {
+            Debug.Assert(small > big, "The first number should bigger than the second one.");
+            return factorial(big) / factorial(small) / factorial(big - small);
+        }
+        
         public static List<double> calculateLinearPolynomialCoefficients(DataPoint pt1, DataPoint pt2)
         {
             Debug.Assert(pt1.X == pt2.X, "The two points have the same X value.");

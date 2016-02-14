@@ -14,8 +14,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
+using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
 
@@ -30,13 +32,52 @@ namespace CurveBase.CurveElement.ParametricCurve
         public BezierCurve(NormalCurvePointList pointList)
         {
             this.pointList = pointList;
+            combination = new List<int>();
+            updateCombination(pointList.Count - 1);
+        }
+        #endregion
+
+        #region Public.Interface
+        public DataPoint calculatePoint(DoubleExtension doubleExtension)
+        {
+            Debug.Assert(doubleExtension <= 1.0001 && doubleExtension >= -0.0001, "Invalid argument for BezierCurve.calculate()");
+            double xVal = 0;
+            double yVal = 0;
+            double basisFunction = 1;
+            for (int i = 0; i < pointList.Count; i++)
+            {
+                basisFunction = calculateBasisFunction(doubleExtension, pointList.Count - 1, i).AccurateValue;
+                xVal += basisFunction * pointList[i].X.AccurateValue;
+                yVal += basisFunction * pointList[i].Y.AccurateValue;
+            }
+            return new DataPoint(xVal, yVal);
+        }
+        #endregion
+
+        #region Property
+        public DataPoint LastPoint
+        {
+            get
+            {
+                return pointList.LastPoint;
+            }
         }
         #endregion
 
         #region Private.Methods
-        private void UpdateCombination(int count)
+        private void updateCombination(int count)
         {
+            combination.Clear();
+            for (int i = 0; i <= count; i++)
+            {
+                combination.Add(MathExtension.combination(count, i));
+            }
+        }
 
+        private DoubleExtension calculateBasisFunction(DoubleExtension doubleExtension, int big, int small)
+        {
+            Debug.Assert(doubleExtension < 1.0001 && doubleExtension > -0.0001 && big >= small, "Invalid argument for BezierCurve.calculateOne()");
+            return new DoubleExtension(combination[small] * Math.Pow(doubleExtension.AccurateValue, small) * Math.Pow(1 - doubleExtension.AccurateValue, big - small));
         }
         #endregion
     }

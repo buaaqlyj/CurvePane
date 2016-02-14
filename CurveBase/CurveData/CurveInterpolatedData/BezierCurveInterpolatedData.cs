@@ -16,12 +16,44 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using CurveBase.CurveData.CurveParamData;
+using CurveBase.CurveElement.ParametricCurve;
 using Util.Variable;
+using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveInterpolatedData
 {
     public class BezierCurveInterpolatedData : ICurveInterpolatedData
     {
+        private BezierCurve bezierCurve = null;
+        private NormalCurvePointList pointList = null;
+
+        #region Constructor
+        public BezierCurveInterpolatedData(bezierCurveParam curveParam)
+        {
+            pointList = curveParam.PointList;
+            bezierCurve = new BezierCurve(pointList);
+        }
+        #endregion
+
+        #region Property
+        public NormalCurvePointList PointList
+        {
+            get
+            {
+                return pointList;
+            }
+        }
+
+        public BezierCurve Curve
+        {
+            get
+            {
+                return bezierCurve;
+            }
+        }
+        #endregion
+
         #region ICurveInterpolatedData
         public CurveType getCurveType()
         {
@@ -30,7 +62,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         public DataPoint getLastPoint()
         {
-            throw new NotImplementedException();
+            return bezierCurve.LastPoint;
         }
         #endregion
     }
