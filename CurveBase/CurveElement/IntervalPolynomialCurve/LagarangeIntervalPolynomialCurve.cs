@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 
 using Util.Variable;
+using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
@@ -27,10 +28,10 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
     {
         protected List<double> coefficients;
 
-        protected static LagarangeIntervalPolynomialCurve nullLagarangePolynomialCurve = new LagarangeIntervalPolynomialCurve();
+        public static LagarangeIntervalPolynomialCurve nullLagarangePolynomialCurve = new LagarangeIntervalPolynomialCurve();
 
         #region Constructor
-        public LagarangeIntervalPolynomialCurve(List<double> coefficients, int degree, DoubleExtension borderVal1, DoubleExtension borderVal2)
+        public LagarangeIntervalPolynomialCurve(List<double> coefficients, int degree, DataInterval interval)
         {
             if (degree >= 0)
             {
@@ -39,19 +40,31 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 for (int i = 0; i < degree; i++ )
                     this.coefficients.Add(coefficients[i]);
             }
-            this.interval = new DataInterval(borderVal1, borderVal2);
+            this.interval = interval;
         }
 
-        private LagarangeIntervalPolynomialCurve()
+        public LagarangeIntervalPolynomialCurve(List<double> coefficients, int degree, DoubleExtension borderVal1, DoubleExtension borderVal2)
+            : this(coefficients, degree, new DataInterval(borderVal1, borderVal2))
         {
-            this.degree = 0;
+            
+        }
+
+        public LagarangeIntervalPolynomialCurve(double val, DataInterval interval)
+        {
+            this.degree = 1;
             this.coefficients = new List<double>();
-            this.coefficients.Add(0);
-            this.interval = DataInterval.nullDataInterval;
+            this.coefficients.Add(val);
+            this.interval = interval;
+        }
+
+        protected LagarangeIntervalPolynomialCurve()
+            : this(0, DataInterval.nullDataInterval)
+        {
+            
         }
         #endregion
 
-        #region Public.Interface
+        #region IntervalPolynomialCurve Member
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))
@@ -64,6 +77,100 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 poweredX *= doubleExtension.AccurateValue;
             }
             return new DoubleExtension(result);
+        }
+        #endregion
+
+        #region Operator
+        public static LagarangeIntervalPolynomialCurve operator +(LagarangeIntervalPolynomialCurve c1, LagarangeIntervalPolynomialCurve c2)
+        {
+            int degree = Math.Max(c1.Degree, c2.Degree);
+            int i = 0;
+            double val1, val2;
+            List<double> coefficients = new List<double>();
+            while (i++ < degree)
+            {
+                if (i < c1.Degree)
+                {
+                    val1 = c1.coefficients[i];
+                }
+                else
+                {
+                    val1 = 0;
+                }
+                if (i < c2.Degree)
+                {
+                    val2 = c2.coefficients[i];
+                }
+                else
+                {
+                    val2 = 0;
+                }
+                coefficients.Add(val1 + val2);
+            }
+            return new LagarangeIntervalPolynomialCurve(coefficients, degree, DataInterval.Intersection(c1.Interval, c2.Interval));
+        }
+        
+        public static LagarangeIntervalPolynomialCurve operator -(LagarangeIntervalPolynomialCurve c1, LagarangeIntervalPolynomialCurve c2)
+        {
+            int degree = Math.Max(c1.Degree, c2.Degree);
+            int i = 0;
+            double val1, val2;
+            List<double> coefficients = new List<double>();
+            while (i++ < degree)
+            {
+                if (i < c1.Degree)
+                {
+                    val1 = c1.coefficients[i];
+                }
+                else
+                {
+                    val1 = 0;
+                }
+                if (i < c2.Degree)
+                {
+                    val2 = c2.coefficients[i];
+                }
+                else
+                {
+                    val2 = 0;
+                }
+                coefficients.Add(val1 - val2);
+            }
+            return new LagarangeIntervalPolynomialCurve(coefficients, degree, DataInterval.Intersection(c1.Interval, c2.Interval));
+        }
+
+        public static LagarangeIntervalPolynomialCurve operator *(double c1, LagarangeIntervalPolynomialCurve c2)
+        {
+            for (int i = 0; i < c2.coefficients.Count; i++ )
+            {
+                c2.coefficients[i] *= c1;
+            }
+            return c2;
+        }
+        
+        public static LagarangeIntervalPolynomialCurve operator *(LagarangeIntervalPolynomialCurve c1, LagarangeIntervalPolynomialCurve c2)
+        {
+            int degree = c1.Degree + c2.Degree - 1;
+            List<double> coefficients = new List<double>();
+            for (int i = 0; i < degree; i++)
+            {
+                if (i < c2.Degree)
+                {
+                    coefficients.Add(c1.coefficients[0] * c2.coefficients[i]);
+                }
+                else
+                {
+                    coefficients.Add(0);
+                }
+            }
+            for (int i = 1; i < c1.Degree; i++)
+            {
+                for (int j = 0; j < c2.Degree; j++)
+                {
+                    coefficients[i + j] += c1.coefficients[i] * c2.coefficients[j];
+                }
+            }
+            return new LagarangeIntervalPolynomialCurve(coefficients, degree, DataInterval.Intersection(c1.Interval, c2.Interval));
         }
         #endregion
     }

@@ -44,7 +44,7 @@ namespace CurvePane
         
         public CurveManager(ZedGraphControl zedGraphControl)
         {
-            zedGraph = new ZedGraphWrapper(zedGraphControl, "BaseLine");
+            zedGraph = new ZedGraphWrapper(zedGraphControl, "BasePoints");
             basePoints = new BaseDataPointList();
             random = new Random();
             curveNames = new List<string>();
@@ -176,7 +176,7 @@ namespace CurvePane
 
         public bool ContainCurveName(string curveName)
         {
-            if (curveName == "BaseLine") return true;
+            if (curveName == "BasePoints") return true;
             else if (curveNames.Contains(curveName)) return true;
             else return false;
         }
@@ -203,7 +203,7 @@ namespace CurvePane
 
         public void RemoveAllLines()
         {
-            zedGraph.RemoveAllLinesExceptCertainLine("BaseLine");
+            zedGraph.RemoveAllLinesExceptCertainLine("BasePoints");
             ClearCurveName();
         }
         #endregion

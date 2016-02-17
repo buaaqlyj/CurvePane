@@ -30,7 +30,6 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         private polynomialCurveType curveType;
 
         #region Constructor
-
         public LagarangePolynomialCurveInterpolatedData(polynomialCurveParam curveParam)
         {
             this.curveType = curveParam.PolynomialCurveType;
@@ -44,7 +43,6 @@ namespace CurveBase.CurveData.CurveInterpolatedData
                     break;
             }
         }
-
         #endregion
 
         #region Property

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Util.Variable;
+using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {

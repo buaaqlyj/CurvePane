@@ -21,12 +21,27 @@ namespace Util.Variable
         private List<List<T>> array;
         private int rowCount = 0;
 
+        #region Constructor
         public Dynamic2DArray()
         {
             array = new List<List<T>>();
             rowCount = 0;
         }
+        #endregion
 
+        #region Property
+        public List<T> this[int index]
+        {
+            get
+            {
+                if (index < rowCount)
+                    return array[index];
+                return new List<T>();
+            }
+        }
+        #endregion
+
+        #region Public.Interface
         public bool HasValue(int index1, int index2)
         {
             if (index1 < rowCount)
@@ -74,5 +89,6 @@ namespace Util.Variable
         {
             return array.Count;
         }
+        #endregion
     }
 }

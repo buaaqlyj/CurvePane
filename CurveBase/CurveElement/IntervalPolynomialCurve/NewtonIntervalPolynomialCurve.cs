@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Util.Variable;
+using Util.Variable.Interval;
 using Util.Variable.PointList;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
@@ -28,11 +29,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
     public class NewtonIntervalPolynomialCurve : IntervalPolynomialCurve
     {
         protected static Dynamic2DArray<DoubleExtension> fullCoefficents = new Dynamic2DArray<DoubleExtension>();
-        //protected static List<List<DoubleExtension>> fullCoefficents = new List<List<DoubleExtension>>();
-        //protected static int currentSize = 0;
-        //protected static string hashCode = "";
-        //protected static List<DataPoint> points = new List<DataPoint>();
-
+        
         protected OrderedCurvePointList list = null;
         
         protected static NewtonIntervalPolynomialCurve nullNewtonPolynomialCurve = new NewtonIntervalPolynomialCurve();
@@ -57,7 +54,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         }
         #endregion
 
-        #region Public.Interface
+        #region IntervalPolynomialCurve Member
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
             if (!interval.isBetweenBordersCloseInterval(doubleExtension))

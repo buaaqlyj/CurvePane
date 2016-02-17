@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Curve\bezierCurve.cs" />
+    <Compile Include="Curve\bSplineCurve.cs" />
     <Compile Include="Draw\DrawType.cs" />
     <Compile Include="Curve\ICurve.cs" />
     <Compile Include="Curve\polynomialCurve.cs" />

@@ -13,61 +13,18 @@
 /// limitations under the License.
 
 using System;
+using System.Collections.Generic;
 
-namespace Util.Variable
+namespace Util.Variable.Interval
 {
     public class DataInterval : IEquatable<DataInterval>
     {
-        private DoubleExtension leftBorder, rightBorder;
-        private bool nullInterval;
+        protected DoubleExtension leftBorder, rightBorder;
+        protected bool nullInterval;
 
         public static DataInterval nullDataInterval = new DataInterval();
 
         #region Constructor
-        public DataInterval(int val1, int val2)
-        {
-            if (val1 == val2)
-            {
-                leftBorder = new DoubleExtension(val1);
-                rightBorder = new DoubleExtension(val2);
-                nullInterval = true;
-            }
-            else if (val1 < val2)
-            {
-                leftBorder = new DoubleExtension(val1);
-                rightBorder = new DoubleExtension(val2);
-                nullInterval = false;
-            }
-            else
-            {
-                leftBorder = new DoubleExtension(val2);
-                rightBorder = new DoubleExtension(val1);
-                nullInterval = false;
-            }
-        }
-        
-        public DataInterval(double val1, double val2)
-        {
-            if (val1 == val2)
-            {
-                leftBorder = new DoubleExtension(val1);
-                rightBorder = new DoubleExtension(val2);
-                nullInterval = true;
-            }
-            else if (val1 < val2)
-            {
-                leftBorder = new DoubleExtension(val1);
-                rightBorder = new DoubleExtension(val2);
-                nullInterval = false;
-            }
-            else
-            {
-                leftBorder = new DoubleExtension(val2);
-                rightBorder = new DoubleExtension(val1);
-                nullInterval = false;
-            }
-        }
-
         public DataInterval(DoubleExtension val1, DoubleExtension val2)
         {
             if (val1 == val2)
@@ -90,11 +47,22 @@ namespace Util.Variable
             }
         }
 
-        private DataInterval()
+        public DataInterval(int val1, int val2)
+            : this(new DoubleExtension(val1), new DoubleExtension(val2))
         {
-            leftBorder = new DoubleExtension(0);
-            rightBorder = new DoubleExtension(0);
-            nullInterval = true;
+            
+        }
+        
+        public DataInterval(double val1, double val2)
+            : this(new DoubleExtension(val1), new DoubleExtension(val2))
+        {
+            
+        }
+
+        protected DataInterval()
+            : this((int)0, (int)0)
+        {
+            
         }
         #endregion
 
@@ -150,6 +118,20 @@ namespace Util.Variable
             else if (db > RightBorder) return 2;
             else if (db == RightBorder) return 1;
             else return 0;
+        }
+        #endregion
+
+        #region Class.Interface
+        public static DataInterval Intersection(DataInterval di1, DataInterval di2)
+        {
+            if (di1.RightBorder <= di2.LeftBorder || di1.LeftBorder >= di2.RightBorder)
+            {
+                return nullDataInterval;
+            }
+            else
+            {
+                return new DataInterval(Math.Max(di1.LeftBorder.AccurateValue, di2.LeftBorder.AccurateValue), Math.Min(di1.RightBorder.AccurateValue, di2.RightBorder.AccurateValue));
+            }
         }
         #endregion
 

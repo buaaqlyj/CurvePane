@@ -23,7 +23,7 @@ using Util.Variable.PointList;
 
 namespace CurveBase.CurveElement.ParametricCurve
 {
-    public class BezierCurve
+    public class BezierCurve : ParametricCurve
     {
         private List<int> combination = null;
         private NormalCurvePointList pointList = null;
@@ -38,9 +38,9 @@ namespace CurveBase.CurveElement.ParametricCurve
         #endregion
 
         #region Public.Interface
-        public DataPoint calculatePoint(DoubleExtension doubleExtension)
+        public override DataPoint calculatePoint(DoubleExtension doubleExtension)
         {
-            Debug.Assert(doubleExtension <= 1.0001 && doubleExtension >= -0.0001, "Invalid argument for BezierCurve.calculate()");
+            Debug.Assert(doubleExtension <= 1.0001 && doubleExtension >= -0.0001, "Invalid argument for BezierCurve.calculatePoint()");
             double xVal = 0;
             double yVal = 0;
             double basisFunction = 1;
