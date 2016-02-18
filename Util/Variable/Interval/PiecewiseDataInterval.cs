@@ -162,5 +162,19 @@ namespace Util.Variable.Interval
             return -1;
         }
         #endregion
+
+        #region IEquatable<DataInterval>
+        public override bool Equals(PiecewiseDataInterval other)
+        {
+            if (base.Equals(other))
+            {
+                if (other.CutPoints == this.CutPoints)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }

@@ -82,7 +82,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             Debug.Assert(param.PolynomialCurveType == polynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
             OrderedCurvePointList pointList = param.PointList;
             List<LagarangeIntervalPolynomialCurve> polynomialCurve = new List<LagarangeIntervalPolynomialCurve>();
-            List<double> coefficients = null;
+            List<DoubleExtension> coefficients = null;
             for (int i = 2; i < pointList.Count; i = i + 2)
             {
                 coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);

@@ -69,12 +69,32 @@ namespace Util.Variable
                 return (int)(1000 * double.Parse(ApproximateString));
             }
         }
+
+        public bool IsZero
+        {
+            get
+            {
+                return ApproximateString == "0.000";
+            }
+        }
         #endregion
 
         #region Public.Interface
+        public bool EqualsToZero()
+        {
+            return ApproximateString == "0.000";
+        }
+        #endregion
+
+        #region Class.Interface
         public static bool areTheSameCoordinate(DoubleExtension v1, DoubleExtension v2)
         {
             return v1 == v2;
+        }
+
+        public static bool EqualsToZero(double val)
+        {
+            return (new DoubleExtension(val)).ApproximateString == "0.000";
         }
         #endregion
 

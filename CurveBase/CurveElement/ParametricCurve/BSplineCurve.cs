@@ -58,11 +58,24 @@ namespace CurveBase.CurveElement.ParametricCurve
         #endregion
 
         #region Private.Method
+        /// <summary>
+        /// 要求的：N+1 = curveParam.PointList.Count;
+        /// 要求的：  k = curveParam.Degree;
+        ///   k = i
+        ///   i = j
+        ///                    t - t[j]                              t[i + j] - t
+        /// N[i, j](t) = --------------------- * N[i - 1, j](t) + --------------------- * N[i - 1, j + 1](t)
+        ///               t[i + j - 1] - t[j]                      t[i + j] - t[j + 1]
+        /// </summary>
+        /// <param name="curveParam"></param>
+        /// <returns></returns>
         private List<BSplineBasisFunctionIntervalPolynomialCurve> calculateBasisFunction(bSplineCurveParam curveParam)
         {
             Dynamic2DArray<BSplineBasisFunctionIntervalPolynomialCurve> basisFunctions = new Dynamic2DArray<BSplineBasisFunctionIntervalPolynomialCurve>();
             int total = curveParam.Degree + curveParam.PointList.Count;
-            BSplineBasisFunctionIntervalPolynomialCurve item = null;
+            DoubleExtension denominator10, denominator20, numerator11, numerator10, numerator21, numerator20;
+            numerator11 = new DoubleExtension(1);
+            numerator21 = new DoubleExtension(-1);
             for (int i = 0; i < total; i++)
             {
                 basisFunctions.SetArrayElement(0, i, new BSplineBasisFunctionIntervalPolynomialCurve(i, curveParam.Interval));
@@ -71,9 +84,11 @@ namespace CurveBase.CurveElement.ParametricCurve
             {
                 for (int j = 0; j < total - i; j++)
                 {
-                    //TODO: B样条基函数计算
-                    //item = ;
-                    basisFunctions.SetArrayElement(i, j, item);
+                    denominator10 = curveParam.Interval.CutPoints[i + j - 1] - curveParam.Interval.CutPoints[j];
+                    denominator20 = curveParam.Interval.CutPoints[i + j] - curveParam.Interval.CutPoints[j + 1];
+                    numerator10 = 0 - curveParam.Interval.CutPoints[j];
+                    numerator20 = curveParam.Interval.CutPoints[i + j];
+                    basisFunctions.SetArrayElement(i, j, basisFunctions.GetArrayElement(i - 1, j).DivideByNumber(denominator10).MultiplyByLinear(numerator11, numerator10) + basisFunctions.GetArrayElement(i - 1, j + 1).DivideByNumber(denominator20).MultiplyByLinear(numerator21, numerator20));
                 }
             }
             return basisFunctions[curveParam.Degree];
