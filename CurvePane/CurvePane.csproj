@@ -43,10 +43,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ZedGraph\ZedGraph.dll</HintPath>
     </Reference>
-    <Reference Include="ZedGraph.resources, Version=5.1.2.878, Culture=zh-cn, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ZedGraph\ZedGraph.resources.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ListViewHelper.cs" />
@@ -84,8 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ZedGraphTool\ZedGraph.dll" />
-    <None Include="ZedGraphTool\ZedGraph.resources.dll" />
-    <None Include="ZedGraphTool\ZedGraph.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CurveBase\CurveBase.csproj">

@@ -22,6 +22,7 @@ using CurveBase.CurveException;
 using CurveDraw.Curve;
 using CurveDraw.Draw;
 using CurvePane.ZedGraphTool;
+using Util.Variable;
 using Util.Variable.PointList;
 using ZedGraph;
 
@@ -134,14 +135,7 @@ namespace CurvePane
             BaseDataPointList pointList = this.basePoints;
             polynomialCurveParam curveParam = new polynomialCurveParam(pointList.SortedPointList, (polynomialCurveType)polynomialType);
             polynomialCurve curve = new polynomialCurve(curveParam);
-            Dictionary<ICurvePointList, DrawType> interpolatedData = curve.sampleCurvePoints();
-            Color color;
-            foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
-            {
-                color = getNewColor();
-                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
-            }
-            AddCurveName(curveName);
+            DrawLines(curveName, curve.sampleCurvePoints());
         }
 
         public void DrawBezierCurve(string curveName)
@@ -149,14 +143,38 @@ namespace CurvePane
             BaseDataPointList pointList = this.basePoints;
             bezierCurveParam curveParam = new bezierCurveParam(pointList.Points);
             bezierCurve curve = new bezierCurve(curveParam);
-            Dictionary<ICurvePointList, DrawType> interpolatedData = curve.sampleCurvePoints();
-            Color color;
-            foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
+            DrawLines(curveName, curve.sampleCurvePoints());
+        }
+
+        public void DrawBSplineCurve(string curveName, string degree, string cutList)
+        {
+            BaseDataPointList pointList = this.basePoints;
+            string[] cuts = cutList.Split(new char[] {' ', ','}, StringSplitOptions.RemoveEmptyEntries);
+            List<DoubleExtension> cutPoints = new List<DoubleExtension>();
+            double parsedResult = 0;
+            foreach (string item in cuts)
             {
-                color = getNewColor();
-                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
+                if (Double.TryParse(item, out parsedResult))
+                {
+                    cutPoints.Add(new DoubleExtension(parsedResult));
+                }
+                else
+                {
+                    throw new ArgumentException("The cutList contains unrecognised string: " + item, "cutList");
+                }
             }
-            AddCurveName(curveName);
+            int degreeInt = 0;
+            if (!Int32.TryParse(degree, out degreeInt))
+            {
+                throw new ArgumentException("The degree is not a integer string: " + degree, "degree");
+            }
+            if (degreeInt < 1)
+            {
+                throw new ArgumentException("The degree is invalid: " + degree, "degree");
+            }
+            bSplineCurveParam curveParam = new bSplineCurveParam(pointList.Points, degreeInt, cutPoints);
+            bSplineCurve curve = new bSplineCurve(curveParam);
+            DrawLines(curveName, curve.sampleCurvePoints());
         }
         #endregion
 
@@ -201,6 +219,17 @@ namespace CurvePane
             }
         }
 
+        public void DrawLines(string curveName, Dictionary<ICurvePointList, DrawType> interpolatedData)
+        {
+            Color color;
+            foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
+            {
+                color = getNewColor();
+                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
+            }
+            AddCurveName(curveName);
+        }
+
         public void RemoveAllLines()
         {
             zedGraph.RemoveAllLinesExceptCertainLine("BasePoints");
@@ -226,6 +255,14 @@ namespace CurvePane
             set
             {
                 captureSwitch = value;
+            }
+        }
+
+        public int BasePointsCount
+        {
+            get
+            {
+                return basePoints.Count;
             }
         }
 

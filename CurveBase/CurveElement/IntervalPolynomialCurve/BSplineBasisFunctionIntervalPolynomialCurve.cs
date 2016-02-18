@@ -113,9 +113,11 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         public BSplineBasisFunctionIntervalPolynomialCurve MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
         {
             List<LagarangeIntervalPolynomialCurve> curve = new List<LagarangeIntervalPolynomialCurve>();
+            LagarangeIntervalPolynomialCurve item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
-                curve.Add(Curves[i].MultiplyByLinear(val1, val0));
+                item = Curves[i].MultiplyByLinear(val1, val0);
+                curve.Add(item);
             }
             return new BSplineBasisFunctionIntervalPolynomialCurve(curve, Interval);
         }
@@ -123,15 +125,17 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         public BSplineBasisFunctionIntervalPolynomialCurve DivideByNumber(DoubleExtension val)
         {
             List<LagarangeIntervalPolynomialCurve> curve = new List<LagarangeIntervalPolynomialCurve>();
+            LagarangeIntervalPolynomialCurve item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
-                curve.Add(Curves[i].DivideByNumber(val));
+                item = Curves[i].DivideByNumber(val);
+                curve.Add(item);
             }
             return new BSplineBasisFunctionIntervalPolynomialCurve(curve, Interval);
         }
         #endregion
 
-        #region
+        #region Operator
         public static BSplineBasisFunctionIntervalPolynomialCurve operator +(BSplineBasisFunctionIntervalPolynomialCurve c1, BSplineBasisFunctionIntervalPolynomialCurve c2)
         {
             if (c1.Interval.Equals(c2.Interval))

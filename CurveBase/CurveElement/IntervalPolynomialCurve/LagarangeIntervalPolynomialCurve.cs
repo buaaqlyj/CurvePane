@@ -82,38 +82,59 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #region Public.Interface
         public LagarangeIntervalPolynomialCurve MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
         {
+            if (EqualsToZero)
+            {
+                return new LagarangeIntervalPolynomialCurve(new DoubleExtension(0), Interval);
+            }
             List<DoubleExtension> newCoefficients = new List<DoubleExtension>();
             for (int i = 0; i < degree; i++)
             {
                 newCoefficients.Add(coefficients[i] * val0);
             }
-            newCoefficients.Add(coefficients[degree - 1] * val1);
-            for (int i = 1; i < degree; i++)
+            if (!(coefficients[degree - 1] * val1).EqualsToZero())
             {
-                newCoefficients[i] += coefficients[i - 1] * val1;
+                newCoefficients.Add(coefficients[degree - 1] * val1);
+            }
+            if (degree > 1)
+            {
+                for (int i = 1; i < degree; i++)
+                {
+                    newCoefficients[i] += coefficients[i - 1] * val1;
+                }
             }
             return new LagarangeIntervalPolynomialCurve(newCoefficients, newCoefficients.Count, Interval);
         }
 
         public LagarangeIntervalPolynomialCurve DivideByNumber(DoubleExtension val)
         {
+            if (EqualsToZero)
+            {
+                return new LagarangeIntervalPolynomialCurve(new DoubleExtension(0), Interval);
+            }
             if (val.EqualsToZero())
             {
-                if (EqualsToZero)
-                {
-                    return new LagarangeIntervalPolynomialCurve(new DoubleExtension(0), Interval);
-                }
-                else
-                {
-                    throw new DivideByZeroException("The polynomial coefficients are divided by 0.");
-                }
+                throw new DivideByZeroException("The polynomial coefficients are divided by 0.");
             }
+            
             List<DoubleExtension> newCoefficients = new List<DoubleExtension>();
             for (int i = 0; i < coefficients.Count; i++)
             {
                 newCoefficients.Add(coefficients[i] / val);
             }
             return new LagarangeIntervalPolynomialCurve(newCoefficients, newCoefficients.Count, Interval);
+        }
+        #endregion
+
+        #region Object Member
+        public override string ToString()
+        {
+            string result = "f(x) = ";
+            for (int i = coefficients.Count - 1; i > 0; i--)
+            {
+                result += coefficients[i].ApproximateString + " x^" + i + " + ";
+            }
+            result += coefficients[0].ApproximateString;
+            return result;
         }
         #endregion
 
@@ -142,7 +163,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             int i = 0;
             DoubleExtension val1, val2;
             List<DoubleExtension> coefficients = new List<DoubleExtension>();
-            while (i++ < degree)
+            while (i < degree)
             {
                 if (i < c1.Degree)
                 {
@@ -161,6 +182,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                     val2 = new DoubleExtension(0);
                 }
                 coefficients.Add(val1 + val2);
+                i++;
             }
             return new LagarangeIntervalPolynomialCurve(coefficients, degree, DataInterval.Intersection(c1.Interval, c2.Interval));
         }

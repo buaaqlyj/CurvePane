@@ -21,6 +21,7 @@ using CurveBase.CurveElement.IntervalPolynomialCurve;
 using CurveBase.CurveElement.ParametricCurve;
 using Util.Variable;
 using Util.Variable.Interval;
+using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveInterpolatedData
 {
@@ -36,6 +37,16 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             this.curveParam = curveParam;
             this.interval = curveParam.Interval;
             this.curve = new BSplineCurve(curveParam);
+        }
+        #endregion
+
+        #region Property
+        public BSplineCurve Curve
+        {
+            get
+            {
+                return curve;
+            }
         }
         #endregion
 

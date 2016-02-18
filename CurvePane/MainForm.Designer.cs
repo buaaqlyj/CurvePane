@@ -49,7 +49,13 @@ namespace CurvePane
             this.csiTabPage = new System.Windows.Forms.TabPage();
             this.pcsiTabPage = new System.Windows.Forms.TabPage();
             this.bezierTabPage = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
             this.bsTabPage = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.nurbsTabPage = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -72,10 +78,10 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.bezierTabPage.SuspendLayout();
+            this.bsTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -159,14 +165,73 @@ namespace CurvePane
             this.bezierTabPage.Text = "Bézier曲线";
             this.bezierTabPage.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(45, 31);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(185, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Bezier曲线绘制不需要额外的参数";
+            // 
             // bsTabPage
             // 
+            this.bsTabPage.Controls.Add(this.checkBox1);
+            this.bsTabPage.Controls.Add(this.textBox5);
+            this.bsTabPage.Controls.Add(this.textBox4);
+            this.bsTabPage.Controls.Add(this.label7);
+            this.bsTabPage.Controls.Add(this.label6);
             this.bsTabPage.Location = new System.Drawing.Point(4, 22);
             this.bsTabPage.Name = "bsTabPage";
             this.bsTabPage.Size = new System.Drawing.Size(549, 123);
             this.bsTabPage.TabIndex = 3;
             this.bsTabPage.Text = "B样条曲线";
             this.bsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(105, 66);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 16);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "均匀节点矢量";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(105, 39);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(425, 21);
+            this.textBox5.TabIndex = 3;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(105, 13);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(66, 21);
+            this.textBox4.TabIndex = 2;
+            this.textBox4.Text = "2";
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(34, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 12);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "节点矢量：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(34, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "曲线次数：";
             // 
             // nurbsTabPage
             // 
@@ -391,15 +456,6 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(185, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Bezier曲线绘制不需要额外的参数";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -418,6 +474,8 @@ namespace CurvePane
             this.pcTabPage.PerformLayout();
             this.bezierTabPage.ResumeLayout(false);
             this.bezierTabPage.PerformLayout();
+            this.bsTabPage.ResumeLayout(false);
+            this.bsTabPage.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -462,6 +520,11 @@ namespace CurvePane
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

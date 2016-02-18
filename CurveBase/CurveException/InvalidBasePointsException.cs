@@ -62,9 +62,7 @@ namespace CurveBase.CurveException
         {
             get
             {
-                string msg = base.Message.Trim();
-                if (msg != "") msg += Environment.NewLine;
-                msg += "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType) + " can't be draw as request.";
+                string msg = "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType) + " can't be draw as request.";
                 if (additionalMessage != "") msg += Environment.NewLine + additionalMessage;
                 return msg;
             }

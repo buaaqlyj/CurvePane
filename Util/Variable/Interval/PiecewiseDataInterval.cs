@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace Util.Variable.Interval
 {
-    public class PiecewiseDataInterval : DataInterval
+    public class PiecewiseDataInterval : DataInterval, IEquatable<DataInterval>
     {
         protected List<DoubleExtension> cutPoints;
         protected List<DataInterval> subIntervals;
@@ -26,37 +26,34 @@ namespace Util.Variable.Interval
         public PiecewiseDataInterval(DoubleExtension val1, DoubleExtension val2, List<DoubleExtension> cutPoints)
             : base(val1, val2)
         {
+            cutPoints.Add(val2);
+            cutPoints.Insert(0, val1);
+            this.cutPoints = cutPoints;
             if (nullInterval)
             {
                 throw new ArgumentException("Null interval cannot have cut points.", "cutPoints");
             }
             if (cutPoints.Count > 0)
             {
-                DoubleExtension lastOne = leftBorder;
-                foreach (DoubleExtension item in cutPoints)
+                DoubleExtension lastOne = cutPoints[0];
+                for (int i = 1; i < cutPoints.Count; i++)
                 {
-                    if (lastOne > item)
+                    if (lastOne > cutPoints[i])
                         throw new ArgumentException("The cut points are not monotonic nondecreasing.", "cutPoints");
-                    if (rightBorder < item)
-                        throw new ArgumentException("Some of the cut points are exceed the right border.", "cutPoints");
-                    lastOne = item;
+                    lastOne = cutPoints[i];
                 }
+
                 subIntervals = new List<DataInterval>();
-                subIntervals.Add(new DataInterval(leftBorder, cutPoints[0]));
                 for (int i = 1; i < cutPoints.Count; i++)
                 {
                     subIntervals.Add(new DataInterval(cutPoints[i - 1], cutPoints[i]));
                 }
-                subIntervals.Add(new DataInterval(cutPoints[cutPoints.Count - 1], rightBorder));
             }
             else
             {
                 subIntervals = new List<DataInterval>();
                 subIntervals.Add(this);
             }
-            cutPoints.Add(val2);
-            cutPoints.Insert(0, val1);
-            this.cutPoints = cutPoints;
         }
 
         public PiecewiseDataInterval(int val1, int val2, List<DoubleExtension> cutPoints)
@@ -75,30 +72,25 @@ namespace Util.Variable.Interval
             : base(cutPoints[0], cutPoints[cutPoints.Count - 1])
         {
             this.cutPoints = cutPoints;
-            cutPoints.RemoveAt(cutPoints.Count - 1);
-            cutPoints.RemoveAt(0);
             if (nullInterval)
             {
                 throw new ArgumentException("Null interval cannot have cut points.", "cutPoints");
             }
             if (cutPoints.Count > 0)
             {
-                DoubleExtension lastOne = leftBorder;
-                foreach (DoubleExtension item in cutPoints)
+                DoubleExtension lastOne = cutPoints[0];
+                for (int i = 1; i < cutPoints.Count; i++)
                 {
-                    if (lastOne > item)
+                    if (lastOne > cutPoints[i])
                         throw new ArgumentException("The cut points are not monotonic nondecreasing.", "cutPoints");
-                    if (rightBorder < item)
-                        throw new ArgumentException("Some of the cut points are exceed the right border.", "cutPoints");
-                    lastOne = item;
+                    lastOne = cutPoints[i];
                 }
+                
                 subIntervals = new List<DataInterval>();
-                subIntervals.Add(new DataInterval(leftBorder, cutPoints[0]));
                 for (int i = 1; i < cutPoints.Count; i++)
                 {
                     subIntervals.Add(new DataInterval(cutPoints[i - 1], cutPoints[i]));
                 }
-                subIntervals.Add(new DataInterval(cutPoints[cutPoints.Count - 1], rightBorder));
             }
             else
             {
@@ -164,7 +156,7 @@ namespace Util.Variable.Interval
         #endregion
 
         #region IEquatable<DataInterval>
-        public override bool Equals(PiecewiseDataInterval other)
+        public bool Equals(PiecewiseDataInterval other)
         {
             if (base.Equals(other))
             {

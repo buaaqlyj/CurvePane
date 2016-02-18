@@ -1,4 +1,15 @@
 ****
+# CurvePane_v0.4.10
+
+## Release Note
+
+I've finished the B-Spline Curve.
+
+## Changelog
+
+* Implemented the B-Spline Curve.
+
+****
 # CurvePane_v0.3.9-alpha
 
 ## Release Note

@@ -57,15 +57,34 @@ namespace CurveBase.CurveElement.ParametricCurve
         }
         #endregion
 
+        #region Property
+        public DataInterval Interval
+        {
+            get
+            {
+                return interval;
+            }
+        }
+        #endregion
+
         #region Private.Method
         /// <summary>
         /// 要求的：N+1 = curveParam.PointList.Count;
         /// 要求的：  k = curveParam.Degree;
         ///   k = i
         ///   i = j
-        ///                    t - t[j]                              t[i + j] - t
-        /// N[i, j](t) = --------------------- * N[i - 1, j](t) + --------------------- * N[i - 1, j + 1](t)
-        ///               t[i + j - 1] - t[j]                      t[i + j] - t[j + 1]
+        ///                  t - t[j]                              t[i + j + 1] - t
+        /// N[i, j](t) = ----------------- * N[i - 1, j](t) + ------------------------- * N[i - 1, j + 1](t)
+        ///               t[i + j] - t[j]                      t[i + j + 1] - t[j + 1]
+        ///               numerator11 * t + numerator10                      numerator21 * t + numerator20
+        ///            = ------------------------------- * N[i - 1, j](t) + ------------------------------- * N[i - 1, j + 1](t)
+        ///                      denominator10                                       denominator20
+        /// numerator11   = 1
+        /// numerator10   = -t[j]
+        /// numerator21   = -1
+        /// numerator20   = t[i + j + 1]
+        /// denominator10 = t[i + j] - t[j]
+        /// denominator20 = t[i + j + 1] - t[j + 1]
         /// </summary>
         /// <param name="curveParam"></param>
         /// <returns></returns>
@@ -74,6 +93,7 @@ namespace CurveBase.CurveElement.ParametricCurve
             Dynamic2DArray<BSplineBasisFunctionIntervalPolynomialCurve> basisFunctions = new Dynamic2DArray<BSplineBasisFunctionIntervalPolynomialCurve>();
             int total = curveParam.Degree + curveParam.PointList.Count;
             DoubleExtension denominator10, denominator20, numerator11, numerator10, numerator21, numerator20;
+            BSplineBasisFunctionIntervalPolynomialCurve curve1, curve2, curves = null;
             numerator11 = new DoubleExtension(1);
             numerator21 = new DoubleExtension(-1);
             for (int i = 0; i < total; i++)
@@ -84,11 +104,14 @@ namespace CurveBase.CurveElement.ParametricCurve
             {
                 for (int j = 0; j < total - i; j++)
                 {
-                    denominator10 = curveParam.Interval.CutPoints[i + j - 1] - curveParam.Interval.CutPoints[j];
-                    denominator20 = curveParam.Interval.CutPoints[i + j] - curveParam.Interval.CutPoints[j + 1];
+                    denominator10 = curveParam.Interval.CutPoints[i + j] - curveParam.Interval.CutPoints[j];
+                    denominator20 = curveParam.Interval.CutPoints[i + j + 1] - curveParam.Interval.CutPoints[j + 1];
                     numerator10 = 0 - curveParam.Interval.CutPoints[j];
-                    numerator20 = curveParam.Interval.CutPoints[i + j];
-                    basisFunctions.SetArrayElement(i, j, basisFunctions.GetArrayElement(i - 1, j).DivideByNumber(denominator10).MultiplyByLinear(numerator11, numerator10) + basisFunctions.GetArrayElement(i - 1, j + 1).DivideByNumber(denominator20).MultiplyByLinear(numerator21, numerator20));
+                    numerator20 = curveParam.Interval.CutPoints[i + j + 1];
+                    curve1 = basisFunctions.GetArrayElement(i - 1, j).DivideByNumber(denominator10).MultiplyByLinear(numerator11, numerator10);
+                    curve2 = basisFunctions.GetArrayElement(i - 1, j + 1).DivideByNumber(denominator20).MultiplyByLinear(numerator21, numerator20);
+                    curves = curve1 + curve2;
+                    basisFunctions.SetArrayElement(i, j, curves);
                 }
             }
             return basisFunctions[curveParam.Degree];

@@ -37,14 +37,6 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region Property
-        public NormalCurvePointList PointList
-        {
-            get
-            {
-                return pointList;
-            }
-        }
-
         public BezierCurve Curve
         {
             get

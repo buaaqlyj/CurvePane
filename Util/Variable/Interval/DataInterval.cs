@@ -138,21 +138,7 @@ namespace Util.Variable.Interval
         #region IEquatable<DataInterval>
         public bool Equals(DataInterval other)
         {
-            if ((leftBorder == null || rightBorder == null) || (other.LeftBorder == null || other.RightBorder == null))
-            {
-                if ((leftBorder == null || rightBorder == null) && (other.LeftBorder == null || other.RightBorder == null))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return leftBorder == other.LeftBorder && rightBorder == other.RightBorder;
-            }
+            return leftBorder.Equals(other.LeftBorder) && rightBorder.Equals(other.RightBorder);
         }
         #endregion
     }

@@ -61,6 +61,7 @@ namespace CurvePane
                         break;
                     case 4:
                         //B样条曲线
+                        masterCurveManager.DrawBSplineCurve(curveName, textBox4.Text, textBox5.Text);
                         break;
                     case 5:
                         //NURBS曲线
@@ -79,7 +80,6 @@ namespace CurvePane
             masterCurveManager.RemoveAllLines();
             textBox1.Text = masterCurveManager.NextAvailableName;
         }
-
         #endregion
         #region Github Info
         private void infoLabel_Click(object sender, EventArgs e)
@@ -139,6 +139,7 @@ namespace CurvePane
                     }
                     listView1.Items.Remove(listView1.Items[index]);
                 }
+                UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
             }
         }
 
@@ -146,6 +147,7 @@ namespace CurvePane
         {
             masterCurveManager.ClearBasePoint();
             listView1.Items.Clear();
+            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
         }
 
         private void AddBasePoint(Util.Variable.DataPoint point)
@@ -153,6 +155,7 @@ namespace CurvePane
             if (masterCurveManager.CaptureSwitch)
             {
                 listView1.Items.Add(new ListViewItem(new string[] {masterCurveManager.BaseNumber.ToString(), point.X.ApproximateString, point.Y.ApproximateString}, -1));
+                UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
             }
         }
 
@@ -161,8 +164,62 @@ namespace CurvePane
             textBox3.Text = point.String;
         }
         #endregion
-        #region CurveManager
+        #region CurveSettings
+        public void UpdateBSplineCurveSetting(int count, string degree)
+        {
+            int degreeInt = 0;
+            if (!Int32.TryParse(degree, out degreeInt))
+            {
+                MessageBox.Show("The degree is not a integer string: " + degree, "曲线次数无法识别");
+                return;
+            }
+            if (degreeInt < 1)
+            {
+                MessageBox.Show("The degree is invalid: " + degree, "曲线次数无法识别");
+                return;
+            }
+            char[] chArray = textBox5.Text.ToCharArray();
+            int currentCommaCount = 0;
+            int totalCommaCount = degreeInt + count;
+            if (checkBox1.Checked)
+            {
+                int val = 1;
+                textBox5.Text = "0";
+                for (int i = 0; i < totalCommaCount; i++)
+                {
+                    textBox5.Text += "," + val++.ToString();
+                }
+            }
+            else
+            {
+                textBox5.Text = "";
+                for (int i = 0; i < chArray.Length; i++)
+                {
+                    if (chArray[i] == ',')
+                    {
+                        if (++currentCommaCount > totalCommaCount)
+                        {
+                            break;
+                        }
+                    }
+                    textBox5.Text += chArray[i];
+                }
+                while (currentCommaCount++ < totalCommaCount)
+                {
+                    textBox5.Text += ',';
+                }
+            }
+        }
 
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+        }
         #endregion
         #endregion
 
@@ -178,7 +235,8 @@ namespace CurvePane
 
             comboBox1.SelectedIndex = 0;
             textBox1.Text = masterCurveManager.NextAvailableName;
-        }
 
+            checkBox1.Checked = true;
+        }
     }
 }

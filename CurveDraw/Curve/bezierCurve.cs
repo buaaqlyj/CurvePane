@@ -73,7 +73,7 @@ namespace CurveDraw.Curve
             {
                 bezierCurveParam param = (bezierCurveParam)curveParam;
                 if (param.Count < 2)
-                    throw new InvalidBasePointsException(CurveType.bezierCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
+                    throw new InvalidBasePointsException(CurveType.bezierCurve, "At least two points are needed to draw Bezier Curve");
             }
             else
             {
