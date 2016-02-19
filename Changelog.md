@@ -1,4 +1,11 @@
 ****
+# CurvePane_vx.x.x
+
+## Changelog
+
+* Implement a feature that it'll tweak the axis range of the pane after every drawing.
+
+****
 # CurvePane_v0.4.10
 
 ## Release Note

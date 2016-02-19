@@ -90,6 +90,7 @@ namespace CurvePane.ZedGraphTool
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
             line.Line.IsVisible = false;
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
             return line;
         }
@@ -97,6 +98,7 @@ namespace CurvePane.ZedGraphTool
         public LineItem AddLineWithoutDots(string curveName, PointPairList pointPairList, Color color)
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.None);
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
             return line;
         }
@@ -104,6 +106,7 @@ namespace CurvePane.ZedGraphTool
         public LineItem AddLineWithDots(string curveName, PointPairList pointPairList, Color color)
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
             return line;
         }
@@ -111,24 +114,28 @@ namespace CurvePane.ZedGraphTool
         public void RemoveLine(string lineName)
         {
             masterPane.CurveList.Remove(masterPane.CurveList[masterPane.CurveList.IndexOf(lineName)]);
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
         }
 
         public void RemoveLines(string keyword)
         {
             masterPane.CurveList.RemoveAll((c) => { return c.Label.Text.Contains(keyword); });
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
         }
 
         public void RemoveAllLinesExceptCertainLine(string lineName)
         {
             masterPane.CurveList.RemoveAll((c) => { return c.Label.Text != lineName; });
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
         }
 
         public void RemoveAllLines()
         {
             masterPane.CurveList.Clear();
+            zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
         }
         #endregion
