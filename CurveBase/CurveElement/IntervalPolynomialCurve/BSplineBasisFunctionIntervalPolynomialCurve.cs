@@ -45,12 +45,13 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
 
         public BSplineBasisFunctionIntervalPolynomialCurve(int index, PiecewiseDataInterval interval)
         {
+            Debug.Assert(index > -1 && index < interval.SubIntervals.Count, "The index is out of range when initializing the BSplineBasisFunctionIntervalPolynomialCurve.");
             polynomialCurves = new List<LagarangeIntervalPolynomialCurve>();
+            if (interval.SubIntervals[index].NullInterval) equalsToZero = true;
             for (int i = 0; i < interval.SubIntervals.Count; i++)
             {
-                polynomialCurves.Add(new LagarangeIntervalPolynomialCurve(new DoubleExtension((i == index) ? 1 : 0), interval.SubIntervals[i]));
+                polynomialCurves.Add(new LagarangeIntervalPolynomialCurve(new DoubleExtension((!equalsToZero && i == index) ? 1 : 0), interval.SubIntervals[i]));
             }
-            if (interval.SubIntervals[index].NullInterval) equalsToZero = true;
             this.interval = interval;
         }
         #endregion

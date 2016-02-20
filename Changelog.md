@@ -4,6 +4,9 @@
 ## Changelog
 
 * Implement a feature that it'll tweak the axis range of the pane after every drawing.
+* Fix the bug that cause the "Divided by zero" report.
+* Add the notification of the min and max degree that one B-Spline curve can have for reference.
+* Lock the node vector textbox if the node is set to be distributed uniformly.
 
 ****
 # CurvePane_v0.4.10

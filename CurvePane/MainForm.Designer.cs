@@ -78,6 +78,12 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.bezierTabPage.SuspendLayout();
@@ -176,6 +182,12 @@ namespace CurvePane
             // 
             // bsTabPage
             // 
+            this.bsTabPage.Controls.Add(this.label13);
+            this.bsTabPage.Controls.Add(this.label12);
+            this.bsTabPage.Controls.Add(this.label11);
+            this.bsTabPage.Controls.Add(this.label10);
+            this.bsTabPage.Controls.Add(this.label9);
+            this.bsTabPage.Controls.Add(this.label8);
             this.bsTabPage.Controls.Add(this.checkBox1);
             this.bsTabPage.Controls.Add(this.textBox5);
             this.bsTabPage.Controls.Add(this.textBox4);
@@ -205,6 +217,7 @@ namespace CurvePane
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(425, 21);
             this.textBox5.TabIndex = 3;
+            this.textBox5.LostFocus += new System.EventHandler(textBox5_LostFocus);
             // 
             // textBox4
             // 
@@ -456,6 +469,60 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(390, 67);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 12);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "节点矢量重复度为：";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(509, 67);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 12);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(191, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(149, 12);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "当前条件允许的最低次数：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(390, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "最高次数：";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(346, 16);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(11, 12);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "0";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(461, 16);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(11, 12);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -525,6 +592,12 @@ namespace CurvePane
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
     }
 }
 

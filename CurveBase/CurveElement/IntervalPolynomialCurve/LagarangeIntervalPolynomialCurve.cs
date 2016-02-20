@@ -128,13 +128,43 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #region Object Member
         public override string ToString()
         {
-            string result = "f(x) = ";
-            for (int i = coefficients.Count - 1; i > 0; i--)
+            bool notFirstTime = false;
+            if (coefficients.Count > 0)
             {
-                result += coefficients[i].ApproximateString + " x^" + i + " + ";
+                string result = "f(x) = ";
+                for (int i = coefficients.Count - 1; i > -1; i--)
+                {
+                    if (notFirstTime)
+                    {
+                        if (coefficients[i].AccurateValue >= 0)
+                        {
+                            result += " +";
+                        }
+                    
+                    }
+                    else
+                    {
+                        notFirstTime = true;
+                    }
+                    result += coefficients[i].ApproximateString;
+                    switch (i)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            result += " x";
+                            break;
+                        default:
+                            result += " x^" + (coefficients.Count - 1).ToString();
+                            break;
+                    }
+                }
+                return result;
             }
-            result += coefficients[0].ApproximateString;
-            return result;
+            else
+            {
+                return "f(x) = N/A";
+            }
         }
         #endregion
 

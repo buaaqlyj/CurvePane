@@ -219,6 +219,48 @@ namespace CurvePane
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+            if (checkBox1.Checked)
+            {
+                textBox5.Enabled = false;
+            }
+            else
+            {
+                textBox5.Enabled = true;
+            }
+        }
+
+        private void textBox5_LostFocus(object sender, EventArgs e)
+        {
+            string[] subString = textBox5.Text.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (subString.Length == 0)
+            {
+                label9.Text = "0";
+                label12.Text = "1";
+                return;
+            }
+            string lastOne = subString[0];
+            int maxCount = 1;
+            int currentCount = 1;
+            for (int i = 1; i < subString.Length; i++)
+            {
+                if (subString[i] == lastOne)
+                {
+                    currentCount++;
+                }
+                else
+                {
+                    lastOne = subString[i];
+                    if (currentCount > maxCount) maxCount = currentCount;
+                    currentCount = 1;
+                }
+            }
+            label9.Text = maxCount.ToString();
+            label12.Text = (maxCount + 1).ToString();
+        }
+
+        private void SetMaxDegreeForBSplineCurve(object sender, EventArgs e)
+        {
+            label13.Text = (masterCurveManager.BasePointsCount - 1).ToString();
         }
         #endregion
         #endregion
@@ -229,6 +271,7 @@ namespace CurvePane
             masterCurveManager = new CurveManager(masterZedGraphControl);
             CurveManager.AddBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(AddBasePoint);
             CurveManager.DisplayBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(DisplayBasePoint);
+            CurveManager.BasePointChangedEvent += new EventHandler(SetMaxDegreeForBSplineCurve);
 
             listView1.ListViewItemSorter = new ListViewColumnSorter();
             listView1.ColumnClick += new ColumnClickEventHandler(ListViewHelper.ListView_ColumnClick);

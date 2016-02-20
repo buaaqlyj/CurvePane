@@ -42,7 +42,8 @@ namespace CurvePane
         private List<string> curveNames = null;
 
         public static event ZedGraphWrapper.DataPointEventHandler AddBasePointEvent, DisplayBasePointEvent;
-        
+        public static event EventHandler BasePointChangedEvent;
+
         public CurveManager(ZedGraphControl zedGraphControl)
         {
             zedGraph = new ZedGraphWrapper(zedGraphControl, "BasePoints");
@@ -51,6 +52,7 @@ namespace CurvePane
             curveNames = new List<string>();
             ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_DoubleClick);
             ZedGraphWrapper.MouseMove += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_MouseMove);
+            
         }
 
         #region EventHandler
@@ -69,7 +71,7 @@ namespace CurvePane
                 DisplayBasePointEvent(point);
             }
         }
-        #endregion
+#endregion
 
         #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
@@ -86,6 +88,7 @@ namespace CurvePane
             zedGraph.AddBasePoint(point);
             baseNumber++;
             AddBasePointEvent(point);
+            BasePointChangedEvent(this, new EventArgs());
         }
 
         public void ClearBasePoint()
@@ -93,12 +96,14 @@ namespace CurvePane
             basePoints.Clear();
             zedGraph.ClearBasePoint();
             baseNumber = 0;
+            BasePointChangedEvent(this, new EventArgs());
         }
 
         public void RemoveBasePoint(Util.Variable.DataPoint point)
         {
             basePoints.Remove(point);
             zedGraph.RemoveBasePoint(point);
+            BasePointChangedEvent(this, new EventArgs());
         }
 
         public List<Util.Variable.DataPoint> getList()
