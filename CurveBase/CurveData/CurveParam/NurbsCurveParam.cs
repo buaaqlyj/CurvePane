@@ -14,47 +14,41 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-using CurveBase.CurveData.CurveParam;
-using CurveBase.CurveElement.ParametricCurve;
 using Util.Variable;
-using Util.Variable.PointList;
 
-namespace CurveBase.CurveData.CurveInterpolatedData
+namespace CurveBase.CurveData.CurveParam
 {
-    public class BezierCurveInterpolatedData : ICurveInterpolatedData
+    public class NurbsCurveParam : BSplineCurveParam
     {
-        private BezierParametricCurveElement bezierCurve = null;
-        private NormalCurvePointList pointList = null;
-
+        protected List<DoubleExtension> weightList;
+        
         #region Constructor
-        public BezierCurveInterpolatedData(BezierCurveParam curveParam)
+        public NurbsCurveParam(List<DataPoint> points, int degree, List<DoubleExtension> cutPoints, List<DoubleExtension> weightList)
+            : base(points, degree, cutPoints)
         {
-            pointList = curveParam.PointList;
-            bezierCurve = new BezierParametricCurveElement(pointList);
+            if (points.Count != weightList.Count)
+            {
+                throw new ArgumentException("The count of weights doesn't match with that of base points");
+            }
+            this.weightList = weightList;
         }
         #endregion
 
         #region Property
-        public BezierParametricCurveElement Curve
+        public List<DoubleExtension> Weight
         {
             get
             {
-                return bezierCurve;
+                return weightList;
             }
         }
         #endregion
 
-        #region ICurveInterpolatedData
-        public CurveType getCurveType()
+        #region ICurveParam Member
+        public override CurveType getCurveType()
         {
-            return CurveType.bezierCurve;
-        }
-
-        public DataPoint getLastPoint()
-        {
-            return bezierCurve.LastPoint;
+            return CurveType.nurbsCurve;
         }
         #endregion
     }

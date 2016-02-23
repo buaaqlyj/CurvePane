@@ -21,7 +21,7 @@ using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
-    public abstract class IntervalPolynomialCurve
+    public abstract class IntervalPolynomialCurveElement
     {
         protected DataInterval interval;
         protected int degree;

@@ -15,12 +15,15 @@
 using System;
 using System.Collections.Generic;
 
+using Util.Tool;
+
 namespace Util.Variable.Interval
 {
     public class PiecewiseDataInterval : DataInterval, IEquatable<DataInterval>
     {
         protected List<DoubleExtension> cutPoints;
         protected List<DataInterval> subIntervals;
+        protected int multiplycity;
 
         #region Constructor
         public PiecewiseDataInterval(DoubleExtension val1, DoubleExtension val2, List<DoubleExtension> cutPoints)
@@ -54,6 +57,7 @@ namespace Util.Variable.Interval
                 subIntervals = new List<DataInterval>();
                 subIntervals.Add(this);
             }
+            multiplycity = ArrayExtension.GetMaxCountFromArray<DoubleExtension>(cutPoints);
         }
 
         public PiecewiseDataInterval(int val1, int val2, List<DoubleExtension> cutPoints)
@@ -97,6 +101,7 @@ namespace Util.Variable.Interval
                 subIntervals = new List<DataInterval>();
                 subIntervals.Add(this);
             }
+            multiplycity = ArrayExtension.GetMaxCountFromArray<DoubleExtension>(cutPoints);
         }
         #endregion
 
@@ -131,6 +136,14 @@ namespace Util.Variable.Interval
                 }
             }
         }
+
+        public int Multiplycity
+        {
+            get
+            {
+                return multiplycity;
+            }
+        }
         #endregion
 
         #region Public.Interface
@@ -141,11 +154,11 @@ namespace Util.Variable.Interval
         /// <returns></returns>
         public int findIntervalIndex(DoubleExtension val)
         {
-            if (isBetweenBordersOpenInterval(val))
+            if (isBetweenBordersCloseInterval(val))
             {
-                for (int i = 0; i < cutPoints.Count - 1; i++)
+                for (int i = 0; i < SubIntervals.Count; i++)
                 {
-                    if (val < cutPoints[i + 1])
+                    if (!SubIntervals[i].NullInterval && SubIntervals[i].isBetweenBordersCloseInterval(val))
                     {
                         return i;
                     }

@@ -27,11 +27,18 @@ namespace Util.Variable
             this.x = new DoubleExtension(x);
             this.y = new DoubleExtension(y);
         }
+
         public DataPoint(int x, int y)
         {
             this.x = new DoubleExtension(x);
             this.y = new DoubleExtension(y);
         }
+
+        public DataPoint(DoubleExtension x, DoubleExtension y)
+        {
+            this.x = x;
+            this.y = y;
+        }        
         #endregion
 
         #region Property
@@ -49,12 +56,12 @@ namespace Util.Variable
                 return y;
             }
         }
-        public string String
+        #endregion
+
+        #region Class.Member
+        public override string ToString()
         {
-            get
-            {
-                return X.ApproximateString + "," + Y.ApproximateString;
-            }
+            return X.ApproximateString + "," + Y.ApproximateString;
         }
         #endregion
 

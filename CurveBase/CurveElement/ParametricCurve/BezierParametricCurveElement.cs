@@ -23,13 +23,13 @@ using Util.Variable.PointList;
 
 namespace CurveBase.CurveElement.ParametricCurve
 {
-    public class BezierCurve : ParametricCurve
+    public class BezierParametricCurveElement : ParametricCurveElement
     {
         private List<int> combination = null;
         private NormalCurvePointList pointList = null;
 
         #region Constructor
-        public BezierCurve(NormalCurvePointList pointList)
+        public BezierParametricCurveElement(NormalCurvePointList pointList)
         {
             this.pointList = pointList;
             combination = new List<int>();

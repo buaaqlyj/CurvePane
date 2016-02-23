@@ -22,14 +22,14 @@ using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
-    public class BSplineBasisFunctionIntervalPolynomialCurve : IntervalPolynomialCurve
+    public class BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement : IntervalPolynomialCurveElement
     {
         protected new PiecewiseDataInterval interval;
-        protected List<LagarangeIntervalPolynomialCurve> polynomialCurves;
+        protected List<LagarangeIntervalPolynomialCurveElement> polynomialCurves;
         protected bool equalsToZero = false;
 
         #region Constructor
-        public BSplineBasisFunctionIntervalPolynomialCurve(List<LagarangeIntervalPolynomialCurve> curves, PiecewiseDataInterval interval)
+        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(List<LagarangeIntervalPolynomialCurveElement> curves, PiecewiseDataInterval interval)
         {
             if (curves.Count != interval.SubIntervals.Count)
                 throw new ArgumentException("Curves' count is different from intervals' count.");
@@ -43,14 +43,14 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             equalsToZero = true;
         }
 
-        public BSplineBasisFunctionIntervalPolynomialCurve(int index, PiecewiseDataInterval interval)
+        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(int index, PiecewiseDataInterval interval)
         {
             Debug.Assert(index > -1 && index < interval.SubIntervals.Count, "The index is out of range when initializing the BSplineBasisFunctionIntervalPolynomialCurve.");
-            polynomialCurves = new List<LagarangeIntervalPolynomialCurve>();
+            polynomialCurves = new List<LagarangeIntervalPolynomialCurveElement>();
             if (interval.SubIntervals[index].NullInterval) equalsToZero = true;
             for (int i = 0; i < interval.SubIntervals.Count; i++)
             {
-                polynomialCurves.Add(new LagarangeIntervalPolynomialCurve(new DoubleExtension((!equalsToZero && i == index) ? 1 : 0), interval.SubIntervals[i]));
+                polynomialCurves.Add(new LagarangeIntervalPolynomialCurveElement(new DoubleExtension((!equalsToZero && i == index) ? 1 : 0), interval.SubIntervals[i]));
             }
             this.interval = interval;
         }
@@ -81,7 +81,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
         }
 
-        public List<LagarangeIntervalPolynomialCurve> Curves
+        public List<LagarangeIntervalPolynomialCurveElement> Curves
         {
             get
             {
@@ -97,7 +97,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
         }
 
-        public LagarangeIntervalPolynomialCurve this[int index]
+        public LagarangeIntervalPolynomialCurveElement this[int index]
         {
             get
             {
@@ -111,42 +111,42 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #endregion
 
         #region Public.Interface
-        public BSplineBasisFunctionIntervalPolynomialCurve MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
+        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
         {
-            List<LagarangeIntervalPolynomialCurve> curve = new List<LagarangeIntervalPolynomialCurve>();
-            LagarangeIntervalPolynomialCurve item = null;
+            List<LagarangeIntervalPolynomialCurveElement> curve = new List<LagarangeIntervalPolynomialCurveElement>();
+            LagarangeIntervalPolynomialCurveElement item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
                 item = Curves[i].MultiplyByLinear(val1, val0);
                 curve.Add(item);
             }
-            return new BSplineBasisFunctionIntervalPolynomialCurve(curve, Interval);
+            return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curve, Interval);
         }
 
-        public BSplineBasisFunctionIntervalPolynomialCurve DivideByNumber(DoubleExtension val)
+        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement DivideByNumber(DoubleExtension val)
         {
-            List<LagarangeIntervalPolynomialCurve> curve = new List<LagarangeIntervalPolynomialCurve>();
-            LagarangeIntervalPolynomialCurve item = null;
+            List<LagarangeIntervalPolynomialCurveElement> curve = new List<LagarangeIntervalPolynomialCurveElement>();
+            LagarangeIntervalPolynomialCurveElement item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
                 item = Curves[i].DivideByNumber(val);
                 curve.Add(item);
             }
-            return new BSplineBasisFunctionIntervalPolynomialCurve(curve, Interval);
+            return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curve, Interval);
         }
         #endregion
 
         #region Operator
-        public static BSplineBasisFunctionIntervalPolynomialCurve operator +(BSplineBasisFunctionIntervalPolynomialCurve c1, BSplineBasisFunctionIntervalPolynomialCurve c2)
+        public static BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement operator +(BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement c1, BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement c2)
         {
             if (c1.Interval.Equals(c2.Interval))
             {
-                List<LagarangeIntervalPolynomialCurve> curves = new List<LagarangeIntervalPolynomialCurve>();
+                List<LagarangeIntervalPolynomialCurveElement> curves = new List<LagarangeIntervalPolynomialCurveElement>();
                 for (int i = 0; i < c1.Curves.Count; i++)
                 {
                     curves.Add(c1.Curves[i] + c2.Curves[i]);
                 }
-                return new BSplineBasisFunctionIntervalPolynomialCurve(curves, c1.Interval);
+                return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curves, c1.Interval);
             }
             throw new ArgumentException("The two BSplineBasisFunctionIntervalPolynomialCurve have different intervals.");
         }

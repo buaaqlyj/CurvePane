@@ -22,24 +22,23 @@ using CurveBase.CurveData.CurveInterpolatedData;
 using CurveBase.CurveElement.ParametricCurve;
 using CurveBase.CurveException;
 using CurveDraw.Draw;
-using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
 {
-    public class BSplineCurve : ICurve
+    public class NurbsCurve : ICurve
     {
-        private BSplineCurveParam curveParam;
+        private NurbsCurveParam curveParam;
         private bool canDraw = false;
         
         #region Constructor
-        public BSplineCurve(ICurveParam curveParam)
+        public NurbsCurve(ICurveParam curveParam)
         {
             if (canDrawCurve(curveParam))
             {
                 canDraw = true;
-                this.curveParam = (BSplineCurveParam)curveParam;
+                this.curveParam = (NurbsCurveParam)curveParam;
             }
         }
         #endregion
@@ -50,13 +49,13 @@ namespace CurveDraw.Curve
             NormalCurvePointList list = new NormalCurvePointList();
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
 
-            BSplineCurveInterpolatedData data = new BSplineCurveInterpolatedData(curveParam);
-            list.AddRange(sampleABSplineCurve(data.Curve));
+            NurbsCurveInterpolatedData data = new NurbsCurveInterpolatedData(curveParam);
+            list.AddRange(sampleANurbsCurve(data.Curve));
             list.Add(data.getLastPoint());
-            list.Label = "[BS]";
+            list.Label = "[NB]";
             result.Add(list, DrawType.LineNoDot);
 
-            curveParam.PointList.Label = "[BSC]";
+            curveParam.PointList.Label = "[NBC]";
             result.Add(curveParam.PointList, DrawType.LineNoDot);
             return result;
         }
@@ -70,22 +69,22 @@ namespace CurveDraw.Curve
         #region Private.Methods
         private bool canDrawCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.bsCurve)
+            if (curveParam.getCurveType() == CurveType.nurbsCurve)
             {
-                BSplineCurveParam param = (BSplineCurveParam)curveParam;
+                NurbsCurveParam param = (NurbsCurveParam)curveParam;
                 if (param.Count <= param.Degree)
-                    throw new InvalidBasePointsException(CurveType.bsCurve, (param.Degree - param.Count + 1).ToString() + " more data points are needed to draw B-Spline Curve");
+                    throw new InvalidBasePointsException(CurveType.nurbsCurve, (param.Degree - param.Count + 1).ToString() + " more data points are needed to draw NURBS Curve");
                 if (param.Interval.CutPoints[param.Degree] == param.Interval.CutPoints[param.PointList.Count])
                     throw new InvalidBasePointsException(CurveType.bsCurve, "The degree is too high or the base points are insufficient or too many duplicated nodes are specified.");
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.bsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(CurveType.nurbsCurve, curveParam.getCurveType());
             }
             return true;
         }
 
-        private List<DataPoint> sampleABSplineCurve(BSplineParametricCurveElement curve)
+        private List<DataPoint> sampleANurbsCurve(NurbsParametricCurveElement curve)
         {
             double stepSize = 0.005;
             int step = 200;
@@ -107,16 +106,6 @@ namespace CurveDraw.Curve
                 parametricValue += stepSize;
             }
             return pts;
-        }
-        #endregion
-
-        #region Property
-        public int GetMultiplycityOfNodes
-        {
-            get
-            {
-                return ArrayExtension.GetMaxCountFromArray<DoubleExtension>(curveParam.Interval.CutPoints);
-            }
         }
         #endregion
     }

@@ -26,16 +26,16 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
     /// Polynomial Curve:
     /// P(x) = a[0] + a[1] * (x - x0) + a[2] * (x - x0) * (x - x1) + a[3] * (x - x0) * (x - x1) * (x - x2)
     /// </summary>
-    public class NewtonIntervalPolynomialCurve : IntervalPolynomialCurve
+    public class NewtonIntervalPolynomialCurveElement : IntervalPolynomialCurveElement
     {
         protected static Dynamic2DArray<DoubleExtension> fullCoefficents = new Dynamic2DArray<DoubleExtension>();
         
         protected OrderedCurvePointList list = null;
         
-        protected static NewtonIntervalPolynomialCurve nullNewtonPolynomialCurve = new NewtonIntervalPolynomialCurve();
+        protected static NewtonIntervalPolynomialCurveElement nullNewtonPolynomialCurve = new NewtonIntervalPolynomialCurveElement();
 
         #region Constructor
-        public NewtonIntervalPolynomialCurve(OrderedCurvePointList pointList)
+        public NewtonIntervalPolynomialCurveElement(OrderedCurvePointList pointList)
         {
             if (degree >= 0)
             {
@@ -46,7 +46,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             this.interval = new DataInterval(list.LeftBorderPoint.X, list.RightBorderPoint.X);
         }
 
-        private NewtonIntervalPolynomialCurve()
+        private NewtonIntervalPolynomialCurveElement()
         {
             this.degree = 0;
             this.list = new OrderedCurvePointList();

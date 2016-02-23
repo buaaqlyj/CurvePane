@@ -100,6 +100,13 @@ namespace Util.Variable.Interval
         }
         #endregion
 
+        #region Object.Member
+        public override string ToString()
+        {
+            return "[" + LeftBorder.CleanString + ", " + RightBorder.CleanString + "]";
+        }
+        #endregion
+
         #region Public.Interface
         public bool isBetweenBordersCloseInterval(DoubleExtension db)
         {

@@ -12,10 +12,18 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-namespace CurveBase.CurveData.CurveParamData
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Util.Variable;
+
+namespace CurveBase.CurveElement.ParametricCurve
 {
-    public interface ICurveParam
+    public abstract class ParametricCurveElement
     {
-        CurveType getCurveType();
+        #region Public.Interface
+        public abstract DataPoint calculatePoint(DoubleExtension doubleExtension);
+        #endregion
     }
 }

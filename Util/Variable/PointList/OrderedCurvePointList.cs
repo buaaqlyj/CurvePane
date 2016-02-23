@@ -85,11 +85,6 @@ namespace Util.Variable.PointList
             get { return sortedPointList.Count; }
         }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
         public bool Remove(DataPoint item)
         {
             return sortedPointList.Remove(sortedPointList.Keys[sortedPointList.IndexOfValue(item)]);

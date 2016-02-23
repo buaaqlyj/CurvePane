@@ -14,23 +14,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 using Util.Variable;
 using Util.Variable.Interval;
 using Util.Variable.PointList;
 
-namespace CurveBase.CurveData.CurveParamData
+namespace CurveBase.CurveData.CurveParam
 {
-    public class bSplineCurveParam : ICurveParam, ICurvePointList
+    public class BSplineCurveParam : ICurveParam, ICurvePointList
     {
         protected int degree;
         protected PiecewiseDataInterval interval;
         protected NormalCurvePointList pointsList;
 
         #region Constructor
-        public bSplineCurveParam(List<DataPoint> points, int degree, List<DoubleExtension> cutPoints)
+        public BSplineCurveParam(List<DataPoint> points, int degree, List<DoubleExtension> cutPoints)
         {
+            if (degree + points.Count + 1 != cutPoints.Count)
+            {
+                throw new ArgumentException("The count of the cut points is invalid!");
+            }
+            if (points.Count < 2)
+            {
+                throw new ArgumentException("At least two points are needed to finish the interpolation.");
+            }
             this.degree = degree;
             this.interval = new PiecewiseDataInterval(cutPoints);
             this.pointsList = new NormalCurvePointList(points);
@@ -61,10 +68,18 @@ namespace CurveBase.CurveData.CurveParamData
                 return degree;
             }
         }
+
+        public int Multiplycity
+        {
+            get
+            {
+                return Interval.Multiplycity;
+            }
+        }
         #endregion
 
         #region ICurveParam Member
-        public CurveType getCurveType()
+        public virtual CurveType getCurveType()
         {
             return CurveType.bsCurve;
         }
@@ -116,11 +131,6 @@ namespace CurveBase.CurveData.CurveParamData
         public int Count
         {
             get { return pointsList.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
         }
 
         public bool Remove(DataPoint item)

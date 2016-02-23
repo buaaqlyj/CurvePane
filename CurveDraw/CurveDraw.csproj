@@ -37,11 +37,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Curve\bezierCurve.cs" />
-    <Compile Include="Curve\bSplineCurve.cs" />
+    <Compile Include="Curve\BezierCurve.cs" />
+    <Compile Include="Curve\BSplineCurve.cs" />
+    <Compile Include="Curve\NurbsCurve.cs" />
     <Compile Include="Draw\DrawType.cs" />
     <Compile Include="Curve\ICurve.cs" />
-    <Compile Include="Curve\polynomialCurve.cs" />
+    <Compile Include="Curve\PolynomialCurve.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

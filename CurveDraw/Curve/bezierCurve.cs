@@ -18,7 +18,7 @@ using System.Text;
 
 using CurveBase;
 using CurveBase.CurveData.CurveInterpolatedData;
-using CurveBase.CurveData.CurveParamData;
+using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveElement.ParametricCurve;
 using CurveBase.CurveException;
 using CurveDraw.Draw;
@@ -27,18 +27,18 @@ using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
 {
-    public class bezierCurve : ICurve
+    public class BezierCurve : ICurve
     {
-        private bezierCurveParam curveParam;
+        private BezierCurveParam curveParam;
         private bool canDraw = false;
 
         #region Constructor
-        public bezierCurve(ICurveParam curveParam)
+        public BezierCurve(ICurveParam curveParam)
         {
             if (canDrawCurve(curveParam))
             {
                 canDraw = true;
-                this.curveParam = (bezierCurveParam)curveParam;
+                this.curveParam = (BezierCurveParam)curveParam;
             }
         }
         #endregion
@@ -71,7 +71,7 @@ namespace CurveDraw.Curve
         {
             if (curveParam.getCurveType() == CurveType.bezierCurve)
             {
-                bezierCurveParam param = (bezierCurveParam)curveParam;
+                BezierCurveParam param = (BezierCurveParam)curveParam;
                 if (param.Count < 2)
                     throw new InvalidBasePointsException(CurveType.bezierCurve, "At least two points are needed to draw Bezier Curve");
             }
@@ -82,7 +82,7 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleABezierCurve(BezierCurve curve)
+        private List<DataPoint> sampleABezierCurve(BezierParametricCurveElement curve)
         {
             double stepSize = 0.002;
             int step = 500;

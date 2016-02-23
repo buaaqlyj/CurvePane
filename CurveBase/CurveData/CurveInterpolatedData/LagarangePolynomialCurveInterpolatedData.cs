@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using CurveBase.CurveData.CurveParamData;
+using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveElement.IntervalPolynomialCurve;
 using Util.Tool;
 using Util.Variable;
@@ -25,12 +25,12 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 {
     public class LagarangePolynomialCurveInterpolatedData : ICurveInterpolatedData
     {
-        private List<LagarangeIntervalPolynomialCurve> lagarangePolynomialInterpolatedCurves = null;
+        private List<LagarangeIntervalPolynomialCurveElement> lagarangePolynomialInterpolatedCurves = null;
         private OrderedCurvePointList lagarangePolynomialInterpolatedPoints = null;
         private polynomialCurveType curveType;
 
         #region Constructor
-        public LagarangePolynomialCurveInterpolatedData(polynomialCurveParam curveParam)
+        public LagarangePolynomialCurveInterpolatedData(PolynomialCurveParam curveParam)
         {
             this.curveType = curveParam.PolynomialCurveType;
             switch (curveType)
@@ -46,7 +46,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region Property
-        public List<LagarangeIntervalPolynomialCurve> Curves
+        public List<LagarangeIntervalPolynomialCurveElement> Curves
         {
             get
             {
@@ -77,16 +77,16 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         #region Private.Methods
 
-        private List<LagarangeIntervalPolynomialCurve> generateQuadraticPolynomialCurves(polynomialCurveParam param)
+        private List<LagarangeIntervalPolynomialCurveElement> generateQuadraticPolynomialCurves(PolynomialCurveParam param)
         {
             Debug.Assert(param.PolynomialCurveType == polynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
             OrderedCurvePointList pointList = param.PointList;
-            List<LagarangeIntervalPolynomialCurve> polynomialCurve = new List<LagarangeIntervalPolynomialCurve>();
+            List<LagarangeIntervalPolynomialCurveElement> polynomialCurve = new List<LagarangeIntervalPolynomialCurveElement>();
             List<DoubleExtension> coefficients = null;
             for (int i = 2; i < pointList.Count; i = i + 2)
             {
                 coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
-                polynomialCurve.Add(new LagarangeIntervalPolynomialCurve(coefficients, 3, pointList[i - 2].X, pointList[i].X));
+                polynomialCurve.Add(new LagarangeIntervalPolynomialCurveElement(coefficients, 3, pointList[i - 2].X, pointList[i].X));
             }
             return polynomialCurve;
         }

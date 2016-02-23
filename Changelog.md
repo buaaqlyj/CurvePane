@@ -1,5 +1,9 @@
 ****
-# CurvePane_vx.x.x
+# CurvePane_v0.5.19
+
+## Release Note
+
+I've finished the NURBS Curve and done a lot of small tweaks of other parts.
 
 ## Changelog
 
@@ -7,6 +11,11 @@
 * Fix the bug that cause the "Divided by zero" report.
 * Add the notification of the min and max degree that one B-Spline curve can have for reference.
 * Lock the node vector textbox if the node is set to be distributed uniformly.
+* Standardize the name of classes.
+* Implement the ArrayExtension to help calculate the maximum count of one element in a list or an array.
+* Remove the minimum degree calculation from B-Spline and NURBS curve because it's wrong.
+* Fix the bug in ToString method of LagarangeIntervalPolynomialCurveElement.
+* Implement the NURBS Curve.
 
 ****
 # CurvePane_v0.4.10

@@ -17,15 +17,15 @@ using System.Collections.Generic;
 using Util.Variable;
 using Util.Variable.PointList;
 
-namespace CurveBase.CurveData.CurveParamData
+namespace CurveBase.CurveData.CurveParam
 {
-    public class polynomialCurveParam : ICurveParam, ICurvePointList
+    public class PolynomialCurveParam : ICurveParam, ICurvePointList
     {
         private OrderedCurvePointList pointsList;
         private polynomialCurveType curveType;
 
         #region Constructor
-        public polynomialCurveParam(List<DataPoint> points, polynomialCurveType curveType)
+        public PolynomialCurveParam(List<DataPoint> points, polynomialCurveType curveType)
         {
             pointsList = new OrderedCurvePointList(points);
             this.curveType = curveType;
@@ -103,11 +103,6 @@ namespace CurveBase.CurveData.CurveParamData
         public int Count
         {
             get { return pointsList.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
         }
 
         public bool Remove(DataPoint item)

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using CurveBase;
 using CurveBase.CurveElement.IntervalPolynomialCurve;
 using CurveBase.CurveException;
-using CurveBase.CurveData.CurveParamData;
+using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveData.CurveInterpolatedData;
 using CurveDraw.Draw;
 using Util.Tool;
@@ -27,18 +27,18 @@ using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
 {
-    public class polynomialCurve : ICurve
+    public class PolynomialCurve : ICurve
     {
-        private polynomialCurveParam curveParam;
+        private PolynomialCurveParam curveParam;
         private bool canDraw = false;
 
         #region Constructor
-        public polynomialCurve(ICurveParam curveParam)
+        public PolynomialCurve(ICurveParam curveParam)
         {
             if (canDrawCurve(curveParam))
             {
                 canDraw = true;
-                this.curveParam = (polynomialCurveParam)curveParam;
+                this.curveParam = (PolynomialCurveParam)curveParam;
             }
         }
         #endregion
@@ -68,7 +68,7 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    foreach (LagarangeIntervalPolynomialCurve curve in data.Curves)
+                    foreach (LagarangeIntervalPolynomialCurveElement curve in data.Curves)
                     {
                         list.AddRange(sampleAPolynomialCurve(curve, 50));
                     }
@@ -91,7 +91,7 @@ namespace CurveDraw.Curve
         {
             if (curveParam.getCurveType() == CurveType.polynomialCurve)
             {
-                polynomialCurveParam param = (polynomialCurveParam)curveParam;
+                PolynomialCurveParam param = (PolynomialCurveParam)curveParam;
                 if (param.Count < 2)
                     throw new InvalidBasePointsException(CurveType.polynomialCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
                 if (!param.PointList.noDuplicatedX())
@@ -104,7 +104,7 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurve curve, int maxPointCount)
+        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurveElement curve, int maxPointCount)
         {
             if (maxPointCount < 2)
                 throw new ArgumentOutOfRangeException("maxPointCount", "The parameter of sampleAPolynomialCurve is out of range.");

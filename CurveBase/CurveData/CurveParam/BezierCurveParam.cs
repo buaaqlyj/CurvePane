@@ -19,14 +19,14 @@ using System.Text;
 using Util.Variable;
 using Util.Variable.PointList;
 
-namespace CurveBase.CurveData.CurveParamData
+namespace CurveBase.CurveData.CurveParam
 {
-    public class bezierCurveParam : ICurveParam, ICurvePointList
+    public class BezierCurveParam : ICurveParam, ICurvePointList
     {
         private NormalCurvePointList pointsList;
         
         #region Constructor
-        public bezierCurveParam(List<DataPoint> points)
+        public BezierCurveParam(List<DataPoint> points)
         {
             pointsList = new NormalCurvePointList(points);
         }
@@ -95,11 +95,6 @@ namespace CurveBase.CurveData.CurveParamData
         public int Count
         {
             get { return pointsList.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
         }
 
         public bool Remove(DataPoint item)

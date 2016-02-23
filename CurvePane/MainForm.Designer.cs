@@ -42,6 +42,7 @@ namespace CurvePane
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.curveTypeTabControl = new System.Windows.Forms.TabControl();
             this.pcTabPage = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,12 +52,28 @@ namespace CurvePane
             this.bezierTabPage = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.bsTabPage = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.nurbsTabPage = new System.Windows.Forms.TabPage();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.curveTypeComboBox = new System.Windows.Forms.ComboBox();
@@ -78,16 +95,11 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.bezierTabPage.SuspendLayout();
             this.bsTabPage.SuspendLayout();
+            this.nurbsTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -123,7 +135,7 @@ namespace CurvePane
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 34);
+            this.label4.Location = new System.Drawing.Point(22, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(101, 12);
             this.label4.TabIndex = 1;
@@ -137,7 +149,7 @@ namespace CurvePane
             "拉格朗日一次插值",
             "拉格朗日二次插值",
             "牛顿插值"});
-            this.comboBox1.Location = new System.Drawing.Point(127, 31);
+            this.comboBox1.Location = new System.Drawing.Point(129, 13);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 0;
@@ -174,7 +186,7 @@ namespace CurvePane
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 31);
+            this.label5.Location = new System.Drawing.Point(22, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(185, 12);
             this.label5.TabIndex = 0;
@@ -182,9 +194,7 @@ namespace CurvePane
             // 
             // bsTabPage
             // 
-            this.bsTabPage.Controls.Add(this.label13);
             this.bsTabPage.Controls.Add(this.label12);
-            this.bsTabPage.Controls.Add(this.label11);
             this.bsTabPage.Controls.Add(this.label10);
             this.bsTabPage.Controls.Add(this.label9);
             this.bsTabPage.Controls.Add(this.label8);
@@ -200,38 +210,74 @@ namespace CurvePane
             this.bsTabPage.Text = "B样条曲线";
             this.bsTabPage.UseVisualStyleBackColor = true;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(334, 16);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(11, 12);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(179, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(149, 12);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "当前条件允许的最高次数：";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(497, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 12);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(378, 16);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(113, 12);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "节点矢量重复度为：";
+            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(105, 66);
+            this.checkBox1.Location = new System.Drawing.Point(93, 66);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(96, 16);
             this.checkBox1.TabIndex = 4;
             this.checkBox1.Text = "均匀节点矢量";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.LockNodesTextBoxForBSplineCurve);
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(105, 39);
+            this.textBox5.Location = new System.Drawing.Point(93, 39);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(425, 21);
             this.textBox5.TabIndex = 3;
-            this.textBox5.LostFocus += new System.EventHandler(textBox5_LostFocus);
+            this.textBox5.LostFocus += new System.EventHandler(this.SetMinDegreeForBSplineCurve);
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(105, 13);
+            this.textBox4.Location = new System.Drawing.Point(93, 13);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(66, 21);
             this.textBox4.TabIndex = 2;
             this.textBox4.Text = "2";
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.TextChanged += new System.EventHandler(this.DegreeChangedForBSplineCurve);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(34, 42);
+            this.label7.Location = new System.Drawing.Point(22, 42);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 1;
@@ -240,7 +286,7 @@ namespace CurvePane
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 16);
+            this.label6.Location = new System.Drawing.Point(22, 16);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 0;
@@ -248,12 +294,133 @@ namespace CurvePane
             // 
             // nurbsTabPage
             // 
+            this.nurbsTabPage.Controls.Add(this.checkBox3);
+            this.nurbsTabPage.Controls.Add(this.textBox8);
+            this.nurbsTabPage.Controls.Add(this.label18);
+            this.nurbsTabPage.Controls.Add(this.label16);
+            this.nurbsTabPage.Controls.Add(this.checkBox2);
+            this.nurbsTabPage.Controls.Add(this.label20);
+            this.nurbsTabPage.Controls.Add(this.label21);
+            this.nurbsTabPage.Controls.Add(this.label15);
+            this.nurbsTabPage.Controls.Add(this.label22);
+            this.nurbsTabPage.Controls.Add(this.textBox6);
+            this.nurbsTabPage.Controls.Add(this.label14);
+            this.nurbsTabPage.Controls.Add(this.textBox7);
             this.nurbsTabPage.Location = new System.Drawing.Point(4, 22);
             this.nurbsTabPage.Name = "nurbsTabPage";
             this.nurbsTabPage.Size = new System.Drawing.Size(549, 123);
             this.nurbsTabPage.TabIndex = 4;
             this.nurbsTabPage.Text = "NURBS曲线";
             this.nurbsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(232, 66);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(96, 16);
+            this.checkBox3.TabIndex = 17;
+            this.checkBox3.Text = "默认权重系数";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.LockWeightsTextBoxForNurbsCurve);
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(93, 88);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(425, 21);
+            this.textBox8.TabIndex = 13;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(334, 16);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(11, 12);
+            this.label18.TabIndex = 15;
+            this.label18.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(22, 91);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(65, 12);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "权重系数：";
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(93, 66);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(96, 16);
+            this.checkBox2.TabIndex = 11;
+            this.checkBox2.Text = "均匀节点矢量";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.LockNodesTextBoxForNurbsCurve);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(179, 16);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(149, 12);
+            this.label20.TabIndex = 13;
+            this.label20.Text = "当前条件允许的最高次数：";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(497, 16);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(11, 12);
+            this.label21.TabIndex = 12;
+            this.label21.Text = "0";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(22, 16);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(65, 12);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "曲线次数：";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(378, 16);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(113, 12);
+            this.label22.TabIndex = 11;
+            this.label22.Text = "节点矢量重复度为：";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(93, 39);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(425, 21);
+            this.textBox6.TabIndex = 10;
+            this.textBox6.LostFocus += new System.EventHandler(this.SetMinDegreeForNurbsCurve);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(22, 42);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(65, 12);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "节点矢量：";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(93, 13);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(66, 21);
+            this.textBox7.TabIndex = 9;
+            this.textBox7.Text = "2";
+            this.textBox7.TextChanged += new System.EventHandler(this.DegreeChangedForNurbsCurve);
             // 
             // groupBox1
             // 
@@ -469,60 +636,6 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(390, 67);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 12);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "节点矢量重复度为：";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(509, 67);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(11, 12);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "0";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(191, 16);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(149, 12);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "当前条件允许的最低次数：";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(390, 16);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "最高次数：";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(346, 16);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(11, 12);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "0";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(461, 16);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(11, 12);
-            this.label13.TabIndex = 10;
-            this.label13.Text = "0";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -543,6 +656,8 @@ namespace CurvePane
             this.bezierTabPage.PerformLayout();
             this.bsTabPage.ResumeLayout(false);
             this.bsTabPage.PerformLayout();
+            this.nurbsTabPage.ResumeLayout(false);
+            this.nurbsTabPage.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -594,10 +709,20 @@ namespace CurvePane
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 

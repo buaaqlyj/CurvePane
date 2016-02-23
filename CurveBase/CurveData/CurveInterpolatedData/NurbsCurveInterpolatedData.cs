@@ -26,23 +26,22 @@ using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveInterpolatedData
 {
-    public class BSplineCurveInterpolatedData : ICurveInterpolatedData
+    public class NurbsCurveInterpolatedData : BSplineCurveInterpolatedData
     {
-        protected PiecewiseDataInterval interval;
-        protected BSplineParametricCurveElement curve = null;
-        protected BSplineCurveParam curveParam = null;
+        protected new NurbsParametricCurveElement curve = null;
+        protected new NurbsCurveParam curveParam = null;
 
         #region Constructor
-        public BSplineCurveInterpolatedData(BSplineCurveParam curveParam)
+        public NurbsCurveInterpolatedData(NurbsCurveParam curveParam)
+            : base(curveParam)
         {
             this.curveParam = curveParam;
-            this.interval = curveParam.Interval;
             InitialCurve(curveParam);
         }
         #endregion
 
         #region Property
-        public BSplineParametricCurveElement Curve
+        public new NurbsParametricCurveElement Curve
         {
             get
             {
@@ -52,28 +51,28 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData Member
-        public virtual CurveType getCurveType()
+        public override CurveType getCurveType()
         {
-            return CurveType.bsCurve;
+            return CurveType.nurbsCurve;
         }
 
-        public virtual DataPoint getLastPoint()
+        public override DataPoint getLastPoint()
         {
             return curve.calculatePoint(curveParam.Interval.CutPoints[curveParam.PointList.Count]);
         }
         #endregion
 
         #region Private.Methods
-        protected virtual void InitialCurve(ICurveParam curveParam)
+        protected override void InitialCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.bsCurve)
+            if (curveParam.getCurveType() == CurveType.nurbsCurve)
             {
-                BSplineCurveParam param = (BSplineCurveParam)curveParam;
-                this.curve = new BSplineParametricCurveElement(param);
+                NurbsCurveParam param = (NurbsCurveParam)curveParam;
+                this.curve = new NurbsParametricCurveElement(param);
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.bsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(CurveType.nurbsCurve, curveParam.getCurveType());
             }
         }
         #endregion

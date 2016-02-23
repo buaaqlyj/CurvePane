@@ -65,6 +65,7 @@ namespace CurvePane
                         break;
                     case 5:
                         //NURBS曲线
+                        masterCurveManager.DrawNURBSCurve(curveName, textBox7.Text, textBox6.Text, textBox8.Text);
                         break;
                 }
                 textBox1.Text = masterCurveManager.NextAvailableName;
@@ -139,7 +140,8 @@ namespace CurvePane
                     }
                     listView1.Items.Remove(listView1.Items[index]);
                 }
-                UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+                UpdateBSplineCurveSetting();
+                UpdateNurbsCurveSetting();
             }
         }
 
@@ -147,7 +149,8 @@ namespace CurvePane
         {
             masterCurveManager.ClearBasePoint();
             listView1.Items.Clear();
-            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+            UpdateBSplineCurveSetting();
+            UpdateNurbsCurveSetting();
         }
 
         private void AddBasePoint(Util.Variable.DataPoint point)
@@ -155,32 +158,33 @@ namespace CurvePane
             if (masterCurveManager.CaptureSwitch)
             {
                 listView1.Items.Add(new ListViewItem(new string[] {masterCurveManager.BaseNumber.ToString(), point.X.ApproximateString, point.Y.ApproximateString}, -1));
-                UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+                UpdateBSplineCurveSetting();
+                UpdateNurbsCurveSetting();
             }
         }
 
         private void DisplayBasePoint(Util.Variable.DataPoint point)
         {
-            textBox3.Text = point.String;
+            textBox3.Text = point.ToString();
         }
         #endregion
         #region CurveSettings
-        public void UpdateBSplineCurveSetting(int count, string degree)
+        public void UpdateBSplineCurveSetting()
         {
-            int degreeInt = 0;
-            if (!Int32.TryParse(degree, out degreeInt))
+            int degree = 0;
+            if (!Int32.TryParse(textBox4.Text, out degree))
             {
-                MessageBox.Show("The degree is not a integer string: " + degree, "曲线次数无法识别");
+                MessageBox.Show("The degree is not a integer string: " + textBox4.Text, "B样条曲线次数无法识别");
                 return;
             }
-            if (degreeInt < 1)
+            if (degree < 1)
             {
-                MessageBox.Show("The degree is invalid: " + degree, "曲线次数无法识别");
+                MessageBox.Show("The degree is invalid: " + textBox4.Text, "B样条曲线次数无法识别");
                 return;
             }
             char[] chArray = textBox5.Text.ToCharArray();
             int currentCommaCount = 0;
-            int totalCommaCount = degreeInt + count;
+            int totalCommaCount = degree + masterCurveManager.BasePointsCount;
             if (checkBox1.Checked)
             {
                 int val = 1;
@@ -211,14 +215,96 @@ namespace CurvePane
             }
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        public void UpdateNurbsCurveSetting()
         {
-            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+            int degree = 0;
+            if (!Int32.TryParse(textBox7.Text, out degree))
+            {
+                MessageBox.Show("The degree is not a integer string: " + textBox7.Text, "NURBS曲线次数无法识别");
+                return;
+            }
+            if (degree < 1)
+            {
+                MessageBox.Show("The degree is invalid: " + textBox7.Text, "NURBS曲线次数无法识别");
+                return;
+            }
+            char[] chArray = textBox6.Text.ToCharArray();
+            int currentCommaCount = 0;
+            int totalCommaCount = degree + masterCurveManager.BasePointsCount;
+            if (checkBox2.Checked)
+            {
+                int val = 1;
+                textBox6.Text = "0";
+                for (int i = 0; i < totalCommaCount; i++)
+                {
+                    textBox6.Text += "," + val++.ToString();
+                }
+            }
+            else
+            {
+                textBox6.Text = "";
+                for (int i = 0; i < chArray.Length; i++)
+                {
+                    if (chArray[i] == ',')
+                    {
+                        if (++currentCommaCount > totalCommaCount)
+                        {
+                            break;
+                        }
+                    }
+                    textBox6.Text += chArray[i];
+                }
+                while (currentCommaCount++ < totalCommaCount)
+                {
+                    textBox6.Text += ',';
+                }
+            }
+
+            chArray = textBox8.Text.ToCharArray();
+            currentCommaCount = 0;
+            totalCommaCount = masterCurveManager.BasePointsCount - 1;
+            if (checkBox3.Checked)
+            {
+                textBox8.Text = "1";
+                for (int i = 0; i < totalCommaCount; i++)
+                {
+                    textBox8.Text += ",1";
+                }
+            }
+            else
+            {
+                textBox8.Text = "";
+                for (int i = 0; i < chArray.Length; i++)
+                {
+                    if (chArray[i] == ',')
+                    {
+                        if (++currentCommaCount > totalCommaCount)
+                        {
+                            break;
+                        }
+                    }
+                    textBox8.Text += chArray[i];
+                }
+                while (currentCommaCount++ < totalCommaCount)
+                {
+                    textBox8.Text += ',';
+                }
+            }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void DegreeChangedForBSplineCurve(object sender, EventArgs e)
         {
-            UpdateBSplineCurveSetting(masterCurveManager.BasePointsCount, textBox4.Text);
+            UpdateBSplineCurveSetting();
+        }
+
+        private void DegreeChangedForNurbsCurve(object sender, EventArgs e)
+        {
+            UpdateNurbsCurveSetting();
+        }
+
+        private void LockNodesTextBoxForBSplineCurve(object sender, EventArgs e)
+        {
+            UpdateBSplineCurveSetting();
             if (checkBox1.Checked)
             {
                 textBox5.Enabled = false;
@@ -229,38 +315,48 @@ namespace CurvePane
             }
         }
 
-        private void textBox5_LostFocus(object sender, EventArgs e)
+        private void LockNodesTextBoxForNurbsCurve(object sender, EventArgs e)
         {
-            string[] subString = textBox5.Text.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-            if (subString.Length == 0)
+            UpdateNurbsCurveSetting();
+            if (checkBox2.Checked)
             {
-                label9.Text = "0";
-                label12.Text = "1";
-                return;
+                textBox6.Enabled = false;
             }
-            string lastOne = subString[0];
-            int maxCount = 1;
-            int currentCount = 1;
-            for (int i = 1; i < subString.Length; i++)
+            else
             {
-                if (subString[i] == lastOne)
-                {
-                    currentCount++;
-                }
-                else
-                {
-                    lastOne = subString[i];
-                    if (currentCount > maxCount) maxCount = currentCount;
-                    currentCount = 1;
-                }
+                textBox6.Enabled = true;
             }
-            label9.Text = maxCount.ToString();
-            label12.Text = (maxCount + 1).ToString();
         }
 
-        private void SetMaxDegreeForBSplineCurve(object sender, EventArgs e)
+        private void LockWeightsTextBoxForNurbsCurve(object sender, EventArgs e)
         {
-            label13.Text = (masterCurveManager.BasePointsCount - 1).ToString();
+            UpdateNurbsCurveSetting();
+            if (checkBox3.Checked)
+            {
+                textBox8.Enabled = false;
+            }
+            else
+            {
+                textBox8.Enabled = true;
+            }
+        }
+
+        private void SetMinDegreeForBSplineCurve(object sender, EventArgs e)
+        {
+            int multCount = masterCurveManager.GetMultiplycityOfNodes(textBox5.Text);
+            label9.Text = multCount.ToString();
+        }
+
+        private void SetMinDegreeForNurbsCurve(object sender, EventArgs e)
+        {
+            int multCount = masterCurveManager.GetMultiplycityOfNodes(textBox6.Text);
+            label21.Text = multCount.ToString();
+        }
+
+        private void SetMaxDegreeForBSplineOrNurbsCurve(object sender, EventArgs e)
+        {
+            label12.Text = (masterCurveManager.BasePointsCount - 1).ToString();
+            label18.Text = (masterCurveManager.BasePointsCount - 1).ToString();
         }
         #endregion
         #endregion
@@ -271,7 +367,7 @@ namespace CurvePane
             masterCurveManager = new CurveManager(masterZedGraphControl);
             CurveManager.AddBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(AddBasePoint);
             CurveManager.DisplayBasePointEvent += new ZedGraphTool.ZedGraphWrapper.DataPointEventHandler(DisplayBasePoint);
-            CurveManager.BasePointChangedEvent += new EventHandler(SetMaxDegreeForBSplineCurve);
+            CurveManager.BasePointChangedEvent += new EventHandler(SetMaxDegreeForBSplineOrNurbsCurve);
 
             listView1.ListViewItemSorter = new ListViewColumnSorter();
             listView1.ColumnClick += new ColumnClickEventHandler(ListViewHelper.ListView_ColumnClick);
@@ -280,6 +376,9 @@ namespace CurvePane
             textBox1.Text = masterCurveManager.NextAvailableName;
 
             checkBox1.Checked = true;
+            checkBox2.Checked = true;
+            checkBox3.Checked = true;
         }
+
     }
 }

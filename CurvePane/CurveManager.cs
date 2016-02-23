@@ -17,8 +17,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using CurveBase.CurveData.CurveParamData;
-using CurveBase.CurveException;
+using CurveBase.CurveData.CurveParam;
 using CurveDraw.Curve;
 using CurveDraw.Draw;
 using CurvePane.ZedGraphTool;
@@ -52,7 +51,6 @@ namespace CurvePane
             curveNames = new List<string>();
             ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_DoubleClick);
             ZedGraphWrapper.MouseMove += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_MouseMove);
-            
         }
 
         #region EventHandler
@@ -71,7 +69,7 @@ namespace CurvePane
                 DisplayBasePointEvent(point);
             }
         }
-#endregion
+        #endregion
 
         #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
@@ -138,35 +136,27 @@ namespace CurvePane
         public void DrawPolynomialCurve(string curveName, int polynomialType)
         {
             BaseDataPointList pointList = this.basePoints;
-            polynomialCurveParam curveParam = new polynomialCurveParam(pointList.SortedPointList, (polynomialCurveType)polynomialType);
-            polynomialCurve curve = new polynomialCurve(curveParam);
+            PolynomialCurveParam curveParam = new PolynomialCurveParam(pointList.SortedPointList, (polynomialCurveType)polynomialType);
+            PolynomialCurve curve = new PolynomialCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
         }
 
         public void DrawBezierCurve(string curveName)
         {
             BaseDataPointList pointList = this.basePoints;
-            bezierCurveParam curveParam = new bezierCurveParam(pointList.Points);
-            bezierCurve curve = new bezierCurve(curveParam);
+            BezierCurveParam curveParam = new BezierCurveParam(pointList.Points);
+            BezierCurve curve = new BezierCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
         }
 
         public void DrawBSplineCurve(string curveName, string degree, string cutList)
         {
             BaseDataPointList pointList = this.basePoints;
-            string[] cuts = cutList.Split(new char[] {' ', ','}, StringSplitOptions.RemoveEmptyEntries);
-            List<DoubleExtension> cutPoints = new List<DoubleExtension>();
-            double parsedResult = 0;
-            foreach (string item in cuts)
+            ArrayString aString = new ArrayString(cutList);
+            List<DoubleExtension> cutPoints = null;
+            if (!aString.tryParseDoubleExtension(out cutPoints))
             {
-                if (Double.TryParse(item, out parsedResult))
-                {
-                    cutPoints.Add(new DoubleExtension(parsedResult));
-                }
-                else
-                {
-                    throw new ArgumentException("The cutList contains unrecognised string: " + item, "cutList");
-                }
+                throw new ArgumentException("The cutList contains unrecognised string: " + cutList, "cutList");
             }
             int degreeInt = 0;
             if (!Int32.TryParse(degree, out degreeInt))
@@ -177,8 +167,36 @@ namespace CurvePane
             {
                 throw new ArgumentException("The degree is invalid: " + degree, "degree");
             }
-            bSplineCurveParam curveParam = new bSplineCurveParam(pointList.Points, degreeInt, cutPoints);
-            bSplineCurve curve = new bSplineCurve(curveParam);
+            BSplineCurveParam curveParam = new BSplineCurveParam(pointList.Points, degreeInt, cutPoints);
+            BSplineCurve curve = new BSplineCurve(curveParam);
+            DrawLines(curveName, curve.sampleCurvePoints());
+        }
+
+        public void DrawNURBSCurve(string curveName, string degree, string cutList, string weightList)
+        {
+            BaseDataPointList pointList = this.basePoints;
+            ArrayString aString = new ArrayString(cutList);
+            List<DoubleExtension> cutPoints = null, weightValues = null;
+            if (!aString.tryParseDoubleExtension(out cutPoints))
+            {
+                throw new ArgumentException("The cutList contains unrecognised string: " + cutList, "cutList");
+            }
+            aString = new ArrayString(weightList);
+            if (!aString.tryParseDoubleExtension(out weightValues))
+            {
+                throw new ArgumentException("The weightList contains unrecognised string: " + weightList, "weightList");
+            }
+            int degreeInt = 0;
+            if (!Int32.TryParse(degree, out degreeInt))
+            {
+                throw new ArgumentException("The degree is not a integer string: " + degree, "degree");
+            }
+            if (degreeInt < 1)
+            {
+                throw new ArgumentException("The degree is invalid: " + degree, "degree");
+            }
+            NurbsCurveParam curveParam = new NurbsCurveParam(pointList.Points, degreeInt, cutPoints, weightValues);
+            NurbsCurve curve = new NurbsCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
         }
         #endregion
@@ -288,5 +306,14 @@ namespace CurvePane
         }
         #endregion
 
+        #region Curve.Property
+        #region B-Spline Curve
+        public int GetMultiplycityOfNodes(string nodesString)
+        {
+            ArrayString aString = new ArrayString(nodesString);
+            return aString.MaxCount;
+        }
+        #endregion
+        #endregion
     }
 }

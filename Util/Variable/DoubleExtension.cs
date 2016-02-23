@@ -62,6 +62,19 @@ namespace Util.Variable
             }
         }
 
+        public string CleanString
+        {
+            get
+            {
+                string text = ApproximateString;
+                while (text != "0" && (text.EndsWith(".") || (text.Contains(".") && text.EndsWith("0"))))
+                {
+                    text = text.Substring(0, text.Length - 1);
+                }
+                return text;
+            }
+        }
+
         public int IdentificationValue
         {
             get
@@ -95,6 +108,13 @@ namespace Util.Variable
         public static bool EqualsToZero(double val)
         {
             return (new DoubleExtension(val)).ApproximateString == "0.000";
+        }
+        #endregion
+
+        #region Object.Member
+        public override string ToString()
+        {
+            return CleanString;
         }
         #endregion
 

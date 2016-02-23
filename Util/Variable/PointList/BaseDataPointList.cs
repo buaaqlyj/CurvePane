@@ -58,11 +58,6 @@ namespace Util.Variable.PointList
             get { return points.Count; }
         }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
         public DataPoint this[int index]
         {
             get

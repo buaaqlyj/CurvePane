@@ -34,8 +34,6 @@ namespace Util.Variable.PointList
 
         int Count { get; }
 
-        bool IsReadOnly { get; }
-
         bool Remove(DataPoint item);
 
         IEnumerator<DataPoint> GetEnumerator();

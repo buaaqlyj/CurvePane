@@ -40,21 +40,24 @@
     <Compile Include="CurveData\CurveInterpolatedData\BSplineCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\LagarangePolynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\NewtonPolynomialCurveInterpolatedData.cs" />
-    <Compile Include="CurveData\CurveParamData\bezierCurveParam.cs" />
-    <Compile Include="CurveData\CurveParamData\bSplineCurveParam.cs" />
-    <Compile Include="CurveElement\IntervalPolynomialCurve\BSplineBasisFunctionIntervalPolynomialCurve.cs" />
-    <Compile Include="CurveElement\ParametricCurve\BezierCurve.cs" />
-    <Compile Include="CurveElement\IntervalPolynomialCurve\IntervalPolynomialCurve.cs" />
-    <Compile Include="CurveElement\IntervalPolynomialCurve\LagarangeIntervalPolynomialCurve.cs" />
-    <Compile Include="CurveElement\IntervalPolynomialCurve\NewtonIntervalPolynomialCurve.cs" />
-    <Compile Include="CurveElement\ParametricCurve\BSplineCurve.cs" />
-    <Compile Include="CurveElement\ParametricCurve\ParametricCurve.cs" />
+    <Compile Include="CurveData\CurveInterpolatedData\NurbsCurveInterpolatedData.cs" />
+    <Compile Include="CurveData\CurveParam\BezierCurveParam.cs" />
+    <Compile Include="CurveData\CurveParam\BSplineCurveParam.cs" />
+    <Compile Include="CurveData\CurveParam\NurbsCurveParam.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement.cs" />
+    <Compile Include="CurveElement\ParametricCurve\BezierParametricCurveElement.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\IntervalPolynomialCurveElement.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\LagarangeIntervalPolynomialCurveElement.cs" />
+    <Compile Include="CurveElement\IntervalPolynomialCurve\NewtonIntervalPolynomialCurveElement.cs" />
+    <Compile Include="CurveElement\ParametricCurve\BSplineParametricCurveElement.cs" />
+    <Compile Include="CurveElement\ParametricCurve\NurbsParametricCurveElement.cs" />
+    <Compile Include="CurveElement\ParametricCurve\ParametricCurveElement.cs" />
     <Compile Include="CurveException\InvalidBasePointsException.cs" />
     <Compile Include="CurveException\UnmatchedCurveParamTypeException.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\ICurveInterpolatedData.cs" />
     <Compile Include="CurveType.cs" />
-    <Compile Include="CurveData\CurveParamData\ICurveParam.cs" />
-    <Compile Include="CurveData\CurveParamData\polynomialCurveParam.cs" />
+    <Compile Include="CurveData\CurveParam\ICurveParam.cs" />
+    <Compile Include="CurveData\CurveParam\PolynomialCurveParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
