@@ -99,7 +99,11 @@ namespace Util.Variable
         }
         #endregion
 
-        #region Class.Interface
+        #region Class Member
+        public static DoubleExtension Zero = new DoubleExtension(0);
+        public static DoubleExtension PositiveOne = new DoubleExtension(1);
+        public static DoubleExtension NegativeOne = new DoubleExtension(-1);
+
         public static bool areTheSameCoordinate(DoubleExtension v1, DoubleExtension v2)
         {
             return v1 == v2;

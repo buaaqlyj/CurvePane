@@ -95,8 +95,22 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
+            this.csiTabPage.SuspendLayout();
+            this.pcsiTabPage.SuspendLayout();
             this.bezierTabPage.SuspendLayout();
             this.bsTabPage.SuspendLayout();
             this.nurbsTabPage.SuspendLayout();
@@ -156,6 +170,12 @@ namespace CurvePane
             // 
             // csiTabPage
             // 
+            this.csiTabPage.Controls.Add(this.label17);
+            this.csiTabPage.Controls.Add(this.label13);
+            this.csiTabPage.Controls.Add(this.textBox10);
+            this.csiTabPage.Controls.Add(this.textBox9);
+            this.csiTabPage.Controls.Add(this.comboBox2);
+            this.csiTabPage.Controls.Add(this.label11);
             this.csiTabPage.Location = new System.Drawing.Point(4, 22);
             this.csiTabPage.Name = "csiTabPage";
             this.csiTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -166,6 +186,12 @@ namespace CurvePane
             // 
             // pcsiTabPage
             // 
+            this.pcsiTabPage.Controls.Add(this.label19);
+            this.pcsiTabPage.Controls.Add(this.label23);
+            this.pcsiTabPage.Controls.Add(this.textBox11);
+            this.pcsiTabPage.Controls.Add(this.textBox12);
+            this.pcsiTabPage.Controls.Add(this.comboBox3);
+            this.pcsiTabPage.Controls.Add(this.label24);
             this.pcsiTabPage.Location = new System.Drawing.Point(4, 22);
             this.pcsiTabPage.Name = "pcsiTabPage";
             this.pcsiTabPage.Size = new System.Drawing.Size(549, 123);
@@ -263,7 +289,7 @@ namespace CurvePane
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(425, 21);
             this.textBox5.TabIndex = 3;
-            this.textBox5.LostFocus += new System.EventHandler(this.SetMinDegreeForBSplineCurve);
+            this.textBox5.LostFocus += new System.EventHandler(this.SetMultiplicityForBSplineCurve);
             // 
             // textBox4
             // 
@@ -402,7 +428,7 @@ namespace CurvePane
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(425, 21);
             this.textBox6.TabIndex = 10;
-            this.textBox6.LostFocus += new System.EventHandler(this.SetMinDegreeForNurbsCurve);
+            this.textBox6.LostFocus += new System.EventHandler(this.SetMultiplycityForNurbsCurve);
             // 
             // label14
             // 
@@ -636,6 +662,114 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(22, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "边界条件：";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "指定首尾一阶导数",
+            "指定首尾二阶导数",
+            "周期性样条"});
+            this.comboBox2.Location = new System.Drawing.Point(93, 13);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 20);
+            this.comboBox2.TabIndex = 3;
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(93, 39);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(100, 21);
+            this.textBox9.TabIndex = 4;
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(348, 39);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(100, 21);
+            this.textBox10.TabIndex = 5;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(22, 42);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "起点条件：";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(277, 42);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(65, 12);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "终点条件：";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(277, 42);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 12);
+            this.label19.TabIndex = 13;
+            this.label19.Text = "终点条件：";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(22, 42);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(65, 12);
+            this.label23.TabIndex = 12;
+            this.label23.Text = "起点条件：";
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(348, 39);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(100, 21);
+            this.textBox11.TabIndex = 11;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(93, 39);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 21);
+            this.textBox12.TabIndex = 10;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "指定首尾一阶导数",
+            "指定首尾二阶导数",
+            "周期性样条"});
+            this.comboBox3.Location = new System.Drawing.Point(93, 13);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 20);
+            this.comboBox3.TabIndex = 9;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(22, 16);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(65, 12);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "边界条件：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -652,6 +786,10 @@ namespace CurvePane
             this.curveTypeTabControl.ResumeLayout(false);
             this.pcTabPage.ResumeLayout(false);
             this.pcTabPage.PerformLayout();
+            this.csiTabPage.ResumeLayout(false);
+            this.csiTabPage.PerformLayout();
+            this.pcsiTabPage.ResumeLayout(false);
+            this.pcsiTabPage.PerformLayout();
             this.bezierTabPage.ResumeLayout(false);
             this.bezierTabPage.PerformLayout();
             this.bsTabPage.ResumeLayout(false);
@@ -723,6 +861,18 @@ namespace CurvePane
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label label24;
     }
 }
 

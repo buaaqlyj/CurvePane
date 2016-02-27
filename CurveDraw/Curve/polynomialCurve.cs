@@ -49,7 +49,7 @@ namespace CurveDraw.Curve
             OrderedCurvePointList list = new OrderedCurvePointList();
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
             
-            if (curveParam.PolynomialCurveType == polynomialCurveType.Newton)
+            if (curveParam.PolynomialCurveType == PolynomialCurveType.Newton)
             {
                 NewtonPolynomialCurveInterpolatedData data = new NewtonPolynomialCurveInterpolatedData(curveParam);
                 list.AddRange(sampleAPolynomialCurve(data.Curve, 200));

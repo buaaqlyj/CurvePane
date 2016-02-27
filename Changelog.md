@@ -1,4 +1,12 @@
 ****
+# CurvePane_vx.x.x
+
+## Changelog
+
+* Tweak the names of some methods.
+* Add static members to DoubleExtension.
+
+****
 # CurvePane_v0.5.19
 
 ## Release Note

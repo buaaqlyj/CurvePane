@@ -12,23 +12,28 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 using Util.Variable;
 using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveParam
 {
-    public class PolynomialCurveParam : ICurveParam, ICurvePointList
+    public class CubicSplineInterpolationCurveParam : ICurveParam, ICurvePointList
     {
         private OrderedCurvePointList pointList;
-        private PolynomialCurveType curveType;
+        private DoubleExtension leftVal, rightVal;
+        private CSIBorderConditionType csiConditionType;
 
         #region Constructor
-        public PolynomialCurveParam(List<DataPoint> points, PolynomialCurveType curveType)
+        public CubicSplineInterpolationCurveParam(List<DataPoint> points, CSIBorderConditionType curveType, DoubleExtension val1, DoubleExtension val2)
         {
             pointList = new OrderedCurvePointList(points);
-            this.curveType = curveType;
+            csiConditionType = curveType;
+            leftVal = val1;
+            rightVal = val2;
         }
         #endregion
 
@@ -41,11 +46,27 @@ namespace CurveBase.CurveData.CurveParam
             }
         }
 
-        public PolynomialCurveType PolynomialCurveType
+        public CSIBorderConditionType BorderConditionType
         {
             get
             {
-                return curveType;
+                return csiConditionType;
+            }
+        }
+
+        public DoubleExtension LeftBorderValue
+        {
+            get
+            {
+                return leftVal;
+            }
+        }
+
+        public DoubleExtension RightBorderValue
+        {
+            get
+            {
+                return rightVal;
             }
         }
         #endregion
@@ -53,7 +74,7 @@ namespace CurveBase.CurveData.CurveParam
         #region ICurveParam Member
         public CurveType getCurveType()
         {
-            return CurveType.polynomialCurve;
+            return CurveType.csiCurve;
         }
         #endregion
 
@@ -129,10 +150,10 @@ namespace CurveBase.CurveData.CurveParam
         #endregion
     }
 
-    public enum PolynomialCurveType
+    public enum CSIBorderConditionType
     {
-        Lagrange_Linear = 1,
-        Lagrange_Quadratic = 2,
-        Newton = 3
+        First_Order_Derivative = 1,
+        Second_Order_Derivative = 2,
+        Cyclicity = 3
     }
 }

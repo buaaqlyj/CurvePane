@@ -43,6 +43,7 @@
     <Compile Include="CurveData\CurveInterpolatedData\NurbsCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveParam\BezierCurveParam.cs" />
     <Compile Include="CurveData\CurveParam\BSplineCurveParam.cs" />
+    <Compile Include="CurveData\CurveParam\CubicSplineInterpolationCurveParam.cs" />
     <Compile Include="CurveData\CurveParam\NurbsCurveParam.cs" />
     <Compile Include="CurveElement\IntervalPolynomialCurve\BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement.cs" />
     <Compile Include="CurveElement\ParametricCurve\BezierParametricCurveElement.cs" />

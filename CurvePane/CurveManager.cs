@@ -136,7 +136,7 @@ namespace CurvePane
         public void DrawPolynomialCurve(string curveName, int polynomialType)
         {
             BaseDataPointList pointList = this.basePoints;
-            PolynomialCurveParam curveParam = new PolynomialCurveParam(pointList.SortedPointList, (polynomialCurveType)polynomialType);
+            PolynomialCurveParam curveParam = new PolynomialCurveParam(pointList.SortedPointList, (PolynomialCurveType)polynomialType);
             PolynomialCurve curve = new PolynomialCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
         }

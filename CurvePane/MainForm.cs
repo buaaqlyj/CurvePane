@@ -341,13 +341,13 @@ namespace CurvePane
             }
         }
 
-        private void SetMinDegreeForBSplineCurve(object sender, EventArgs e)
+        private void SetMultiplicityForBSplineCurve(object sender, EventArgs e)
         {
             int multCount = masterCurveManager.GetMultiplycityOfNodes(textBox5.Text);
             label9.Text = multCount.ToString();
         }
 
-        private void SetMinDegreeForNurbsCurve(object sender, EventArgs e)
+        private void SetMultiplycityForNurbsCurve(object sender, EventArgs e)
         {
             int multCount = masterCurveManager.GetMultiplycityOfNodes(textBox6.Text);
             label21.Text = multCount.ToString();
@@ -378,6 +378,9 @@ namespace CurvePane
             checkBox1.Checked = true;
             checkBox2.Checked = true;
             checkBox3.Checked = true;
+
+            comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
         }
 
     }

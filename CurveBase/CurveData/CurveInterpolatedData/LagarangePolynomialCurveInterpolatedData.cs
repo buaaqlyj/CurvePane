@@ -27,7 +27,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
     {
         private List<LagarangeIntervalPolynomialCurveElement> lagarangePolynomialInterpolatedCurves = null;
         private OrderedCurvePointList lagarangePolynomialInterpolatedPoints = null;
-        private polynomialCurveType curveType;
+        private PolynomialCurveType curveType;
 
         #region Constructor
         public LagarangePolynomialCurveInterpolatedData(PolynomialCurveParam curveParam)
@@ -35,10 +35,10 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             this.curveType = curveParam.PolynomialCurveType;
             switch (curveType)
             {
-                case polynomialCurveType.Lagrange_Linear:
+                case PolynomialCurveType.Lagrange_Linear:
                     lagarangePolynomialInterpolatedPoints = curveParam.PointList;
                     break;
-                case polynomialCurveType.Lagrange_Quadratic:
+                case PolynomialCurveType.Lagrange_Quadratic:
                     lagarangePolynomialInterpolatedCurves = generateQuadraticPolynomialCurves(curveParam);
                     break;
             }
@@ -79,7 +79,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         private List<LagarangeIntervalPolynomialCurveElement> generateQuadraticPolynomialCurves(PolynomialCurveParam param)
         {
-            Debug.Assert(param.PolynomialCurveType == polynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
+            Debug.Assert(param.PolynomialCurveType == PolynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
             OrderedCurvePointList pointList = param.PointList;
             List<LagarangeIntervalPolynomialCurveElement> polynomialCurve = new List<LagarangeIntervalPolynomialCurveElement>();
             List<DoubleExtension> coefficients = null;
