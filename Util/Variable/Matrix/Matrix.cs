@@ -1,4 +1,18 @@
-﻿using System;
+﻿/// Copyright 2016 Troy Lewis. Some Rights Reserved
+/// 
+/// Licensed under the Apache License, Version 2.0 (the "License");
+/// you may not use this file except in compliance with the License.
+/// You may obtain a copy of the License at
+/// 
+///     http://www.apache.org/licenses/LICENSE-2.0
+/// 
+/// Unless required by applicable law or agreed to in writing, software
+/// distributed under the License is distributed on an "AS IS" BASIS,
+/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+/// See the License for the specific language governing permissions and
+/// limitations under the License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,20 +20,20 @@ namespace Util.Variable.Matrix
 {
     public class Matrix
     {
-        private double[,] _data;
+        private DoubleExtension[,] _data;
 
         #region Constructor
         public Matrix(int size)
         {
-            this._data = new double[size, size];
+            this._data = new DoubleExtension[size, size];
         }
 
         public Matrix(int rows, int cols)
         {
-            this._data = new double[rows, cols];
+            this._data = new DoubleExtension[rows, cols];
         }
 
-        public Matrix(double[,] data)
+        public Matrix(DoubleExtension[,] data)
         {
             this._data = data;
         }
@@ -44,7 +58,7 @@ namespace Util.Variable.Matrix
                 throw new Exception("Matrix Dimensions Don't Agree!");
             }
 
-            double[,] result = new double[matrix1_Rows, matrix1_Columns];
+            DoubleExtension[,] result = new DoubleExtension[matrix1_Rows, matrix1_Columns];
             for (int i = 0; i < matrix1_Rows; i++)
             {
                 for (int j = 0; j < matrix1_Columns; j++)
@@ -69,7 +83,7 @@ namespace Util.Variable.Matrix
                 throw new Exception("Matrix Dimensions Don't Agree!");
             }
 
-            double[,] result = new double[matrix1_Rows, matrix1_Columns];
+            DoubleExtension[,] result = new DoubleExtension[matrix1_Rows, matrix1_Columns];
             for (int i = 0; i < matrix1_Rows; i++)
             {
                 for (int j = 0; j < matrix1_Columns; j++)
@@ -94,7 +108,7 @@ namespace Util.Variable.Matrix
                 throw new Exception("Matrix Dimensions Don't Agree!");
             }
 
-            double[,] result = new double[matrix1_Rows, matrix2_Columns];
+            DoubleExtension[,] result = new DoubleExtension[matrix1_Rows, matrix2_Columns];
             for (int i = 0; i < matrix1_Rows; i++)
             {
                 for (int j = 0; j < matrix2_Columns; j++)
@@ -109,7 +123,7 @@ namespace Util.Variable.Matrix
             return new Matrix(result);
         }
 
-        public static Matrix operator /(double i, Matrix matrix)
+        public static Matrix operator /(DoubleExtension i, Matrix matrix)
         {
             return new Matrix(ScaleBy(i, INV(matrix.Data)));
         }
@@ -175,7 +189,7 @@ namespace Util.Variable.Matrix
 
         public Matrix Transpose()
         {
-            double[,] D = Transpose(this.Data);
+            DoubleExtension[,] D = Transpose(this.Data);
             return new Matrix(D);
         }
         #endregion
@@ -188,19 +202,19 @@ namespace Util.Variable.Matrix
 
         public static Matrix Zeros(int size)
         {
-            double[,] D = new double[size, size];
+            DoubleExtension[,] D = new DoubleExtension[size, size];
             return new Matrix(D);
         }
 
         public static Matrix Zeros(int rows, int cols)
         {
-            double[,] D = new double[rows, cols];
+            DoubleExtension[,] D = new DoubleExtension[rows, cols];
             return new Matrix(D);
         }
         #endregion
 
         #region Public.Interface
-        public double Det()
+        public DoubleExtension Det()
         {
             if (this.IsSquare)
             {
@@ -226,7 +240,7 @@ namespace Util.Variable.Matrix
         {
             get
             {
-                return ((int)this.Det() == 0);
+                return (this.Det() == DoubleExtension.Zero);
             }
         }
 
@@ -239,7 +253,7 @@ namespace Util.Variable.Matrix
         /// <param name="i">The row position in the Matrix</param>
         /// <param name="j">The Column position in the Matrix</param>
         /// <returns>Double, The specified value of the Matrix</returns>
-        public double this[int i, int j]
+        public DoubleExtension this[int i, int j]
         {
             get { return this._data[i, j]; }
             set { this._data[i, j] = value; }
@@ -247,27 +261,14 @@ namespace Util.Variable.Matrix
         /// <summary>
         /// Gets the Matrix
         /// </summary>
-        public double[,] Data
+        public DoubleExtension[,] Data
         {
             get { return _data; }
-        }
-
-        public double[] DataArray
-        {
-            get
-            {
-                double[] result = new double[Rows * Columns];
-                int k = 0;
-                for (int i = 0; i < Rows; i++)
-                    for (int j = 0; j < Columns; j++)
-                        result[k++] = this[i, j];
-                return result;
-            }
         }
         #endregion
 
         #region Private.Methods
-        private static double[,] INV(double[,] srcMatrix)
+        private static DoubleExtension[,] INV(DoubleExtension[,] srcMatrix)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
@@ -276,8 +277,8 @@ namespace Util.Variable.Matrix
                 throw new ArgumentException("Cannot find inverse for an non-square matrix", "srcMatrix");
 
             int q;
-            double[,] desMatrix = new double[rows, columns];
-            double[,] unitMatrix = UnitMatrix(rows);
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows, columns];
+            DoubleExtension[,] unitMatrix = UnitMatrix(rows);
             for (int p = 0; p < rows; p++)
             {
                 for (q = 0; q < columns; q++)
@@ -287,7 +288,7 @@ namespace Util.Variable.Matrix
             }
 
             int i = 0;
-            double det = 1;
+            DoubleExtension det = DoubleExtension.PositiveOne;
             if (srcMatrix[0, 0] == 0)
             {
                 i = 1;
@@ -369,26 +370,26 @@ namespace Util.Variable.Matrix
         /// </summary>
         /// <param name="srcMatrix">The Matrix to be Inversed</param>
         /// <returns>The Inversed Matrix</returns>
-        private static double[,] Inverse(double[,] srcMatrix)
+        private static DoubleExtension[,] Inverse(DoubleExtension[,] srcMatrix)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            double[,] desMatrix = new double[rows, columns];
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows, columns];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    desMatrix[i, j] = 0;
+                    desMatrix[i, j] = DoubleExtension.Zero;
                 }
             }
 
             if (rows != columns)
                 throw new Exception("Cannot find inverse for an non-square matrix");
 
-            double determine = Determinent(srcMatrix);
+            DoubleExtension determine = Determinent(srcMatrix);
 
-            if (determine == 0)
+            if (determine == DoubleExtension.Zero)
             {
                 throw new Exception("Cannot Perform Inversion. Matrix Singular");
             }
@@ -397,8 +398,8 @@ namespace Util.Variable.Matrix
             {
                 for (int q = 0; q < columns; q++)
                 {
-                    double[,] tmp = FilterMatrix(srcMatrix, p, q);
-                    double determineTMP = Determinent(tmp);
+                    DoubleExtension[,] tmp = FilterMatrix(srcMatrix, p, q);
+                    DoubleExtension determineTMP = Determinent(tmp);
                     desMatrix[p, q] = Math.Pow(-1, p + q + 2) * determineTMP / determine;
                 }
             }
@@ -410,12 +411,12 @@ namespace Util.Variable.Matrix
         /// </summary>
         /// <param name="srcMatrix">The Matrix used to calc</param>
         /// <returns>The Determinent</returns>
-        private static double Determinent(double[,] srcMatrix)
+        private static DoubleExtension Determinent(DoubleExtension[,] srcMatrix)
         {
             int q = 0;
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            double[,] desMatrix = new double[rows, columns];
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows, columns];
             for (int p = 0; p < rows; p++)
             {
                 for (q = 0; q < columns; q++)
@@ -425,7 +426,7 @@ namespace Util.Variable.Matrix
             }
 
             int i = 0;
-            double det = 1;
+            DoubleExtension det = DoubleExtension.PositiveOne;
             try
             {
                 if (rows != columns)
@@ -470,7 +471,7 @@ namespace Util.Variable.Matrix
                 }
             }
 
-            if (srcMatrix[0, 0] == 0) return 0;
+            if (srcMatrix[0, 0] == 0) return DoubleExtension.Zero;
 
             det *= srcMatrix[0, 0];
             Matrix.RowDiv(srcMatrix, 0, srcMatrix[0, 0]);
@@ -493,7 +494,7 @@ namespace Util.Variable.Matrix
                     {
                         if (srcMatrix[p, j] != 0)
                         {
-                            Matrix.ColumnSub(srcMatrix, p, j, -1);
+                            Matrix.ColumnSub(srcMatrix, p, j, DoubleExtension.NegativeOne);
                             det *= srcMatrix[p, p];
                             Matrix.RowDiv(srcMatrix, p, srcMatrix[p, p]);
                             break;
@@ -501,7 +502,7 @@ namespace Util.Variable.Matrix
                     }
                 }
 
-                if (srcMatrix[p, p] == 0) return 0;
+                if (srcMatrix[p, p] == 0) return DoubleExtension.Zero;
             }
 
             for (int p = 0; p < rows; p++)
@@ -520,11 +521,11 @@ namespace Util.Variable.Matrix
         /// <param name="scalar">The Ratio for the Scale</param>
         /// <param name="srcMatrix">The Matrix which will be scaled</param>
         /// <returns>A new Matrix which is scaled with a specified ratio</returns>
-        private static double[,] ScaleBy(double scalar, double[,] srcMatrix)
+        private static DoubleExtension[,] ScaleBy(DoubleExtension scalar, DoubleExtension[,] srcMatrix)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            double[,] desMatrix = new double[rows, columns];
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows, columns];
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -540,15 +541,15 @@ namespace Util.Variable.Matrix
         /// </summary>
         /// <param name="dimension">Dimension</param>
         /// <returns>The unit double array</returns>
-        private static double[,] UnitMatrix(int dimension)
+        private static DoubleExtension[,] UnitMatrix(int dimension)
         {
-            double[,] a = new double[dimension, dimension];
+            DoubleExtension[,] a = new DoubleExtension[dimension, dimension];
             for (int i = 0; i < dimension; i++)
             {
                 for (int j = 0; j < dimension; j++)
                 {
-                    if (i == j) a[i, j] = 1;
-                    else a[i, j] = 0;
+                    if (i == j) a[i, j] = DoubleExtension.PositiveOne;
+                    else a[i, j] = DoubleExtension.Zero;
                 }
             }
 
@@ -560,7 +561,7 @@ namespace Util.Variable.Matrix
         /// <param name="srcMatrix">The Matrix to be scaled</param>
         /// <param name="row">The Specified Row</param>
         /// <param name="scaleRatio">The Scale Ratio</param>
-        private static void RowDiv(double[,] srcMatrix, int row, double scaleRatio)
+        private static void RowDiv(DoubleExtension[,] srcMatrix, int row, DoubleExtension scaleRatio)
         {
             int columns = srcMatrix.GetLength(1);
             for (int i = 0; i < columns; i++)
@@ -575,7 +576,7 @@ namespace Util.Variable.Matrix
         /// <param name="row1">The Row Index to be substracted</param>
         /// <param name="row2">The Row Index to substract</param>
         /// <param name="scaleRatio">Scale Ratio</param>
-        private static void RowSub(double[,] srcMatrix, int row1, int row2, double scaleRatio)
+        private static void RowSub(DoubleExtension[,] srcMatrix, int row1, int row2, DoubleExtension scaleRatio)
         {
             int columns = srcMatrix.GetLength(1);
             for (int q = 0; q < columns; q++)
@@ -590,7 +591,7 @@ namespace Util.Variable.Matrix
         /// <param name="column1">The Column Index to be Substracted</param>
         /// <param name="column2">The Column Index to Substract</param>
         /// <param name="scaleRatio">Scale Ratio</param>
-        private static void ColumnSub(double[,] srcMatrix, int column1, int column2, double scaleRatio)
+        private static void ColumnSub(DoubleExtension[,] srcMatrix, int column1, int column2, DoubleExtension scaleRatio)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
@@ -606,11 +607,11 @@ namespace Util.Variable.Matrix
         /// <param name="row1">Row index</param>
         /// <param name="row2">Row index</param>
         /// <returns>Exchanged Matrix</returns>
-        private static double[,] InterRow(double[,] srcMatrix, int row1, int row2)
+        private static DoubleExtension[,] InterRow(DoubleExtension[,] srcMatrix, int row1, int row2)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            double tmp = 0;
+            DoubleExtension tmp = DoubleExtension.Zero;
             for (int k = 0; k < columns; k++)
             {
                 tmp = srcMatrix[row1, k];
@@ -627,10 +628,10 @@ namespace Util.Variable.Matrix
         /// <param name="row">A specified Row</param>
         /// <param name="column">A specified Column</param>
         /// <returns>The Filtered Matrix</returns>
-        private static double[,] FilterMatrix(double[,] srcMatrix, int row, int column)
+        private static DoubleExtension[,] FilterMatrix(DoubleExtension[,] srcMatrix, int row, int column)
         {
             int rows = srcMatrix.GetLength(0);
-            double[,] desMatrix = new double[rows - 1, rows - 1];
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows - 1, rows - 1];
             int i = 0;
             for (int p = 0; p < rows; p++)
             {
@@ -657,11 +658,11 @@ namespace Util.Variable.Matrix
         /// </summary>
         /// <param name="srcMatrix">The Matrix to be Transposed</param>
         /// <returns>The Transposed Matrix</returns>
-        private static double[,] Transpose(double[,] srcMatrix)
+        private static DoubleExtension[,] Transpose(DoubleExtension[,] srcMatrix)
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            double[,] desMatrix = new double[rows, columns];
+            DoubleExtension[,] desMatrix = new DoubleExtension[rows, columns];
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
