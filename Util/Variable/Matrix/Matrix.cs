@@ -181,6 +181,11 @@ namespace Util.Variable.Matrix
         #endregion
 
         #region Class.Member
+        public static Matrix LinearSolve(Matrix COF, Matrix CON)
+        {
+            return COF.Inverse() * CON;
+        }
+
         public static Matrix Zeros(int size)
         {
             double[,] D = new double[size, size];
@@ -195,11 +200,6 @@ namespace Util.Variable.Matrix
         #endregion
 
         #region Public.Interface
-        public Matrix LinearSolve(Matrix COF, Matrix CON)
-        {
-            return COF.Inverse() * CON;
-        }
-
         public double Det()
         {
             if (this.IsSquare)
@@ -271,15 +271,9 @@ namespace Util.Variable.Matrix
         {
             int rows = srcMatrix.GetLength(0);
             int columns = srcMatrix.GetLength(1);
-            try
-            {
-                if (rows != columns)
-                    throw new Exception();
-            }
-            catch
-            {
-                Console.WriteLine("Cannot find inverse for an non-square matrix");
-            }
+
+            if (rows != columns)
+                throw new ArgumentException("Cannot find inverse for an non-square matrix", "srcMatrix");
 
             int q;
             double[,] desMatrix = new double[rows, columns];
@@ -389,27 +383,14 @@ namespace Util.Variable.Matrix
                 }
             }
 
-            try
-            {
-                if (rows != columns) throw new Exception();
-            }
-            catch
-            {
-                Console.WriteLine("Cannot Find Inverse for an non-square Matrix");
-            }
+            if (rows != columns)
+                throw new Exception("Cannot find inverse for an non-square matrix");
 
             double determine = Determinent(srcMatrix);
 
-            try
+            if (determine == 0)
             {
-                if (determine == 0)
-                {
-                    throw new Exception("Cannot Perform Inversion. Matrix Singular");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                throw new Exception("Cannot Perform Inversion. Matrix Singular");
             }
 
             for (int p = 0; p < rows; p++)
