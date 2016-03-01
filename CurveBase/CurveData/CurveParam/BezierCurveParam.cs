@@ -23,12 +23,12 @@ namespace CurveBase.CurveData.CurveParam
 {
     public class BezierCurveParam : ICurveParam, ICurvePointList
     {
-        private NormalCurvePointList pointsList;
+        private NormalCurvePointList pointList;
         
         #region Constructor
         public BezierCurveParam(List<DataPoint> points)
         {
-            pointsList = new NormalCurvePointList(points);
+            pointList = new NormalCurvePointList(points);
         }
         #endregion
 
@@ -37,7 +37,7 @@ namespace CurveBase.CurveData.CurveParam
         {
             get
             {
-                return pointsList;
+                return pointList;
             }
         }
         #endregion
@@ -52,70 +52,70 @@ namespace CurveBase.CurveData.CurveParam
         #region ICurvePointList Member
         public int IndexOf(DataPoint item)
         {
-            return pointsList.IndexOf(item);
+            return pointList.IndexOf(item);
         }
 
         public void RemoveAt(int index)
         {
-            pointsList.RemoveAt(index);
+            pointList.RemoveAt(index);
         }
 
         public DataPoint this[int index]
         {
             get
             {
-                return pointsList[index];
+                return pointList[index];
             }
             set
             {
-                pointsList[index] = value;
+                pointList[index] = value;
             }
         }
 
         public void Add(DataPoint item)
         {
-            pointsList.Add(item);
+            pointList.Add(item);
         }
 
         public void Clear()
         {
-            pointsList.Clear();
+            pointList.Clear();
         }
 
         public bool Contains(DataPoint item)
         {
-            return pointsList.Contains(item);
+            return pointList.Contains(item);
         }
 
         public void CopyTo(DataPoint[] array, int arrayIndex)
         {
-            pointsList.CopyTo(array, arrayIndex);
+            pointList.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return pointsList.Count; }
+            get { return pointList.Count; }
         }
 
         public bool Remove(DataPoint item)
         {
-            return pointsList.Remove(item);
+            return pointList.Remove(item);
         }
 
         public IEnumerator<DataPoint> GetEnumerator()
         {
-            return pointsList.GetEnumerator();
+            return pointList.GetEnumerator();
         }
 
         public string Label
         {
             get
             {
-                return pointsList.Label;
+                return pointList.Label;
             }
             set
             {
-                pointsList.Label = value;
+                pointList.Label = value;
             }
         }
         #endregion

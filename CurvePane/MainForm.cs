@@ -56,6 +56,7 @@ namespace CurvePane
                         break;
                     case 2:
                         //参数样条曲线
+                        masterCurveManager.DrawPCSICurve(curveName, comboBox3.SelectedIndex + 1, textBox11.Text, textBox12.Text, textBox13.Text, textBox14.Text);
                         break;
                     case 3:
                         //Bezier曲线
@@ -211,9 +212,74 @@ namespace CurvePane
                 MessageBox.Show("导入型值点/控制点前，请先点击\"开始抓取\"按钮");
             }
         }
-
         #endregion
         #region CurveSettings
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox2.SelectedIndex)
+            {
+                case 0:
+                    label25.Text = "一阶导数值";
+                    label26.Text = "一阶导数值";
+                    textBox9.Enabled = true;
+                    textBox10.Enabled = true;
+                    break;
+                case 1:
+                    label25.Text = "二阶导数值";
+                    label26.Text = "二阶导数值";
+                    textBox9.Enabled = true;
+                    textBox10.Enabled = true;
+                    break;
+                case 2:
+                    label25.Text = "";
+                    label26.Text = "";
+                    textBox9.Enabled = false;
+                    textBox10.Enabled = false;
+                    break;
+            }
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox3.SelectedIndex)
+            {
+                case 0:
+                    //指定首尾一阶导数
+                    label27.Text = "一阶导数值";
+                    label28.Text = "一阶导数值";
+                    label29.Text = "";
+                    label30.Text = "";
+                    textBox11.Enabled = true;
+                    textBox12.Enabled = true;
+                    textBox13.Enabled = false;
+                    textBox14.Enabled = false;
+                    break;
+                case 1:
+                    //首尾端点曲率均为0
+                    label27.Text = "";
+                    label28.Text = "";
+                    label29.Text = "";
+                    label30.Text = "";
+                    textBox11.Enabled = false;
+                    textBox12.Enabled = false;
+                    textBox13.Enabled = false;
+                    textBox14.Enabled = false;
+                    break;
+                case 2:
+                    //指定首尾端点的曲率中心
+                    label27.Text = "曲率中心_x";
+                    label28.Text = "曲率中心_x";
+                    label29.Text = "曲率中心_y";
+                    label30.Text = "曲率中心_y";
+                    textBox11.Enabled = true;
+                    textBox12.Enabled = true;
+                    textBox13.Enabled = true;
+                    textBox14.Enabled = true;
+                    break;
+            }
+        }
+
         public void UpdateBSplineCurveSetting()
         {
             int degree = 0;

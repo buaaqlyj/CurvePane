@@ -41,6 +41,7 @@
     <Compile Include="Tool\EnumExtension.cs" />
     <Compile Include="Tool\MathExtension.cs" />
     <Compile Include="Variable\ArrayString.cs" />
+    <Compile Include="Variable\DataVector.cs" />
     <Compile Include="Variable\Dynamic2DArray.cs" />
     <Compile Include="Variable\Interval\PiecewiseDataInterval.cs" />
     <Compile Include="Variable\Matrix\LinearEquationSet.cs" />

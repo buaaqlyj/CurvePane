@@ -58,24 +58,6 @@ namespace Util.Variable
         }
         #endregion
 
-        #region Class.Member
-        public static bool TryParse(string text, out DataPoint point)
-        {
-            string[] strings = text.Split(new char[]{' ', ','}, StringSplitOptions.RemoveEmptyEntries);
-            if (strings.Length == 2)
-            {
-                double val1, val2;
-                if (double.TryParse(strings[0], out val1) && double.TryParse(strings[1], out val2))
-                {
-                    point = new DataPoint(val1, val2);
-                    return true;
-                }
-            }
-            point = new DataPoint(0, 0);
-            return false;
-        }
-        #endregion
-
         #region Object.Member
         public override string ToString()
         {
@@ -99,6 +81,22 @@ namespace Util.Variable
         public static double distance(DataPoint pt1, DataPoint pt2)
         {
             return Math.Sqrt(Math.Pow((pt1.X - pt2.X).AccurateValue, 2) + Math.Pow((pt1.Y - pt2.Y).AccurateValue, 2));
+        }
+
+        public static bool TryParse(string text, out DataPoint point)
+        {
+            string[] strings = text.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (strings.Length == 2)
+            {
+                double val1, val2;
+                if (double.TryParse(strings[0], out val1) && double.TryParse(strings[1], out val2))
+                {
+                    point = new DataPoint(val1, val2);
+                    return true;
+                }
+            }
+            point = new DataPoint(0, 0);
+            return false;
         }
         #endregion
 

@@ -107,6 +107,14 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.csiTabPage.SuspendLayout();
@@ -170,6 +178,8 @@ namespace CurvePane
             // 
             // csiTabPage
             // 
+            this.csiTabPage.Controls.Add(this.label26);
+            this.csiTabPage.Controls.Add(this.label25);
             this.csiTabPage.Controls.Add(this.label17);
             this.csiTabPage.Controls.Add(this.label13);
             this.csiTabPage.Controls.Add(this.textBox10);
@@ -204,14 +214,14 @@ namespace CurvePane
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(348, 39);
+            this.textBox10.Location = new System.Drawing.Point(419, 39);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(100, 21);
             this.textBox10.TabIndex = 5;
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(93, 39);
+            this.textBox9.Location = new System.Drawing.Point(164, 39);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(100, 21);
             this.textBox9.TabIndex = 4;
@@ -228,6 +238,7 @@ namespace CurvePane
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 20);
             this.comboBox2.TabIndex = 3;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -240,6 +251,12 @@ namespace CurvePane
             // 
             // pcsiTabPage
             // 
+            this.pcsiTabPage.Controls.Add(this.textBox14);
+            this.pcsiTabPage.Controls.Add(this.label30);
+            this.pcsiTabPage.Controls.Add(this.textBox13);
+            this.pcsiTabPage.Controls.Add(this.label29);
+            this.pcsiTabPage.Controls.Add(this.label28);
+            this.pcsiTabPage.Controls.Add(this.label27);
             this.pcsiTabPage.Controls.Add(this.label19);
             this.pcsiTabPage.Controls.Add(this.label23);
             this.pcsiTabPage.Controls.Add(this.textBox11);
@@ -273,14 +290,14 @@ namespace CurvePane
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(348, 39);
+            this.textBox11.Location = new System.Drawing.Point(164, 39);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(100, 21);
             this.textBox11.TabIndex = 11;
             // 
             // textBox12
             // 
-            this.textBox12.Location = new System.Drawing.Point(93, 39);
+            this.textBox12.Location = new System.Drawing.Point(419, 39);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(100, 21);
             this.textBox12.TabIndex = 10;
@@ -291,12 +308,13 @@ namespace CurvePane
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
             "指定首尾一阶导数",
-            "指定首尾二阶导数",
-            "周期性样条"});
+            "首尾端点曲率均为0",
+            "指定首尾端点的曲率中心"});
             this.comboBox3.Location = new System.Drawing.Point(93, 13);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(121, 20);
             this.comboBox3.TabIndex = 9;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label24
             // 
@@ -773,6 +791,80 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(93, 42);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(65, 12);
+            this.label25.TabIndex = 8;
+            this.label25.Text = "一阶导数值";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(348, 42);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(65, 12);
+            this.label26.TabIndex = 9;
+            this.label26.Text = "一阶导数值";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(93, 42);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(65, 12);
+            this.label27.TabIndex = 14;
+            this.label27.Text = "一阶导数值";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(348, 42);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(65, 12);
+            this.label28.TabIndex = 15;
+            this.label28.Text = "一阶导数值";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(93, 69);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(65, 12);
+            this.label29.TabIndex = 16;
+            this.label29.Text = "一阶导数值";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(164, 66);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(100, 21);
+            this.textBox13.TabIndex = 17;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(419, 66);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(100, 21);
+            this.textBox14.TabIndex = 19;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(348, 69);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(65, 12);
+            this.label30.TabIndex = 18;
+            this.label30.Text = "一阶导数值";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -784,7 +876,7 @@ namespace CurvePane
             this.Controls.Add(this.masterZedGraphControl);
             this.Controls.Add(this.groupBox1);
             this.Name = "MainForm";
-            this.Text = "产品建模技术实践类大作业 - 曲线画布";
+            this.Text = "产品建模技术实践类大作业 - 建模曲线画布";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.curveTypeTabControl.ResumeLayout(false);
             this.pcTabPage.ResumeLayout(false);
@@ -876,6 +968,14 @@ namespace CurvePane
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Label label29;
     }
 }
 

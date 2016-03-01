@@ -158,14 +158,38 @@ namespace CurvePane
         public void DrawCSICurve(string curveName, int borderConditionType, string leftVal, string rightVal)
         {
             BaseDataPointList pointList = this.basePoints;
-            double left, right;
-            if (!Double.TryParse(leftVal, out left) || !Double.TryParse(rightVal, out right))
+            double left = 0, right = 0;
+            if (borderConditionType < 3)
             {
-                throw new ArgumentException("The left or right border can't be recognized.");
+                if (!Double.TryParse(leftVal, out left) || !Double.TryParse(rightVal, out right))
+                {
+                    throw new ArgumentException("The left or right border can't be recognized.");
+                }
             }
             CubicSplineInterpolationCurveParam curveParam = new CubicSplineInterpolationCurveParam(pointList.SortedPointList, (CSIBorderConditionType)borderConditionType, new DoubleExtension(left), new DoubleExtension(right));
             CubicSplineInterpolationCurve curve = new CubicSplineInterpolationCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
+        }
+
+        public void DrawPCSICurve(string curveName, int borderConditionType, string val1, string val2, string val3, string val4)
+        {
+            BaseDataPointList pointList = this.basePoints;
+            double subVal1 = 0, subVal2 = 0, subVal3 = 0, subVal4 = 0;
+            if (borderConditionType != 2)
+            {
+                if (!Double.TryParse(val1, out subVal1) || !Double.TryParse(val2, out subVal2))
+                {
+                    throw new ArgumentException("The left or right border can't be recognized.");
+                }
+                if (borderConditionType == 3)
+                {
+                    if (!Double.TryParse(val3, out subVal3) || !Double.TryParse(val4, out subVal4))
+                    {
+                        throw new ArgumentException("The left or right border can't be recognized.");
+                    }
+                }
+            }
+            ParametricCubicSplineInterpolationCurveParam curveParam = new ParametricCubicSplineInterpolationCurveParam(pointList.Points, (PCSIBorderConditionType)borderConditionType, new DoubleExtension(subVal1), new DoubleExtension(subVal2), new DoubleExtension(subVal3), new DoubleExtension(subVal4));
         }
 
         public void DrawBezierCurve(string curveName)
