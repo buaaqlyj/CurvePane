@@ -1,10 +1,16 @@
 ****
-# CurvePane_vx.x.x
+# CurvePane_v0.6.23
+
+## Release Note
+
+I've finished the Cubic Spline Interpolation Curve and done a lot of small tweaks of other parts.
 
 ## Changelog
 
 * Tweak the names of some methods.
 * Add static members to DoubleExtension.
+* Add file drag&drop support for base points import.
+* Implement the Cubic Spline Interpolation Curve.
 
 ****
 # CurvePane_v0.5.19

@@ -73,14 +73,6 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #region Private.Methods
         private void UpdateCoefficients(ICurvePointList pointList)
         {
-            //if (hashCode == "" || hashCode != getHashCode(points, currentSize))
-            //{
-            //    //Update all
-            //}
-            //else 
-            //{
-            //    //Update partial
-            //}
             for (int i = 0; i < degree; i++)
             {
                 fullCoefficents.SetArrayElement(0, i, pointList[i].Y);
@@ -89,16 +81,6 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 for (int j = 0; j < degree - i; j++)
                     fullCoefficents.SetArrayElement(i, j, new DoubleExtension((fullCoefficents.GetArrayElement(i - 1, j + 1).AccurateValue - fullCoefficents.GetArrayElement(i - 1, 0).AccurateValue) / (pointList[i + j].X.AccurateValue - pointList[i - 1].X.AccurateValue)));
         }
-
-        //private string getHashCode(List<DataPoint> points, int size)
-        //{
-        //    string pointsText = "";
-        //    for (int i = 0; i < size && i < points.Count; i++)
-        //    {
-        //        pointsText += points[i].X.CoordinateString + points[i].Y.CoordinateString;
-        //    }
-        //    return pointsText.GetHashCode().ToString();
-        //}
         #endregion
     }
 }

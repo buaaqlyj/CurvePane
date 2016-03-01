@@ -59,6 +59,24 @@ namespace Util.Variable
         #endregion
 
         #region Class.Member
+        public static bool TryParse(string text, out DataPoint point)
+        {
+            string[] strings = text.Split(new char[]{' ', ','}, StringSplitOptions.RemoveEmptyEntries);
+            if (strings.Length == 2)
+            {
+                double val1, val2;
+                if (double.TryParse(strings[0], out val1) && double.TryParse(strings[1], out val2))
+                {
+                    point = new DataPoint(val1, val2);
+                    return true;
+                }
+            }
+            point = new DataPoint(0, 0);
+            return false;
+        }
+        #endregion
+
+        #region Object.Member
         public override string ToString()
         {
             return X.ApproximateString + "," + Y.ApproximateString;

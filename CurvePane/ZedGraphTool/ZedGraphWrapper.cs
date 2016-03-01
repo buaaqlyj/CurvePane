@@ -90,56 +90,57 @@ namespace CurvePane.ZedGraphTool
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
             line.Line.IsVisible = false;
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
             return line;
         }
 
         public LineItem AddLineWithoutDots(string curveName, PointPairList pointPairList, Color color)
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.None);
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
             return line;
         }
 
         public LineItem AddLineWithDots(string curveName, PointPairList pointPairList, Color color)
         {
             LineItem line = masterPane.AddCurve(curveName, pointPairList, color, SymbolType.XCross);
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
             return line;
         }
 
         public void RemoveLine(string lineName)
         {
             masterPane.CurveList.Remove(masterPane.CurveList[masterPane.CurveList.IndexOf(lineName)]);
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
         }
 
         public void RemoveLines(string keyword)
         {
             masterPane.CurveList.RemoveAll((c) => { return c.Label.Text.Contains(keyword); });
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
         }
 
         public void RemoveAllLinesExceptCertainLine(string lineName)
         {
             masterPane.CurveList.RemoveAll((c) => { return c.Label.Text != lineName; });
-            zedGraphControl.AxisChange();
-            zedGraphControl.Refresh();
+            UpdatePaneView();
         }
 
         public void RemoveAllLines()
         {
             masterPane.CurveList.Clear();
+            UpdatePaneView();
+        }
+        #endregion
+
+        #region Pane Operation
+        public void UpdatePaneView()
+        {
             zedGraphControl.AxisChange();
             zedGraphControl.Refresh();
         }
         #endregion
-        
+
         #region Property
         public bool HasInitialized
         {

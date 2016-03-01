@@ -104,6 +104,20 @@ namespace CurvePane
             BasePointChangedEvent(this, new EventArgs());
         }
 
+        public bool TryAddBasePointFromText(string text)
+        {
+            Util.Variable.DataPoint point;
+            if (Util.Variable.DataPoint.TryParse(text, out point))
+            {
+                AddBasePoint(point);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public List<Util.Variable.DataPoint> getList()
         {
             return basePoints.Points;
@@ -138,6 +152,19 @@ namespace CurvePane
             BaseDataPointList pointList = this.basePoints;
             PolynomialCurveParam curveParam = new PolynomialCurveParam(pointList.SortedPointList, (PolynomialCurveType)polynomialType);
             PolynomialCurve curve = new PolynomialCurve(curveParam);
+            DrawLines(curveName, curve.sampleCurvePoints());
+        }
+
+        public void DrawCSICurve(string curveName, int borderConditionType, string leftVal, string rightVal)
+        {
+            BaseDataPointList pointList = this.basePoints;
+            double left, right;
+            if (!Double.TryParse(leftVal, out left) || !Double.TryParse(rightVal, out right))
+            {
+                throw new ArgumentException("The left or right border can't be recognized.");
+            }
+            CubicSplineInterpolationCurveParam curveParam = new CubicSplineInterpolationCurveParam(pointList.SortedPointList, (CSIBorderConditionType)borderConditionType, new DoubleExtension(left), new DoubleExtension(right));
+            CubicSplineInterpolationCurve curve = new CubicSplineInterpolationCurve(curveParam);
             DrawLines(curveName, curve.sampleCurvePoints());
         }
 
@@ -303,6 +330,13 @@ namespace CurvePane
             {
                 return getNewName();
             }
+        }
+        #endregion
+
+        #region Pane Operation
+        public void UpdatePaneView()
+        {
+            zedGraph.UpdatePaneView();
         }
         #endregion
 

@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="CurveData\CurveInterpolatedData\BezierCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\BSplineCurveInterpolatedData.cs" />
+    <Compile Include="CurveData\CurveInterpolatedData\CubicSplineInterpolationInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\LagarangePolynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\NewtonPolynomialCurveInterpolatedData.cs" />
     <Compile Include="CurveData\CurveInterpolatedData\NurbsCurveInterpolatedData.cs" />

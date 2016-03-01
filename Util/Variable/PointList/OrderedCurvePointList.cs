@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Util.Variable.PointList
@@ -143,7 +144,7 @@ namespace Util.Variable.PointList
             {
                 if (sortedPointList.Count > 0)
                     return sortedPointList.Values[0];
-                return null;
+                throw new ArgumentException("The list is empty!");
             }
         }
 
@@ -153,7 +154,7 @@ namespace Util.Variable.PointList
             {
                 if (sortedPointList.Count > 0)
                     return sortedPointList.Values[sortedPointList.Count - 1];
-                return null;
+                throw new ArgumentException("The list is empty!");
             }
         }
         #endregion

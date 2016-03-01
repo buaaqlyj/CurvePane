@@ -19,7 +19,7 @@ namespace Util.Variable
 {
     public class DoubleExtension : IEquatable<DoubleExtension>, IComparer<DoubleExtension>, IComparable<DoubleExtension>
     {
-        private double va;
+        private double va = 0;
 
         #region Constructor
         public DoubleExtension(double va)
@@ -30,6 +30,11 @@ namespace Util.Variable
         public DoubleExtension(int va)
         {
             this.va = Convert.ToDouble(va);
+        }
+
+        public DoubleExtension()
+        {
+            
         }
         #endregion
 

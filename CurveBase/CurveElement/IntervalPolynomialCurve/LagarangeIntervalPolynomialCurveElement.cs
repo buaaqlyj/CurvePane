@@ -67,6 +67,26 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         {
             
         }
+
+        public LagarangeIntervalPolynomialCurveElement(double leftSecondOrderDerivative, double rightSecondOrderDerivative, DataPoint leftBorder, DataPoint rightBorder)
+        {
+            this.degree = 4;
+            this.coefficients = new List<DoubleExtension>();
+            this.interval = new DataInterval(leftBorder.X, rightBorder.X);
+            DoubleExtension aVal, bVal, coef, xDiff, denominator;
+            xDiff = rightBorder.X - leftBorder.X;
+            denominator = 6.0 * xDiff;
+            aVal = rightBorder.Y - rightSecondOrderDerivative / 6.0 * Math.Pow(xDiff.AccurateValue, 2);
+            bVal = leftBorder.Y - leftSecondOrderDerivative / 6.0 * Math.Pow(xDiff.AccurateValue, 2);
+            coef = (6.0 * bVal * rightBorder.X - 6.0 * aVal * leftBorder.X + leftSecondOrderDerivative * Math.Pow(rightBorder.X.AccurateValue, 3) - rightSecondOrderDerivative * Math.Pow(leftBorder.X.AccurateValue, 3)) / denominator;
+            this.coefficients.Add(coef);
+            coef = 3.0 * (rightSecondOrderDerivative * Math.Pow(leftBorder.X.AccurateValue, 2) - leftSecondOrderDerivative * Math.Pow(rightBorder.X.AccurateValue, 2) + 2.0 * aVal - 2.0 * bVal) / denominator;
+            this.coefficients.Add(coef);
+            coef = 3.0 * (leftSecondOrderDerivative * rightBorder.X - rightSecondOrderDerivative * leftBorder.X) / denominator;
+            this.coefficients.Add(coef);
+            coef = (rightSecondOrderDerivative - leftSecondOrderDerivative) / denominator;
+            this.coefficients.Add(coef);
+        }
         #endregion
 
         #region Property

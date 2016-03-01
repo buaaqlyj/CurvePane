@@ -13,6 +13,7 @@
 /// limitations under the License.
 
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace CurvePane
@@ -51,6 +52,7 @@ namespace CurvePane
                         break;
                     case 1:
                         //三次样条插值曲线
+                        masterCurveManager.DrawCSICurve(curveName, comboBox2.SelectedIndex + 1, textBox9.Text, textBox10.Text);
                         break;
                     case 2:
                         //参数样条曲线
@@ -167,6 +169,49 @@ namespace CurvePane
         {
             textBox3.Text = point.ToString();
         }
+
+        private void listView1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Link;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void listView1_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+        {
+            if (masterCurveManager.CaptureSwitch)
+            {
+                string filename = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+                if (!File.Exists(filename))
+                {
+                    return;
+                }
+                StreamReader sr = new StreamReader(filename);
+                string text;
+                while (!sr.EndOfStream)
+                {
+                    text = sr.ReadLine().Trim();
+                    if (text.Contains("#"))
+                    {
+                        text = text.Substring(0, text.IndexOf('#'));
+                    }
+                    if (text != "")
+                    {
+                        if (!masterCurveManager.TryAddBasePointFromText(text))
+                        {
+                            textBox2.AppendText(Environment.NewLine + "Unrecognized text: " + text);
+                        }
+                    }
+                }
+                masterCurveManager.UpdatePaneView();
+            }
+            else
+            {
+                MessageBox.Show("导入型值点/控制点前，请先点击\"开始抓取\"按钮");
+            }
+        }
+
         #endregion
         #region CurveSettings
         public void UpdateBSplineCurveSetting()
