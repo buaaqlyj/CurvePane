@@ -21,6 +21,7 @@ using CurveBase.CurveData.CurveParam;
 using CurveDraw.Curve;
 using CurveDraw.Draw;
 using CurvePane.ZedGraphTool;
+using Util.Enum;
 using Util.Variable;
 using Util.Variable.PointList;
 using ZedGraph;
@@ -37,6 +38,7 @@ namespace CurvePane
         private Random random = null;
 
         private bool captureSwitch = false;
+        private bool hasDrawBasePointsConnections = false;
 
         private List<string> curveNames = null;
 
@@ -300,6 +302,14 @@ namespace CurvePane
             Color color;
             foreach (KeyValuePair<ICurvePointList, DrawType> item in interpolatedData)
             {
+                if (hasDrawBasePointsConnections)
+                {
+                    if (item.Key.PaneCurveType == PaneCurveType.connectingSupportingCurve) break;
+                }
+                else
+                {
+                    if (item.Key.PaneCurveType == PaneCurveType.connectingSupportingCurve) hasDrawBasePointsConnections = true;
+                }
                 color = getNewColor();
                 DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
             }
@@ -309,6 +319,7 @@ namespace CurvePane
         public void RemoveAllLines()
         {
             zedGraph.RemoveAllLinesExceptCertainLine("BasePoints");
+            hasDrawBasePointsConnections = false;
             ClearCurveName();
         }
         #endregion

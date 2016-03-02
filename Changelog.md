@@ -6,6 +6,7 @@
 * Tweak the names of some classes.
 * Add members to ICurvePointList.
 * Implement the Parametric Cubic Spline Interpolation Curve.
+* Fix the bug that drawing duplicated curves that connect base points.
 
 ****
 # CurvePane_v0.6.23
