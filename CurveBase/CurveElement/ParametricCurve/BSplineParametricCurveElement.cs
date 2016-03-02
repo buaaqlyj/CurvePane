@@ -27,8 +27,7 @@ namespace CurveBase.CurveElement.ParametricCurve
     public class BSplineParametricCurveElement : ParametricCurveElement
     {
         protected NormalCurvePointList pointList = null;
-        protected List<BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement> basisFunctions;
-        protected DataInterval interval = null;
+        protected List<PiecewiseIntervalPolynomialCurveElement> basisFunctions;
         
         #region Constructor
         public BSplineParametricCurveElement(BSplineCurveParam curveParam)
@@ -56,16 +55,6 @@ namespace CurveBase.CurveElement.ParametricCurve
         }
         #endregion
 
-        #region Property
-        public DataInterval Interval
-        {
-            get
-            {
-                return interval;
-            }
-        }
-        #endregion
-
         #region Private.Method
         /// <summary>
         /// 要求的：N+1 = curveParam.PointList.Count;
@@ -89,18 +78,18 @@ namespace CurveBase.CurveElement.ParametricCurve
         /// <returns></returns>
         protected virtual void calculateBasisFunction(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.bsCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.bsCurve)
             {
                 BSplineCurveParam param = (BSplineCurveParam)curveParam;
-                Dynamic2DArray<BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement> basisFunctions = new Dynamic2DArray<BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement>();
+                Dynamic2DArray<PiecewiseIntervalPolynomialCurveElement> basisFunctions = new Dynamic2DArray<PiecewiseIntervalPolynomialCurveElement>();
                 int total = param.Degree + param.PointList.Count;
                 DoubleExtension denominator10, denominator20, numerator11, numerator10, numerator21, numerator20;
-                BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement curve1, curve2;
+                PiecewiseIntervalPolynomialCurveElement curve1, curve2;
                 numerator11 = new DoubleExtension(1);
                 numerator21 = new DoubleExtension(-1);
                 for (int i = 0; i < total; i++)
                 {
-                    basisFunctions.SetArrayElement(0, i, new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(i, param.Interval));
+                    basisFunctions.SetArrayElement(0, i, new PiecewiseIntervalPolynomialCurveElement(i, param.Interval));
                 }
                 for (int i = 1; i <= param.Degree; i++)
                 {
@@ -119,7 +108,7 @@ namespace CurveBase.CurveElement.ParametricCurve
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.bsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.bsCurve, curveParam.getCurveType());
             }
         }
         #endregion

@@ -190,6 +190,8 @@ namespace CurvePane
                 }
             }
             ParametricCubicSplineInterpolationCurveParam curveParam = new ParametricCubicSplineInterpolationCurveParam(pointList.Points, (PCSIBorderConditionType)borderConditionType, new DoubleExtension(subVal1), new DoubleExtension(subVal2), new DoubleExtension(subVal3), new DoubleExtension(subVal4));
+            ParametricCubicSplineInterpolationCurve curve = new ParametricCubicSplineInterpolationCurve(curveParam);
+            DrawLines(curveName, curve.sampleCurvePoints());
         }
 
         public void DrawBezierCurve(string curveName)

@@ -14,6 +14,7 @@
 
 using System.Collections.Generic;
 
+using Util.Enum;
 using Util.Variable;
 using Util.Variable.PointList;
 
@@ -51,9 +52,9 @@ namespace CurveBase.CurveData.CurveParam
         #endregion
 
         #region ICurveParam Member
-        public CurveType getCurveType()
+        public InterpolationCurveType getCurveType()
         {
-            return CurveType.polynomialCurve;
+            return InterpolationCurveType.polynomialCurve;
         }
         #endregion
 
@@ -125,6 +126,28 @@ namespace CurveBase.CurveData.CurveParam
             {
                 pointList.Label = value;
             }
+        }
+
+        public PaneCurveType PaneCurveType
+        {
+            get
+            {
+                return pointList.PaneCurveType;
+            }
+            set
+            {
+                pointList.PaneCurveType = value;
+            }
+        }
+
+        public List<DoubleExtension> XList
+        {
+            get { return pointList.XList; }
+        }
+
+        public List<DoubleExtension> YList
+        {
+            get { return pointList.YList; }
         }
         #endregion
     }

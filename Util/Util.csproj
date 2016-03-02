@@ -46,6 +46,7 @@
     <Compile Include="Variable\Interval\PiecewiseDataInterval.cs" />
     <Compile Include="Variable\Matrix\LinearEquationSet.cs" />
     <Compile Include="Variable\Matrix\Matrix.cs" />
+    <Compile Include="Enum\PaneCurveType.cs" />
     <Compile Include="Variable\PointList\BaseDataPointList.cs" />
     <Compile Include="Variable\Interval\DataInterval.cs" />
     <Compile Include="Variable\DataPoint.cs" />

@@ -25,7 +25,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 {
     public class LagarangePolynomialCurveInterpolatedData : ICurveInterpolatedData
     {
-        private List<LagarangeIntervalPolynomialCurveElement> lagarangePolynomialInterpolatedCurves = null;
+        private List<NormalIntervalPolynomialCurveElement> lagarangePolynomialInterpolatedCurves = null;
         private OrderedCurvePointList lagarangePolynomialInterpolatedPoints = null;
         private PolynomialCurveType curveType;
 
@@ -46,7 +46,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region Property
-        public List<LagarangeIntervalPolynomialCurveElement> Curves
+        public List<NormalIntervalPolynomialCurveElement> Curves
         {
             get
             {
@@ -64,9 +64,9 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData Member
-        public CurveType getCurveType()
+        public InterpolationCurveType getCurveType()
         {
-            return CurveType.polynomialCurve;
+            return InterpolationCurveType.polynomialCurve;
         }
 
         public DataPoint getLastPoint()
@@ -77,16 +77,19 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         #region Private.Methods
 
-        private List<LagarangeIntervalPolynomialCurveElement> generateQuadraticPolynomialCurves(PolynomialCurveParam param)
+        private List<NormalIntervalPolynomialCurveElement> generateQuadraticPolynomialCurves(PolynomialCurveParam param)
         {
             Debug.Assert(param.PolynomialCurveType == PolynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
             OrderedCurvePointList pointList = param.PointList;
-            List<LagarangeIntervalPolynomialCurveElement> polynomialCurve = new List<LagarangeIntervalPolynomialCurveElement>();
+            List<NormalIntervalPolynomialCurveElement> polynomialCurve = new List<NormalIntervalPolynomialCurveElement>();
             List<DoubleExtension> coefficients = null;
+            List<DoubleExtension> cutPoints = new List<DoubleExtension>();
+            cutPoints.Add(pointList[0].X);
             for (int i = 2; i < pointList.Count; i = i + 2)
             {
                 coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
-                polynomialCurve.Add(new LagarangeIntervalPolynomialCurveElement(coefficients, 3, pointList[i - 2].X, pointList[i].X));
+                polynomialCurve.Add(new NormalIntervalPolynomialCurveElement(coefficients, 3, pointList[i - 2].X, pointList[i].X));
+                cutPoints.Add(pointList[i].X);
             }
             return polynomialCurve;
         }

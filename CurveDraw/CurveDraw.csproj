@@ -41,6 +41,7 @@
     <Compile Include="Curve\BSplineCurve.cs" />
     <Compile Include="Curve\CubicSplineInterpolationCurve.cs" />
     <Compile Include="Curve\NurbsCurve.cs" />
+    <Compile Include="Curve\ParametricCubicSplineInterpolationCurve.cs" />
     <Compile Include="Draw\DrawType.cs" />
     <Compile Include="Curve\ICurve.cs" />
     <Compile Include="Curve\PolynomialCurve.cs" />

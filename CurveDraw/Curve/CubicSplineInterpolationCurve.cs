@@ -21,6 +21,7 @@ using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveElement.IntervalPolynomialCurve;
 using CurveBase.CurveException;
 using CurveDraw.Draw;
+using Util.Enum;
 using Util.Variable;
 using Util.Variable.PointList;
 
@@ -49,12 +50,13 @@ namespace CurveDraw.Curve
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
 
             CubicSplineInterpolationInterpolatedData data = new CubicSplineInterpolationInterpolatedData(curveParam);
-            foreach (LagarangeIntervalPolynomialCurveElement curve in data.Curves)
+            foreach (NormalIntervalPolynomialCurveElement curve in data.Curve.Curves)
             {
                 list.AddRange(sampleAPolynomialCurve(curve, 50));
             }
             list.Add(data.getLastPoint());
             list.Label = "[CSI]";
+            list.PaneCurveType = PaneCurveType.realCurve;
             result.Add(list, DrawType.LineNoDot);
             return result;
         }
@@ -68,17 +70,17 @@ namespace CurveDraw.Curve
         #region Private.Methods
         private bool canDrawCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.csiCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.csiCurve)
             {
                 CubicSplineInterpolationCurveParam param = (CubicSplineInterpolationCurveParam)curveParam;
                 if (param.Count < 2)
-                    throw new InvalidBasePointsException(CurveType.csiCurve, "At least two points are needed to draw Cubic Spline Interpolation Curve");
+                    throw new InvalidBasePointsException(InterpolationCurveType.csiCurve, "At least two points are needed to draw Cubic Spline Interpolation Curve");
                 if (!param.PointList.noDuplicatedX())
-                    throw new InvalidBasePointsException(CurveType.csiCurve, "At least two points given have the same X value.");
+                    throw new InvalidBasePointsException(InterpolationCurveType.csiCurve, "At least two points given have the same X value.");
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.csiCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.csiCurve, curveParam.getCurveType());
             }
             return true;
         }

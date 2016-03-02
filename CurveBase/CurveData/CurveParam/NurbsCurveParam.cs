@@ -46,9 +46,9 @@ namespace CurveBase.CurveData.CurveParam
         #endregion
 
         #region ICurveParam Member
-        public override CurveType getCurveType()
+        public override InterpolationCurveType getCurveType()
         {
-            return CurveType.nurbsCurve;
+            return InterpolationCurveType.nurbsCurve;
         }
         #endregion
     }

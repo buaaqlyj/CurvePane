@@ -16,7 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Util.Enum;
 using Util.Variable;
+using Util.Variable.Interval;
 using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveParam
@@ -26,6 +28,7 @@ namespace CurveBase.CurveData.CurveParam
         private OrderedCurvePointList pointList;
         private DoubleExtension leftVal, rightVal;
         private CSIBorderConditionType csiConditionType;
+        private PiecewiseDataInterval interval;
 
         #region Constructor
         public CubicSplineInterpolationCurveParam(List<DataPoint> points, CSIBorderConditionType curveType, DoubleExtension val1, DoubleExtension val2)
@@ -34,6 +37,7 @@ namespace CurveBase.CurveData.CurveParam
             csiConditionType = curveType;
             leftVal = val1;
             rightVal = val2;
+            interval = new PiecewiseDataInterval(pointList);
         }
         #endregion
 
@@ -69,12 +73,20 @@ namespace CurveBase.CurveData.CurveParam
                 return rightVal;
             }
         }
+
+        public PiecewiseDataInterval Interval
+        {
+            get
+            {
+                return interval;
+            }
+        }
         #endregion
 
         #region ICurveParam Member
-        public CurveType getCurveType()
+        public InterpolationCurveType getCurveType()
         {
-            return CurveType.csiCurve;
+            return InterpolationCurveType.csiCurve;
         }
         #endregion
 
@@ -146,6 +158,28 @@ namespace CurveBase.CurveData.CurveParam
             {
                 pointList.Label = value;
             }
+        }
+
+        public PaneCurveType PaneCurveType
+        {
+            get
+            {
+                return pointList.PaneCurveType;
+            }
+            set
+            {
+                pointList.PaneCurveType = value;
+            }
+        }
+
+        public List<DoubleExtension> XList
+        {
+            get { return pointList.XList; }
+        }
+
+        public List<DoubleExtension> YList
+        {
+            get { return pointList.YList; }
         }
         #endregion
     }

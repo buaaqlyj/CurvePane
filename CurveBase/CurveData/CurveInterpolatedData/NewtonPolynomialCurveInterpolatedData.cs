@@ -55,9 +55,9 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData Member
-        public CurveType getCurveType()
+        public InterpolationCurveType getCurveType()
         {
-            return CurveType.polynomialCurve;
+            return InterpolationCurveType.polynomialCurve;
         }
 
         public DataPoint getLastPoint()

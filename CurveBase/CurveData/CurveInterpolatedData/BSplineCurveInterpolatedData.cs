@@ -52,9 +52,9 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData Member
-        public virtual CurveType getCurveType()
+        public virtual InterpolationCurveType getCurveType()
         {
-            return CurveType.bsCurve;
+            return InterpolationCurveType.bsCurve;
         }
 
         public virtual DataPoint getLastPoint()
@@ -66,14 +66,14 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #region Private.Methods
         protected virtual void InitialCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.bsCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.bsCurve)
             {
                 BSplineCurveParam param = (BSplineCurveParam)curveParam;
                 this.curve = new BSplineParametricCurveElement(param);
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.bsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.bsCurve, curveParam.getCurveType());
             }
         }
         #endregion

@@ -19,6 +19,7 @@ using System.Text;
 using CurveBase;
 using CurveBase.CurveData.CurveInterpolatedData;
 using CurveBase.CurveData.CurveParam;
+using CurveBase.CurveElement.IntervalPolynomialCurve;
 using CurveBase.CurveElement.ParametricCurve;
 using CurveBase.CurveException;
 using CurveDraw.Draw;
@@ -28,18 +29,18 @@ using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
 {
-    public class BezierCurve : ICurve
+    public class ParametricCubicSplineInterpolationCurve : ICurve
     {
-        private BezierCurveParam curveParam;
+        private ParametricCubicSplineInterpolationCurveParam curveParam;
         private bool canDraw = false;
 
         #region Constructor
-        public BezierCurve(ICurveParam curveParam)
+        public ParametricCubicSplineInterpolationCurve(ICurveParam curveParam)
         {
             if (canDrawCurve(curveParam))
             {
                 canDraw = true;
-                this.curveParam = (BezierCurveParam)curveParam;
+                this.curveParam = (ParametricCubicSplineInterpolationCurveParam)curveParam;
             }
         }
         #endregion
@@ -50,16 +51,12 @@ namespace CurveDraw.Curve
             NormalCurvePointList list = new NormalCurvePointList();
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
 
-            BezierCurveInterpolatedData data = new BezierCurveInterpolatedData(curveParam);
-            list.AddRange(sampleABezierCurve(data.Curve));
+            ParametricCubicSplineInterpolationInterpolatedData data = new ParametricCubicSplineInterpolationInterpolatedData(curveParam);
+            list.AddRange(sampleAPCSICurve(data.Curve));
             list.Add(data.getLastPoint());
-            list.Label = "[BZ]";
+            list.Label = "[PCSI]";
             list.PaneCurveType = PaneCurveType.realCurve;
             result.Add(list, DrawType.LineNoDot);
-
-            curveParam.PointList.Label = "[BZC]";
-            curveParam.PointList.PaneCurveType = PaneCurveType.connectingSupportingCurve;
-            result.Add(curveParam.PointList, DrawType.LineNoDot);
             return result;
         }
 
@@ -69,32 +66,41 @@ namespace CurveDraw.Curve
         }
         #endregion
 
-        #region Private.Methods
+        #region Private Member
         private bool canDrawCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == InterpolationCurveType.bezierCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.pcsiCurve)
             {
-                BezierCurveParam param = (BezierCurveParam)curveParam;
+                ParametricCubicSplineInterpolationCurveParam param = (ParametricCubicSplineInterpolationCurveParam)curveParam;
                 if (param.Count < 2)
-                    throw new InvalidBasePointsException(InterpolationCurveType.bezierCurve, "At least two points are needed to draw Bezier Curve");
+                    throw new InvalidBasePointsException(InterpolationCurveType.pcsiCurve, "At least two points are needed to draw Parametric Cubic Spline Interpolation Curve");
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.bezierCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.pcsiCurve, curveParam.getCurveType());
             }
             return true;
         }
 
-        private List<DataPoint> sampleABezierCurve(BezierParametricCurveElement curve)
+        private List<DataPoint> sampleAPCSICurve(ParametricCubicSplineInterpolationCurveElement curve)
         {
-            double stepSize = 0.002;
-            int step = 500;
-            double parametricValue = 0;
+            double stepSize = 0.005;
+            int step = 200;
+            if (curve.Interval.Length > 1)
+            {
+                stepSize = curve.Interval.Length.AccurateValue / step;
+            }
+            else
+            {
+                step = (int)(curve.Interval.Length.AccurateValue / stepSize);
+            }
+
+            DoubleExtension parametricValue = curve.Interval.LeftBorder;
             List<DataPoint> pts = new List<DataPoint>();
             int count = 0;
             while (count++ < step)
             {
-                pts.Add(curve.calculatePoint(new DoubleExtension(parametricValue)));
+                pts.Add(curve.calculatePoint(parametricValue));
                 parametricValue += stepSize;
             }
             return pts;

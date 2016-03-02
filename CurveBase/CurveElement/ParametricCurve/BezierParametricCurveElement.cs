@@ -19,6 +19,7 @@ using System.Text;
 
 using Util.Tool;
 using Util.Variable;
+using Util.Variable.Interval;
 using Util.Variable.PointList;
 
 namespace CurveBase.CurveElement.ParametricCurve
@@ -32,15 +33,16 @@ namespace CurveBase.CurveElement.ParametricCurve
         public BezierParametricCurveElement(NormalCurvePointList pointList)
         {
             this.pointList = pointList;
-            combination = new List<int>();
+            this.combination = new List<int>();
             updateCombination(pointList.Count - 1);
+            this.interval = new DataInterval(0, 1);
         }
         #endregion
 
         #region Public.Interface
         public override DataPoint calculatePoint(DoubleExtension doubleExtension)
         {
-            Debug.Assert(doubleExtension <= 1.0001 && doubleExtension >= -0.0001, "Invalid argument for BezierCurve.calculatePoint()");
+            Debug.Assert(doubleExtension <= interval.RightBorder && doubleExtension >= interval.LeftBorder, "The parameter is out of range for BezierCurve.");
             double xVal = 0;
             double yVal = 0;
             double basisFunction = 1;
@@ -76,7 +78,7 @@ namespace CurveBase.CurveElement.ParametricCurve
 
         private DoubleExtension calculateBasisFunction(DoubleExtension doubleExtension, int big, int small)
         {
-            Debug.Assert(doubleExtension < 1.0001 && doubleExtension > -0.0001 && big >= small, "Invalid argument for BezierCurve.calculateOne()");
+            Debug.Assert(doubleExtension <= interval.RightBorder && doubleExtension >= interval.LeftBorder && big >= small, "Invalid argument for BezierCurve.calculateOne()");
             return new DoubleExtension(combination[small] * Math.Pow(doubleExtension.AccurateValue, small) * Math.Pow(1 - doubleExtension.AccurateValue, big - small));
         }
         #endregion

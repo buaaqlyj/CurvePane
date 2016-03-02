@@ -22,7 +22,7 @@ namespace CurveBase.CurveException
     [Serializable]
     public sealed class UnmatchedCurveParamTypeException : Exception, ISerializable
     {
-        private CurveType curveType1 = CurveType.unknown, curveType2 = CurveType.unknown;
+        private InterpolationCurveType curveType1 = InterpolationCurveType.unknown, curveType2 = InterpolationCurveType.unknown;
         
         #region Constructor
         public UnmatchedCurveParamTypeException()
@@ -34,21 +34,21 @@ namespace CurveBase.CurveException
         public UnmatchedCurveParamTypeException(string message, Exception innerException)
             : base(message, innerException) { }
 
-        public UnmatchedCurveParamTypeException(CurveType curveType1, CurveType curveType2)
+        public UnmatchedCurveParamTypeException(InterpolationCurveType curveType1, InterpolationCurveType curveType2)
             : base() 
         {
             this.curveType1 = curveType1;
             this.curveType2 = curveType2;
         }
 
-        public UnmatchedCurveParamTypeException(string message, CurveType curveType1, CurveType curveType2)
+        public UnmatchedCurveParamTypeException(string message, InterpolationCurveType curveType1, InterpolationCurveType curveType2)
             : base(message) 
         {
             this.curveType1 = curveType1;
             this.curveType2 = curveType2;
         }
 
-        public UnmatchedCurveParamTypeException(string message, CurveType curveType1, CurveType curveType2, Exception innerException)
+        public UnmatchedCurveParamTypeException(string message, InterpolationCurveType curveType1, InterpolationCurveType curveType2, Exception innerException)
             : base(message, innerException) 
         {
             this.curveType1 = curveType1;
@@ -62,8 +62,8 @@ namespace CurveBase.CurveException
             get
             {
                 string msg = base.Message;
-                if (curveType1 != CurveType.unknown && curveType2 != CurveType.unknown)
-                    msg = "The curve you are drawing is " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType1) + ", but you used the parameters of " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType2) + ".";
+                if (curveType1 != InterpolationCurveType.unknown && curveType2 != InterpolationCurveType.unknown)
+                    msg = "The curve you are drawing is " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType1) + ", but you used the parameters of " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType2) + ".";
                 return msg;
             }
         }
@@ -73,8 +73,8 @@ namespace CurveBase.CurveException
         private UnmatchedCurveParamTypeException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            curveType1 = (CurveType)info.GetInt32("DrawingType");
-            curveType2 = (CurveType)info.GetInt32("ParameterType");
+            curveType1 = (InterpolationCurveType)info.GetInt32("DrawingType");
+            curveType2 = (InterpolationCurveType)info.GetInt32("ParameterType");
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
@@ -86,7 +86,7 @@ namespace CurveBase.CurveException
         #endregion
 
         #region Property
-        public CurveType DrawingType
+        public InterpolationCurveType DrawingType
         {
             get
             {
@@ -94,7 +94,7 @@ namespace CurveBase.CurveException
             }
         }
 
-        public CurveType ParameterType
+        public InterpolationCurveType ParameterType
         {
             get
             {

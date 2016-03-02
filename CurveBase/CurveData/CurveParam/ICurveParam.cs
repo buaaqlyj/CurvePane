@@ -16,6 +16,6 @@ namespace CurveBase.CurveData.CurveParam
 {
     public interface ICurveParam
     {
-        CurveType getCurveType();
+        InterpolationCurveType getCurveType();
     }
 }

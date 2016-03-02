@@ -38,7 +38,7 @@ namespace CurveBase.CurveElement.ParametricCurve
         }
         #endregion
 
-        #region ParametricCurve Member
+        #region ParametricCurveElement Member
         public override DataPoint calculatePoint(DoubleExtension doubleExtension)
         {
             Debug.Assert(interval.isBetweenBordersCloseInterval(doubleExtension), "Invalid argument for NurbsParametricCurveElement.calculatePoint()");
@@ -60,18 +60,18 @@ namespace CurveBase.CurveElement.ParametricCurve
         #region Private.Method
         protected override void calculateBasisFunction(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.nurbsCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.nurbsCurve)
             {
                 NurbsCurveParam param = (NurbsCurveParam)curveParam;
-                Dynamic2DArray<BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement> basisFunctions = new Dynamic2DArray<BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement>();
+                Dynamic2DArray<PiecewiseIntervalPolynomialCurveElement> basisFunctions = new Dynamic2DArray<PiecewiseIntervalPolynomialCurveElement>();
                 int total = param.Degree + param.PointList.Count;
                 DoubleExtension denominator10, denominator20, numerator11, numerator10, numerator21, numerator20;
-                BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement curve1, curve2;
+                PiecewiseIntervalPolynomialCurveElement curve1, curve2;
                 numerator11 = new DoubleExtension(1);
                 numerator21 = new DoubleExtension(-1);
                 for (int i = 0; i < total; i++)
                 {
-                    basisFunctions.SetArrayElement(0, i, new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(i, param.Interval));
+                    basisFunctions.SetArrayElement(0, i, new PiecewiseIntervalPolynomialCurveElement(i, param.Interval));
                 }
                 for (int i = 1; i <= param.Degree; i++)
                 {
@@ -90,7 +90,7 @@ namespace CurveBase.CurveElement.ParametricCurve
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.nurbsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.nurbsCurve, curveParam.getCurveType());
             }
         }
         #endregion

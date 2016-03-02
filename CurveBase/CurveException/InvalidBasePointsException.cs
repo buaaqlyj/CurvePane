@@ -22,7 +22,7 @@ namespace CurveBase.CurveException
     [Serializable]
     public sealed class InvalidBasePointsException : Exception, ISerializable
     {
-        private CurveType curveType = CurveType.unknown;
+        private InterpolationCurveType curveType = InterpolationCurveType.unknown;
         private string additionalMessage = "";
 
         #region Constructor
@@ -35,21 +35,21 @@ namespace CurveBase.CurveException
         public InvalidBasePointsException(string message, Exception innerException)
             : base(message, innerException) { }
 
-        public InvalidBasePointsException(CurveType curveType, string additionalMessage)
+        public InvalidBasePointsException(InterpolationCurveType curveType, string additionalMessage)
             : base() 
         {
             this.curveType = curveType;
             this.additionalMessage = additionalMessage;
         }
 
-        public InvalidBasePointsException(string message, CurveType curveType, string additionalMessage)
+        public InvalidBasePointsException(string message, InterpolationCurveType curveType, string additionalMessage)
             : base(message)
         {
             this.curveType = curveType;
             this.additionalMessage = additionalMessage;
         }
 
-        public InvalidBasePointsException(string message, CurveType curveType, string additionalMessage, Exception innerException)
+        public InvalidBasePointsException(string message, InterpolationCurveType curveType, string additionalMessage, Exception innerException)
             : base(message, innerException)
         {
             this.curveType = curveType;
@@ -62,7 +62,7 @@ namespace CurveBase.CurveException
         {
             get
             {
-                string msg = "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<CurveType>(curveType) + " can't be draw as request.";
+                string msg = "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType) + " can't be draw as request.";
                 if (additionalMessage != "") msg += Environment.NewLine + additionalMessage;
                 return msg;
             }
@@ -74,7 +74,7 @@ namespace CurveBase.CurveException
             : base(info, context)
         {
             additionalMessage = info.GetString("AdditionalMessage");
-            curveType = (CurveType)info.GetInt32("DrawingType");
+            curveType = (InterpolationCurveType)info.GetInt32("DrawingType");
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
@@ -86,7 +86,7 @@ namespace CurveBase.CurveException
         #endregion
 
         #region Property
-        public CurveType DrawingType
+        public InterpolationCurveType DrawingType
         {
             get
             {

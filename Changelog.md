@@ -1,4 +1,13 @@
 ****
+# CurvePane_vx.x.x
+
+## Changelog
+
+* Tweak the names of some classes.
+* Add members to ICurvePointList.
+* Implement the Parametric Cubic Spline Interpolation Curve.
+
+****
 # CurvePane_v0.6.23
 
 ## Release Note

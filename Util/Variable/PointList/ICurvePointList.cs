@@ -14,6 +14,8 @@
 
 using System.Collections.Generic;
 
+using Util.Enum;
+
 namespace Util.Variable.PointList
 {
     public interface ICurvePointList
@@ -39,5 +41,11 @@ namespace Util.Variable.PointList
         IEnumerator<DataPoint> GetEnumerator();
 
         string Label { get; set; }
+
+        PaneCurveType PaneCurveType { get; set; }
+
+        List<DoubleExtension> XList { get; }
+
+        List<DoubleExtension> YList { get; }
     }
 }

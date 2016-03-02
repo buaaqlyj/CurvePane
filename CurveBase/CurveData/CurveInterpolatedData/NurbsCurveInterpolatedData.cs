@@ -51,9 +51,9 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData Member
-        public override CurveType getCurveType()
+        public override InterpolationCurveType getCurveType()
         {
-            return CurveType.nurbsCurve;
+            return InterpolationCurveType.nurbsCurve;
         }
 
         public override DataPoint getLastPoint()
@@ -65,14 +65,14 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #region Private.Methods
         protected override void InitialCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.nurbsCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.nurbsCurve)
             {
                 NurbsCurveParam param = (NurbsCurveParam)curveParam;
                 this.curve = new NurbsParametricCurveElement(param);
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.nurbsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.nurbsCurve, curveParam.getCurveType());
             }
         }
         #endregion

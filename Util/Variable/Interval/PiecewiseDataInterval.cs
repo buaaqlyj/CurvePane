@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 
 using Util.Tool;
+using Util.Variable.PointList;
 
 namespace Util.Variable.Interval
 {
@@ -103,6 +104,12 @@ namespace Util.Variable.Interval
             }
             multiplycity = ArrayExtension.GetMaxCountFromArray<DoubleExtension>(cutPoints);
         }
+
+        public PiecewiseDataInterval(ICurvePointList points)
+            : this(points.XList)
+        {
+            
+        }
         #endregion
 
         #region Property
@@ -173,8 +180,15 @@ namespace Util.Variable.Interval
         {
             if (base.Equals(other))
             {
-                if (other.CutPoints == this.CutPoints)
+                if (other.CutPoints.Count == this.CutPoints.Count)
                 {
+                    for (int i = 0; i < this.CutPoints.Count; i++)
+                    {
+                        if (other.CutPoints[i] != this.CutPoints[i])
+                        {
+                            return false;
+                        }
+                    }
                     return true;
                 }
             }

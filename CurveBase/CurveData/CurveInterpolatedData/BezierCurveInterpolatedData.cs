@@ -47,9 +47,9 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         #endregion
 
         #region ICurveInterpolatedData
-        public CurveType getCurveType()
+        public InterpolationCurveType getCurveType()
         {
-            return CurveType.bezierCurve;
+            return InterpolationCurveType.bezierCurve;
         }
 
         public DataPoint getLastPoint()

@@ -21,6 +21,7 @@ using CurveBase.CurveException;
 using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveData.CurveInterpolatedData;
 using CurveDraw.Draw;
+using Util.Enum;
 using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
@@ -68,7 +69,7 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    foreach (LagarangeIntervalPolynomialCurveElement curve in data.Curves)
+                    foreach (NormalIntervalPolynomialCurveElement curve in data.Curves)
                     {
                         list.AddRange(sampleAPolynomialCurve(curve, 50));
                     }
@@ -76,6 +77,7 @@ namespace CurveDraw.Curve
                 }
                 list.Label = "[LP]";
             }
+            list.PaneCurveType = PaneCurveType.realCurve;
             result.Add(list, DrawType.LineNoDot);
             return result;
         }
@@ -89,17 +91,17 @@ namespace CurveDraw.Curve
         #region Private.Methods
         private bool canDrawCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.polynomialCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.polynomialCurve)
             {
                 PolynomialCurveParam param = (PolynomialCurveParam)curveParam;
                 if (param.Count < 2)
-                    throw new InvalidBasePointsException(CurveType.polynomialCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
+                    throw new InvalidBasePointsException(InterpolationCurveType.polynomialCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
                 if (!param.PointList.noDuplicatedX())
-                    throw new InvalidBasePointsException(CurveType.polynomialCurve, "At least two points given have the same X value.");
+                    throw new InvalidBasePointsException(InterpolationCurveType.polynomialCurve, "At least two points given have the same X value.");
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.polynomialCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.polynomialCurve, curveParam.getCurveType());
             }
             return true;
         }

@@ -15,12 +15,15 @@
 using System;
 using System.Collections.Generic;
 
+using Util.Enum;
+
 namespace Util.Variable.PointList
 {
     public class OrderedCurvePointList : ICurvePointList
     {
         protected SortedList<DoubleExtension, DataPoint> sortedPointList;
         protected string label = "";
+        protected PaneCurveType paneCurveType = PaneCurveType.unknown;
 
         #region Constructor
         public OrderedCurvePointList(List<DataPoint> points)
@@ -105,6 +108,44 @@ namespace Util.Variable.PointList
             set
             {
                 label = value;
+            }
+        }
+
+        public PaneCurveType PaneCurveType
+        {
+            get
+            {
+                return paneCurveType;
+            }
+            set
+            {
+                paneCurveType = value;
+            }
+        }
+
+        public List<DoubleExtension> XList
+        {
+            get
+            {
+                List<DoubleExtension> X = new List<DoubleExtension>();
+                foreach (DoubleExtension item in sortedPointList.Keys)
+                {
+                    X.Add(item);
+                }
+                return X;
+            }
+        }
+
+        public List<DoubleExtension> YList
+        {
+            get
+            {
+                List<DoubleExtension> Y = new List<DoubleExtension>();
+                foreach (DataPoint item in sortedPointList.Values)
+                {
+                    Y.Add(item.Y);
+                }
+                return Y;
             }
         }
         #endregion

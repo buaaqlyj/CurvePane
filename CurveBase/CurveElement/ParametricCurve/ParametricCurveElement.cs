@@ -17,13 +17,26 @@ using System.Collections.Generic;
 using System.Text;
 
 using Util.Variable;
+using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.ParametricCurve
 {
     public abstract class ParametricCurveElement
     {
+        protected DataInterval interval;
+
         #region Public.Interface
         public abstract DataPoint calculatePoint(DoubleExtension doubleExtension);
+        #endregion
+
+        #region Property
+        public DataInterval Interval
+        {
+            get
+            {
+                return interval;
+            }
+        }
         #endregion
     }
 }

@@ -16,7 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Util.Enum;
 using Util.Variable;
+using Util.Variable.Interval;
 using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveParam
@@ -25,6 +27,7 @@ namespace CurveBase.CurveData.CurveParam
     {
         private NormalCurvePointList pointList;
         private CubicSplineInterpolationCurveParam xList, yList;
+        private PiecewiseDataInterval interval;
 
         #region Constructor
         public ParametricCubicSplineInterpolationCurveParam(List<DataPoint> points, PCSIBorderConditionType curveType, DoubleExtension val1, DoubleExtension val2, DoubleExtension val3, DoubleExtension val4)
@@ -37,15 +40,22 @@ namespace CurveBase.CurveData.CurveParam
             if (points.Count < 2)
                 throw new ArgumentException("At least two points are needed for PCSI Curve drawing.");
 
+            pointList = new NormalCurvePointList(points);
+
             xPointList.Add(new DataPoint(DoubleExtension.Zero, points[0].X));
             yPointList.Add(new DataPoint(DoubleExtension.Zero, points[0].Y));
             DoubleExtension accumulatedChordLength = DoubleExtension.Zero;
+            List<DoubleExtension> cutPoints = new List<DoubleExtension>();
+            cutPoints.Add(accumulatedChordLength);
             for (int i = 1; i < points.Count; i++)
             {
                 accumulatedChordLength += DataPoint.distance(points[i - 1], points[i]);
+                cutPoints.Add(accumulatedChordLength);
                 xPointList.Add(new DataPoint(accumulatedChordLength, points[i].X));
                 yPointList.Add(new DataPoint(accumulatedChordLength, points[i].Y));
             }
+
+            this.interval = new PiecewiseDataInterval(cutPoints);
 
             switch (curveType)
             {
@@ -104,10 +114,36 @@ namespace CurveBase.CurveData.CurveParam
         }
         #endregion
 
-        #region ICurveParam Member
-        public CurveType getCurveType()
+        #region Property
+        public CubicSplineInterpolationCurveParam XParam
         {
-            return CurveType.pcsiCurve;
+            get
+            {
+                return xList;
+            }
+        }
+
+        public CubicSplineInterpolationCurveParam YParam
+        {
+            get
+            {
+                return yList;
+            }
+        }
+
+        public PiecewiseDataInterval Interval
+        {
+            get
+            {
+                return interval;
+            }
+        }
+        #endregion
+
+        #region ICurveParam Member
+        public InterpolationCurveType getCurveType()
+        {
+            return InterpolationCurveType.pcsiCurve;
         }
         #endregion
 
@@ -179,6 +215,28 @@ namespace CurveBase.CurveData.CurveParam
             {
                 pointList.Label = value;
             }
+        }
+
+        public PaneCurveType PaneCurveType
+        {
+            get
+            {
+                return pointList.PaneCurveType;
+            }
+            set
+            {
+                pointList.PaneCurveType = value;
+            }
+        }
+
+        public List<DoubleExtension> XList
+        {
+            get { return pointList.XList; }
+        }
+
+        public List<DoubleExtension> YList
+        {
+            get { return pointList.YList; }
         }
         #endregion
     }

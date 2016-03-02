@@ -22,14 +22,14 @@ using Util.Variable.Interval;
 
 namespace CurveBase.CurveElement.IntervalPolynomialCurve
 {
-    public class BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement : IntervalPolynomialCurveElement
+    public class PiecewiseIntervalPolynomialCurveElement : IntervalPolynomialCurveElement
     {
         protected new PiecewiseDataInterval interval;
-        protected List<LagarangeIntervalPolynomialCurveElement> polynomialCurves;
+        protected List<NormalIntervalPolynomialCurveElement> polynomialCurves;
         protected bool equalsToZero = false;
 
         #region Constructor
-        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(List<LagarangeIntervalPolynomialCurveElement> curves, PiecewiseDataInterval interval)
+        public PiecewiseIntervalPolynomialCurveElement(List<NormalIntervalPolynomialCurveElement> curves, PiecewiseDataInterval interval)
         {
             if (curves.Count != interval.SubIntervals.Count)
                 throw new ArgumentException("Curves' count is different from intervals' count.");
@@ -42,15 +42,21 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
             equalsToZero = true;
         }
+        
+        public PiecewiseIntervalPolynomialCurveElement(List<NormalIntervalPolynomialCurveElement> curves, List<DoubleExtension> cutPoints)
+            : this(curves, new PiecewiseDataInterval(cutPoints))
+        {
+            
+        }
 
-        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(int index, PiecewiseDataInterval interval)
+        public PiecewiseIntervalPolynomialCurveElement(int index, PiecewiseDataInterval interval)
         {
             Debug.Assert(index > -1 && index < interval.SubIntervals.Count, "The index is out of range when initializing the BSplineBasisFunctionIntervalPolynomialCurve.");
-            polynomialCurves = new List<LagarangeIntervalPolynomialCurveElement>();
+            polynomialCurves = new List<NormalIntervalPolynomialCurveElement>();
             if (interval.SubIntervals[index].NullInterval) equalsToZero = true;
             for (int i = 0; i < interval.SubIntervals.Count; i++)
             {
-                polynomialCurves.Add(new LagarangeIntervalPolynomialCurveElement(new DoubleExtension((!equalsToZero && i == index) ? 1 : 0), interval.SubIntervals[i]));
+                polynomialCurves.Add(new NormalIntervalPolynomialCurveElement(new DoubleExtension((!equalsToZero && i == index) ? 1 : 0), interval.SubIntervals[i]));
             }
             this.interval = interval;
         }
@@ -81,7 +87,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
         }
 
-        public List<LagarangeIntervalPolynomialCurveElement> Curves
+        public List<NormalIntervalPolynomialCurveElement> Curves
         {
             get
             {
@@ -97,7 +103,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             }
         }
 
-        public LagarangeIntervalPolynomialCurveElement this[int index]
+        public NormalIntervalPolynomialCurveElement this[int index]
         {
             get
             {
@@ -111,42 +117,42 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #endregion
 
         #region Public.Interface
-        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
+        public PiecewiseIntervalPolynomialCurveElement MultiplyByLinear(DoubleExtension val1, DoubleExtension val0)
         {
-            List<LagarangeIntervalPolynomialCurveElement> curve = new List<LagarangeIntervalPolynomialCurveElement>();
-            LagarangeIntervalPolynomialCurveElement item = null;
+            List<NormalIntervalPolynomialCurveElement> curve = new List<NormalIntervalPolynomialCurveElement>();
+            NormalIntervalPolynomialCurveElement item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
                 item = Curves[i].MultiplyByLinear(val1, val0);
                 curve.Add(item);
             }
-            return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curve, Interval);
+            return new PiecewiseIntervalPolynomialCurveElement(curve, Interval);
         }
 
-        public BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement DivideByNumber(DoubleExtension val)
+        public PiecewiseIntervalPolynomialCurveElement DivideByNumber(DoubleExtension val)
         {
-            List<LagarangeIntervalPolynomialCurveElement> curve = new List<LagarangeIntervalPolynomialCurveElement>();
-            LagarangeIntervalPolynomialCurveElement item = null;
+            List<NormalIntervalPolynomialCurveElement> curve = new List<NormalIntervalPolynomialCurveElement>();
+            NormalIntervalPolynomialCurveElement item = null;
             for (int i = 0; i < Curves.Count; i++)
             {
                 item = Curves[i].DivideByNumber(val);
                 curve.Add(item);
             }
-            return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curve, Interval);
+            return new PiecewiseIntervalPolynomialCurveElement(curve, Interval);
         }
         #endregion
 
         #region Operator
-        public static BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement operator +(BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement c1, BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement c2)
+        public static PiecewiseIntervalPolynomialCurveElement operator +(PiecewiseIntervalPolynomialCurveElement c1, PiecewiseIntervalPolynomialCurveElement c2)
         {
             if (c1.Interval.Equals(c2.Interval))
             {
-                List<LagarangeIntervalPolynomialCurveElement> curves = new List<LagarangeIntervalPolynomialCurveElement>();
+                List<NormalIntervalPolynomialCurveElement> curves = new List<NormalIntervalPolynomialCurveElement>();
                 for (int i = 0; i < c1.Curves.Count; i++)
                 {
                     curves.Add(c1.Curves[i] + c2.Curves[i]);
                 }
-                return new BSplineOrNurbsBasisFunctionIntervalPolynomialCurveElement(curves, c1.Interval);
+                return new PiecewiseIntervalPolynomialCurveElement(curves, c1.Interval);
             }
             throw new ArgumentException("The two BSplineBasisFunctionIntervalPolynomialCurve have different intervals.");
         }

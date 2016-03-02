@@ -12,14 +12,21 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-using Util.Variable;
+using System.ComponentModel;
 
-namespace CurveBase.CurveData.CurveInterpolatedData
+namespace Util.Enum
 {
-    public interface ICurveInterpolatedData
+    public enum PaneCurveType
     {
-        InterpolationCurveType getCurveType();
-
-        DataPoint getLastPoint();
+        [Description("unknown curve")]
+        unknown = -1,
+        [Description("curve")]
+        realCurve = 0,
+        [Description("supporting curve that connects base points")]
+        connectingSupportingCurve = 1,
+        [Description("other kind of supporting curve")]
+        otherSupportingCurve = 2,
+        [Description("base points curve")]
+        baseCurve = 3
     }
 }

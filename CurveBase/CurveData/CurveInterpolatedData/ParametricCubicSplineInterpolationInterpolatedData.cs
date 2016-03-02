@@ -18,6 +18,7 @@ using System.Text;
 
 using CurveBase.CurveData.CurveParam;
 using CurveBase.CurveElement.IntervalPolynomialCurve;
+using CurveBase.CurveElement.ParametricCurve;
 using Util.Tool;
 using Util.Variable;
 using Util.Variable.Matrix;
@@ -25,38 +26,40 @@ using Util.Variable.PointList;
 
 namespace CurveBase.CurveData.CurveInterpolatedData
 {
-    public class CubicSplineInterpolationInterpolatedData : ICurveInterpolatedData
+    public class ParametricCubicSplineInterpolationInterpolatedData : ICurveInterpolatedData
     {
-        private PiecewiseIntervalPolynomialCurveElement curve = null;
-        private CubicSplineInterpolationCurveParam curveParam;
-
+        protected ParametricCubicSplineInterpolationCurveElement curve;
+        private ParametricCubicSplineInterpolationCurveParam curveParam = null;
+        
         #region Constructor
-        public CubicSplineInterpolationInterpolatedData(CubicSplineInterpolationCurveParam curveParam)
+        public ParametricCubicSplineInterpolationInterpolatedData(ParametricCubicSplineInterpolationCurveParam curveParam)
         {
             this.curveParam = curveParam;
-            this.curve = GenerateCurve(curveParam);
-        }
-        #endregion
-
-        #region Property
-        public PiecewiseIntervalPolynomialCurveElement Curve
-        {
-            get
-            {
-                return curve;
-            }
+            PiecewiseIntervalPolynomialCurveElement xCurve = GenerateCurve(curveParam.XParam);
+            PiecewiseIntervalPolynomialCurveElement yCurve = GenerateCurve(curveParam.YParam);
+            curve = new ParametricCubicSplineInterpolationCurveElement(xCurve, yCurve);
         }
         #endregion
 
         #region ICurveInterpolatedData Member
         public InterpolationCurveType getCurveType()
         {
-            return InterpolationCurveType.csiCurve;
+            return InterpolationCurveType.pcsiCurve;
         }
 
         public DataPoint getLastPoint()
         {
-            return curveParam.PointList.RightBorderPoint;
+            return curve.calculatePoint(curve.Interval.RightBorder);
+        }
+        #endregion
+
+        #region Property
+        public ParametricCubicSplineInterpolationCurveElement Curve
+        {
+            get 
+            {
+                return curve;
+            }
         }
         #endregion
 
@@ -70,7 +73,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             {
                 uVal = (curveParam[i].X.AccurateValue - curveParam[i - 1].X.AccurateValue) / (curveParam[i + 1].X.AccurateValue - curveParam[i - 1].X.AccurateValue);
                 dVal = 6 / (curveParam[i + 1].X.AccurateValue - curveParam[i - 1].X.AccurateValue) * (
-                    (curveParam[i + 1].Y.AccurateValue - curveParam[i].Y.AccurateValue) / (curveParam[i + 1].X.AccurateValue - curveParam[i].X.AccurateValue) - 
+                    (curveParam[i + 1].Y.AccurateValue - curveParam[i].Y.AccurateValue) / (curveParam[i + 1].X.AccurateValue - curveParam[i].X.AccurateValue) -
                     (curveParam[i].Y.AccurateValue - curveParam[i - 1].Y.AccurateValue) / (curveParam[i].X.AccurateValue - curveParam[i - 1].X.AccurateValue)
                     );
                 coefficientsArray[i, i - 1] = uVal;
@@ -112,7 +115,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
                     coefficientsArray[curveParam.Count - 1, 0] = 1;
                     coefficientsArray[curveParam.Count - 1, curveParam.Count - 1] = -1;
                     val2 = 6 * (
-                        (curveParam[1].Y.AccurateValue - curveParam[0].Y.AccurateValue) / (curveParam[1].X.AccurateValue - curveParam[0].X.AccurateValue) - 
+                        (curveParam[1].Y.AccurateValue - curveParam[0].Y.AccurateValue) / (curveParam[1].X.AccurateValue - curveParam[0].X.AccurateValue) -
                         (curveParam[curveParam.Count - 1].Y.AccurateValue - curveParam[curveParam.Count - 2].Y.AccurateValue) / (curveParam[curveParam.Count - 1].X.AccurateValue - curveParam[curveParam.Count - 2].X.AccurateValue)
                         );
                     constantArray[0, 0] = val2;

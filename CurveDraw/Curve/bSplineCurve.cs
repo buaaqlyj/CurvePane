@@ -22,6 +22,7 @@ using CurveBase.CurveData.CurveInterpolatedData;
 using CurveBase.CurveElement.ParametricCurve;
 using CurveBase.CurveException;
 using CurveDraw.Draw;
+using Util.Enum;
 using Util.Tool;
 using Util.Variable;
 using Util.Variable.PointList;
@@ -54,9 +55,11 @@ namespace CurveDraw.Curve
             list.AddRange(sampleABSplineCurve(data.Curve));
             list.Add(data.getLastPoint());
             list.Label = "[BS]";
+            list.PaneCurveType = PaneCurveType.realCurve;
             result.Add(list, DrawType.LineNoDot);
 
             curveParam.PointList.Label = "[BSC]";
+            curveParam.PointList.PaneCurveType = PaneCurveType.connectingSupportingCurve;
             result.Add(curveParam.PointList, DrawType.LineNoDot);
             return result;
         }
@@ -70,17 +73,17 @@ namespace CurveDraw.Curve
         #region Private.Methods
         private bool canDrawCurve(ICurveParam curveParam)
         {
-            if (curveParam.getCurveType() == CurveType.bsCurve)
+            if (curveParam.getCurveType() == InterpolationCurveType.bsCurve)
             {
                 BSplineCurveParam param = (BSplineCurveParam)curveParam;
                 if (param.Count <= param.Degree)
-                    throw new InvalidBasePointsException(CurveType.bsCurve, (param.Degree - param.Count + 1).ToString() + " more data points are needed to draw B-Spline Curve");
+                    throw new InvalidBasePointsException(InterpolationCurveType.bsCurve, (param.Degree - param.Count + 1).ToString() + " more data points are needed to draw B-Spline Curve");
                 if (param.Interval.CutPoints[param.Degree] == param.Interval.CutPoints[param.PointList.Count])
-                    throw new InvalidBasePointsException(CurveType.bsCurve, "The degree is too high or the base points are insufficient or too many duplicated nodes are specified.");
+                    throw new InvalidBasePointsException(InterpolationCurveType.bsCurve, "The degree is too high or the base points are insufficient or too many duplicated nodes are specified.");
             }
             else
             {
-                throw new UnmatchedCurveParamTypeException(CurveType.bsCurve, curveParam.getCurveType());
+                throw new UnmatchedCurveParamTypeException(InterpolationCurveType.bsCurve, curveParam.getCurveType());
             }
             return true;
         }
