@@ -48,6 +48,8 @@ namespace CurvePane
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.csiTabPage = new System.Windows.Forms.TabPage();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox10 = new System.Windows.Forms.TextBox();
@@ -55,6 +57,12 @@ namespace CurvePane
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.pcsiTabPage = new System.Windows.Forms.TabPage();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
@@ -107,14 +115,7 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.csiTabPage.SuspendLayout();
@@ -194,6 +195,26 @@ namespace CurvePane
             this.csiTabPage.Text = "三次样条插值曲线";
             this.csiTabPage.UseVisualStyleBackColor = true;
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(348, 42);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(65, 12);
+            this.label26.TabIndex = 9;
+            this.label26.Text = "一阶导数值";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(93, 42);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(65, 12);
+            this.label25.TabIndex = 8;
+            this.label25.Text = "一阶导数值";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -270,6 +291,60 @@ namespace CurvePane
             this.pcsiTabPage.Text = "参数样条曲线";
             this.pcsiTabPage.UseVisualStyleBackColor = true;
             // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(419, 66);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(100, 21);
+            this.textBox14.TabIndex = 19;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(348, 69);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(65, 12);
+            this.label30.TabIndex = 18;
+            this.label30.Text = "一阶导数值";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(164, 66);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(100, 21);
+            this.textBox13.TabIndex = 17;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(93, 69);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(65, 12);
+            this.label29.TabIndex = 16;
+            this.label29.Text = "一阶导数值";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(348, 42);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(65, 12);
+            this.label28.TabIndex = 15;
+            this.label28.Text = "一阶导数值";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(93, 42);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(65, 12);
+            this.label27.TabIndex = 14;
+            this.label27.Text = "一阶导数值";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -309,7 +384,7 @@ namespace CurvePane
             this.comboBox3.Items.AddRange(new object[] {
             "指定首尾一阶导数",
             "首尾端点曲率均为0",
-            "指定首尾端点的曲率中心"});
+            "指定首尾端点的曲率中心方向"});
             this.comboBox3.Location = new System.Drawing.Point(93, 13);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(121, 20);
@@ -576,6 +651,7 @@ namespace CurvePane
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox4);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.curveTypeComboBox);
             this.groupBox1.Controls.Add(this.label1);
@@ -791,79 +867,16 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
-            // label25
+            // checkBox4
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(93, 42);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(65, 12);
-            this.label25.TabIndex = 8;
-            this.label25.Text = "一阶导数值";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(348, 42);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(65, 12);
-            this.label26.TabIndex = 9;
-            this.label26.Text = "一阶导数值";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(93, 42);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(65, 12);
-            this.label27.TabIndex = 14;
-            this.label27.Text = "一阶导数值";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(348, 42);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(65, 12);
-            this.label28.TabIndex = 15;
-            this.label28.Text = "一阶导数值";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(93, 69);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(65, 12);
-            this.label29.TabIndex = 16;
-            this.label29.Text = "一阶导数值";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(164, 66);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(100, 21);
-            this.textBox13.TabIndex = 17;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(419, 66);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(100, 21);
-            this.textBox14.TabIndex = 19;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(348, 69);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(65, 12);
-            this.label30.TabIndex = 18;
-            this.label30.Text = "一阶导数值";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(591, 129);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(144, 16);
+            this.checkBox4.TabIndex = 7;
+            this.checkBox4.Text = "X轴Y轴是否等步长显示";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
             // MainForm
             // 
@@ -976,6 +989,7 @@ namespace CurvePane
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox textBox13;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
 

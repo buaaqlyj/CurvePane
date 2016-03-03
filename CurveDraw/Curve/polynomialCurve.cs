@@ -69,10 +69,11 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    foreach (NormalIntervalPolynomialCurveElement curve in data.Curves)
-                    {
-                        list.AddRange(sampleAPolynomialCurve(curve, 50));
-                    }
+                    //TODO: 更改取样方法
+                    //foreach (NormalIntervalPolynomialCurveElement curve in data.Curves)
+                    //{
+                    //    list.AddRange(sampleAPolynomialCurve(curve, 50));
+                    //}
                     list.Add(data.getLastPoint());
                 }
                 list.Label = "[LP]";

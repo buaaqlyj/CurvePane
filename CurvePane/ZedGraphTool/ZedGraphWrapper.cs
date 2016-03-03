@@ -25,6 +25,7 @@ namespace CurvePane.ZedGraphTool
         private ZedGraphControl zedGraphControl = null;
         private GraphPane masterPane = null;
         private LineItem baseLine = null;
+        private bool sameStepForXY = false;
 
         public ZedGraphWrapper(ZedGraphControl zedGraphControl, string baseName)
         {
@@ -137,6 +138,17 @@ namespace CurvePane.ZedGraphTool
         public void UpdatePaneView()
         {
             zedGraphControl.AxisChange();
+            if (sameStepForXY)
+            {
+                if (zedGraphControl.GraphPane.XAxis.Scale.MajorStep > zedGraphControl.GraphPane.YAxis.Scale.MajorStep)
+                {
+                    zedGraphControl.GraphPane.YAxis.Scale.MajorStep = zedGraphControl.GraphPane.XAxis.Scale.MajorStep;
+                }
+                else
+                {
+                    zedGraphControl.GraphPane.XAxis.Scale.MajorStep = zedGraphControl.GraphPane.YAxis.Scale.MajorStep;
+                }
+            }
             zedGraphControl.Refresh();
         }
         #endregion
@@ -155,6 +167,18 @@ namespace CurvePane.ZedGraphTool
             get
             {
                 return masterPane;
+            }
+        }
+
+        public bool SameStepForXY
+        {
+            get
+            {
+                return sameStepForXY;
+            }
+            set
+            {
+                sameStepForXY = value;
             }
         }
         #endregion

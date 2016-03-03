@@ -46,14 +46,11 @@ namespace CurveDraw.Curve
         #region ICurve Member
         public Dictionary<ICurvePointList, DrawType> sampleCurvePoints()
         {
-            OrderedCurvePointList list = new OrderedCurvePointList();
+            NormalCurvePointList list = new NormalCurvePointList();
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
 
             CubicSplineInterpolationInterpolatedData data = new CubicSplineInterpolationInterpolatedData(curveParam);
-            foreach (NormalIntervalPolynomialCurveElement curve in data.Curve.Curves)
-            {
-                list.AddRange(sampleAPolynomialCurve(curve, 50));
-            }
+            list.AddRange(sampleAPolynomialCurveWithDenserBorder(data.Curve, data.Curve.Curves.Count * 100));
             list.Add(data.getLastPoint());
             list.Label = "[CSI]";
             list.PaneCurveType = PaneCurveType.realCurve;
@@ -85,30 +82,64 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurveElement curve, int maxPointCount)
+        private List<DataPoint> sampleAPolynomialCurveWithDenserBorder(PiecewiseIntervalPolynomialCurveElement curve, int maxPointCount)
         {
             if (maxPointCount < 2)
                 throw new ArgumentOutOfRangeException("maxPointCount", "The desired point count to sample a curve should be bigger than 1.");
-            double stepSize;
-            int step;
-            if (curve.Interval.Length.AccurateValue > 0.001 * maxPointCount)
+            double normalStepSize = 0.001, borderStepSize = 0.0005;
+            int step, stage = 1;
+            if (curve.Interval.Length > 0.2)
             {
-                stepSize = curve.Interval.Length.AccurateValue / maxPointCount;
-                step = maxPointCount;
+                stage = 1;
+                if (curve.Interval.Length.AccurateValue > 0.001 * maxPointCount)
+                {
+                    normalStepSize = (curve.Interval.Length.AccurateValue - 0.2) / maxPointCount;
+                    step = maxPointCount + 400;
+                }
+                else
+                {
+                    step = (int)(curve.Interval.Length.AccurateValue * 1000) + 200;
+                }
             }
             else
             {
-                stepSize = 0.001;
-                step = (int)(curve.Interval.Length.AccurateValue * 1000);
+                stage = 3;
+                step = Convert.ToInt32(curve.Interval.Length.AccurateValue * 2000);
             }
-            double xValue = curve.Interval.LeftBorder.AccurateValue;
+            
+            DoubleExtension xValue = curve.Interval.LeftBorder;
             List<DataPoint> pts = new List<DataPoint>();
-            int count = 0;
-            while (count < step)
+            while (xValue < curve.Interval.RightBorder)
             {
-                pts.Add(new DataPoint(xValue, curve.calculate(new DoubleExtension(xValue)).AccurateValue));
-                xValue += stepSize;
-                count++;
+                pts.Add(new DataPoint(xValue, curve.calculate(xValue)));
+                switch (stage)
+                {
+                    case 1:
+                        if (curve.Interval.RightBorder - xValue <= 0.1)
+                        { 
+                            stage = 3;
+                        }
+                        else if (xValue - curve.Interval.LeftBorder >= 0.1)
+                        {
+                            stage = 2;
+                            xValue += normalStepSize;
+                            break;
+                        }
+                        xValue += borderStepSize;
+                        break;
+                    case 2:
+                        if (curve.Interval.RightBorder - xValue <= 0.1)
+                        {
+                            stage = 3;
+                            xValue += borderStepSize;
+                            break;
+                        }
+                        xValue += normalStepSize;
+                        break;
+                    case 3:
+                        xValue += borderStepSize;
+                        break;
+                }
             }
             return pts;
         }

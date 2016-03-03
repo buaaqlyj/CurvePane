@@ -30,6 +30,15 @@ namespace CurveBase.CurveData.CurveParam
         private PiecewiseDataInterval interval;
 
         #region Constructor
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="points">型值点</param>
+        /// <param name="curveType">边界条件类型</param>
+        /// <param name="val1"></param>
+        /// <param name="val2"></param>
+        /// <param name="val3"></param>
+        /// <param name="val4"></param>
         public ParametricCubicSplineInterpolationCurveParam(List<DataPoint> points, PCSIBorderConditionType curveType, DoubleExtension val1, DoubleExtension val2, DoubleExtension val3, DoubleExtension val4)
         {
             DoubleExtension subValLeftX = DoubleExtension.Zero, subValRightX = DoubleExtension.Zero, subValLeftY = DoubleExtension.Zero, subValRightY = DoubleExtension.Zero;
@@ -61,52 +70,71 @@ namespace CurveBase.CurveData.CurveParam
             {
                 case PCSIBorderConditionType.First_Order_Derivative:
                     subType = CSIBorderConditionType.First_Order_Derivative;
-                    DataVector referenceArcLeft = new DataVector(points[0], points[1]);
-                    DataVector referenceArcRight = new DataVector(points[points.Count - 2], points[points.Count - 1]);
-                    DoubleExtension arcLeft = new DoubleExtension(Math.Atan(val1.AccurateValue));
-                    DoubleExtension arcRight = new DoubleExtension(Math.Atan(val2.AccurateValue));
-                    bool flagLeft = referenceArcLeft.GetTheFlagForCloserArc(arcLeft);
-                    bool flagRight = referenceArcRight.GetTheFlagForCloserArc(arcRight);
-                    if (flagLeft)
-                    {
-                        subValLeftX = new DoubleExtension(Math.Cos(arcLeft.AccurateValue));
-                        subValLeftY = new DoubleExtension(Math.Sin(arcLeft.AccurateValue));
-                    }
-                    else
-                    {
-                        subValLeftX = new DoubleExtension(0 - Math.Cos(arcLeft.AccurateValue));;
-                        subValLeftY = new DoubleExtension(0 - Math.Sin(arcLeft.AccurateValue));
-                    }
-                    if (flagRight)
-                    {
-                        subValRightX = new DoubleExtension(Math.Cos(arcRight.AccurateValue));
-                        subValRightY = new DoubleExtension(Math.Sin(arcRight.AccurateValue));
-                    }
-                    else
-                    {
-                        subValRightX = new DoubleExtension(Math.Cos(0 - arcRight.AccurateValue));
-                        subValRightY = new DoubleExtension(Math.Sin(0 - arcRight.AccurateValue));
-                    }
+                    DoubleExtension arcLeft1 = new DoubleExtension(Math.Atan(val1.AccurateValue));
+                    DoubleExtension arcRight1 = new DoubleExtension(Math.Atan(val2.AccurateValue));
+                    subValLeftX = new DoubleExtension(Math.Cos(arcLeft1.AccurateValue));
+                    subValLeftY = new DoubleExtension(Math.Sin(arcLeft1.AccurateValue));
+                    subValRightX = new DoubleExtension(Math.Cos(arcRight1.AccurateValue));
+                    subValRightY = new DoubleExtension(Math.Sin(arcRight1.AccurateValue));
+                    //DataVector referenceArcLeft1 = new DataVector(points[0], points[1]);
+                    //DataVector referenceArcRight1 = new DataVector(points[points.Count - 2], points[points.Count - 1]);
+                    //bool flagLeft = referenceArcLeft.GetTheFlagForCloserArc(arcLeft);
+                    //bool flagRight = referenceArcRight.GetTheFlagForCloserArc(arcRight);
+                    //if (flagLeft)
+                    //{
+                    //    subValLeftX = new DoubleExtension(Math.Cos(arcLeft.AccurateValue));
+                    //    subValLeftY = new DoubleExtension(Math.Sin(arcLeft.AccurateValue));
+                    //}
+                    //else
+                    //{
+                    //    subValLeftX = new DoubleExtension(0 - Math.Cos(arcLeft.AccurateValue));;
+                    //    subValLeftY = new DoubleExtension(0 - Math.Sin(arcLeft.AccurateValue));
+                    //}
+                    //if (flagRight)
+                    //{
+                    //    subValRightX = new DoubleExtension(Math.Cos(arcRight.AccurateValue));
+                    //    subValRightY = new DoubleExtension(Math.Sin(arcRight.AccurateValue));
+                    //}
+                    //else
+                    //{
+                    //    subValRightX = new DoubleExtension(Math.Cos(0 - arcRight.AccurateValue));
+                    //    subValRightY = new DoubleExtension(Math.Sin(0 - arcRight.AccurateValue));
+                    //}
                     break;
                 case PCSIBorderConditionType.Zero_Curvature:
                     subType = CSIBorderConditionType.Second_Order_Derivative;
                     break;
                 case PCSIBorderConditionType.Centre_of_Curvature:
-                    subType = CSIBorderConditionType.Second_Order_Derivative;
                     if (val1 == points[0].X && val3 == points[0].Y)
                     {
                         throw new ArgumentException("The center of the left border's curvature is the same as the left border point.");
                     }
-                    if (val2 == points[0].X && val4 == points[0].Y)
+                    if (val2 == points[points.Count - 1].X && val4 == points[points.Count - 1].Y)
                     {
-                        throw new ArgumentException("The center of the left border's curvature is the same as the left border point.");
+                        throw new ArgumentException("The center of the right border's curvature is the same as the right border point.");
                     }
-                    DoubleExtension denominator1 = new DoubleExtension(Math.Pow(val1.AccurateValue - points[0].X.AccurateValue, 2) + Math.Pow(val3.AccurateValue - points[0].Y.AccurateValue, 2));
-                    DoubleExtension denominator2 = new DoubleExtension(Math.Pow(val2.AccurateValue - points[points.Count - 1].X.AccurateValue, 2) + Math.Pow(val4.AccurateValue - points[points.Count - 1].Y.AccurateValue, 2));
-                    subValLeftX = (val1 - points[0].X) / denominator1;
-                    subValLeftY = (val3 - points[0].Y) / denominator1;
-                    subValRightX = (val2 - points[points.Count - 1].X) / denominator2;
-                    subValRightY = (val4 - points[points.Count - 1].Y) / denominator2;
+                    
+                    //
+                    // Second_Order_Derivative
+                    //
+                    //subType = CSIBorderConditionType.Second_Order_Derivative;
+                    //DoubleExtension denominator1 = new DoubleExtension(Math.Pow(val1.AccurateValue - points[0].X.AccurateValue, 2) + Math.Pow(val3.AccurateValue - points[0].Y.AccurateValue, 2));
+                    //DoubleExtension denominator2 = new DoubleExtension(Math.Pow(val2.AccurateValue - points[points.Count - 1].X.AccurateValue, 2) + Math.Pow(val4.AccurateValue - points[points.Count - 1].Y.AccurateValue, 2));
+                    //subValLeftX = (val1 - points[0].X) / denominator1;
+                    //subValLeftY = (val3 - points[0].Y) / denominator1;
+                    //subValRightX = (val2 - points[points.Count - 1].X) / denominator2;
+                    //subValRightY = (val4 - points[points.Count - 1].Y) / denominator2;
+
+                    //
+                    // First_Order_Derivative
+                    //
+                    subType = CSIBorderConditionType.First_Order_Derivative;
+                    DoubleExtension arcLeft2 = new DoubleExtension(Math.Atan2(val3.AccurateValue - points[0].Y.AccurateValue, val1.AccurateValue - points[0].X.AccurateValue) + Math.PI / 2.0);
+                    DoubleExtension arcRight2 = new DoubleExtension(Math.Atan2(val4.AccurateValue - points[points.Count - 1].Y.AccurateValue, val2.AccurateValue - points[points.Count - 1].X.AccurateValue) + Math.PI / 2.0);
+                    subValLeftX = new DoubleExtension(Math.Cos(arcLeft2.AccurateValue));
+                    subValLeftY = new DoubleExtension(Math.Sin(arcLeft2.AccurateValue));
+                    subValRightX = new DoubleExtension(Math.Cos(arcRight2.AccurateValue));
+                    subValRightY = new DoubleExtension(Math.Sin(arcRight2.AccurateValue));
                     break;
             }
             xList = new CubicSplineInterpolationCurveParam(xPointList, subType, subValLeftX, subValRightX);

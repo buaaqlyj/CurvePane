@@ -52,7 +52,7 @@ namespace CurveDraw.Curve
             Dictionary<ICurvePointList, DrawType> result = new Dictionary<ICurvePointList, DrawType>();
 
             ParametricCubicSplineInterpolationInterpolatedData data = new ParametricCubicSplineInterpolationInterpolatedData(curveParam);
-            list.AddRange(sampleAPCSICurve(data.Curve));
+            list.AddRange(sampleAParametricCurveWithDenserBorder(data.Curve, 1000));
             list.Add(data.getLastPoint());
             list.Label = "[PCSI]";
             list.PaneCurveType = PaneCurveType.realCurve;
@@ -82,26 +82,64 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleAPCSICurve(ParametricCubicSplineInterpolationCurveElement curve)
+        private List<DataPoint> sampleAParametricCurveWithDenserBorder(ParametricCubicSplineInterpolationCurveElement curve, int maxPointCount)
         {
-            double stepSize = 0.005;
-            int step = 200;
-            if (curve.Interval.Length > 1)
+            if (maxPointCount < 2)
+                throw new ArgumentOutOfRangeException("maxPointCount", "The desired point count to sample a curve should be bigger than 1.");
+            double normalStepSize = 0.001, borderStepSize = 0.0005;
+            int step, stage = 1;
+            if (curve.Interval.Length > 0.2)
             {
-                stepSize = curve.Interval.Length.AccurateValue / step;
+                stage = 1;
+                if (curve.Interval.Length.AccurateValue > 0.001 * maxPointCount)
+                {
+                    normalStepSize = (curve.Interval.Length.AccurateValue - 0.2) / maxPointCount;
+                    step = maxPointCount + 400;
+                }
+                else
+                {
+                    step = (int)(curve.Interval.Length.AccurateValue * 1000) + 200;
+                }
             }
             else
             {
-                step = (int)(curve.Interval.Length.AccurateValue / stepSize);
+                stage = 3;
+                step = Convert.ToInt32(curve.Interval.Length.AccurateValue * 2000);
             }
 
             DoubleExtension parametricValue = curve.Interval.LeftBorder;
             List<DataPoint> pts = new List<DataPoint>();
-            int count = 0;
-            while (count++ < step)
+            while (parametricValue < curve.Interval.RightBorder)
             {
                 pts.Add(curve.calculatePoint(parametricValue));
-                parametricValue += stepSize;
+                switch (stage)
+                {
+                    case 1:
+                        if (curve.Interval.RightBorder - parametricValue <= 0.1)
+                        {
+                            stage = 3;
+                        }
+                        else if (parametricValue - curve.Interval.LeftBorder >= 0.1)
+                        {
+                            stage = 2;
+                            parametricValue += normalStepSize;
+                            break;
+                        }
+                        parametricValue += borderStepSize;
+                        break;
+                    case 2:
+                        if (curve.Interval.RightBorder - parametricValue <= 0.1)
+                        {
+                            stage = 3;
+                            parametricValue += borderStepSize;
+                            break;
+                        }
+                        parametricValue += normalStepSize;
+                        break;
+                    case 3:
+                        parametricValue += borderStepSize;
+                        break;
+                }
             }
             return pts;
         }

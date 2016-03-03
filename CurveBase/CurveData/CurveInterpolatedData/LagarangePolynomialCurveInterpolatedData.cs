@@ -25,7 +25,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 {
     public class LagarangePolynomialCurveInterpolatedData : ICurveInterpolatedData
     {
-        private List<NormalIntervalPolynomialCurveElement> lagarangePolynomialInterpolatedCurves = null;
+        private PiecewiseIntervalPolynomialCurveElement curve = null;
         private OrderedCurvePointList lagarangePolynomialInterpolatedPoints = null;
         private PolynomialCurveType curveType;
 
@@ -39,18 +39,18 @@ namespace CurveBase.CurveData.CurveInterpolatedData
                     lagarangePolynomialInterpolatedPoints = curveParam.PointList;
                     break;
                 case PolynomialCurveType.Lagrange_Quadratic:
-                    lagarangePolynomialInterpolatedCurves = generateQuadraticPolynomialCurves(curveParam);
+                    curve = generateQuadraticPolynomialCurves(curveParam);
                     break;
             }
         }
         #endregion
 
         #region Property
-        public List<NormalIntervalPolynomialCurveElement> Curves
+        public PiecewiseIntervalPolynomialCurveElement Curves
         {
             get
             {
-                return lagarangePolynomialInterpolatedCurves;
+                return curve;
             }
         }
 
@@ -71,13 +71,12 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         public DataPoint getLastPoint()
         {
-            return lagarangePolynomialInterpolatedCurves[lagarangePolynomialInterpolatedCurves.Count - 1].LastPoint;
+            return curve.LastPoint;
         }
         #endregion
 
         #region Private.Methods
-
-        private List<NormalIntervalPolynomialCurveElement> generateQuadraticPolynomialCurves(PolynomialCurveParam param)
+        private PiecewiseIntervalPolynomialCurveElement generateQuadraticPolynomialCurves(PolynomialCurveParam param)
         {
             Debug.Assert(param.PolynomialCurveType == PolynomialCurveType.Lagrange_Quadratic, @"This method """"generateQuadraticPolynomialCurves"""" only supports quadratic polynomialCurveType");
             OrderedCurvePointList pointList = param.PointList;
@@ -91,9 +90,8 @@ namespace CurveBase.CurveData.CurveInterpolatedData
                 polynomialCurve.Add(new NormalIntervalPolynomialCurveElement(coefficients, 3, pointList[i - 2].X, pointList[i].X));
                 cutPoints.Add(pointList[i].X);
             }
-            return polynomialCurve;
+            return new PiecewiseIntervalPolynomialCurveElement(polynomialCurve, cutPoints);
         }
-
         #endregion
     }
 }

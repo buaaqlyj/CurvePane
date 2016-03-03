@@ -470,6 +470,19 @@ namespace CurvePane
             label18.Text = (masterCurveManager.BasePointsCount - 1).ToString();
         }
         #endregion
+        #region PaneSetting
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox4.Checked)
+            {
+                masterCurveManager.SameStepForXY = true;
+            }
+            else
+            {
+                masterCurveManager.SameStepForXY = false;
+            }
+        }
+        #endregion
         #endregion
 
         private void MainForm_Load(object sender, EventArgs e)

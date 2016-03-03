@@ -23,9 +23,7 @@ namespace CurvePane
         /// </summary>
         public ListViewHelper()
         {
-            //
-            // TODO: 在此处添加构造函数逻辑
-            //
+            
         }
         public static void ListView_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
         {

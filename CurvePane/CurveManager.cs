@@ -368,6 +368,22 @@ namespace CurvePane
                 return getNewName();
             }
         }
+
+        public bool SameStepForXY
+        {
+            get
+            {
+                return zedGraph.SameStepForXY;
+            }
+            set
+            {
+                zedGraph.SameStepForXY = value;
+                if (value == true)
+                {
+                    UpdatePaneView();
+                }
+            }
+        }
         #endregion
 
         #region Pane Operation
