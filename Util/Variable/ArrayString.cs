@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 using Util.Tool;
 
@@ -112,8 +111,8 @@ namespace Util.Variable
         }
         #endregion
 
-        #region Public.Interface
-        public bool tryParseDoubleExtension(out List<DoubleExtension> doubleExtensionList)
+        #region Public Member
+        public bool TryParseDoubleExtension(out List<DoubleExtension> doubleExtensionList)
         {
             double val;
             doubleExtensionList = new List<DoubleExtension>();

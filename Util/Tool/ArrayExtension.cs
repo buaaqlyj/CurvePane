@@ -12,9 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Util.Tool
 {
@@ -45,7 +43,7 @@ namespace Util.Tool
             return maxCount;
         }
 
-        public static int GetMaxCountFromArray<T>(List<T> list)
+        public static int GetMaxCountFromList<T>(List<T> list)
         {
             if (list.Count == 0)
             {

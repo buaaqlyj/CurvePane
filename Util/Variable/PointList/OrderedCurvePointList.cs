@@ -41,7 +41,57 @@ namespace Util.Variable.PointList
         }
         #endregion
 
-        #region ICurvePointList
+        #region Property
+        public DataPoint LeftBorderPoint
+        {
+            get
+            {
+                if (sortedPointList.Count > 0)
+                    return sortedPointList.Values[0];
+                throw new ArgumentException("The list is empty!");
+            }
+        }
+
+        public DataPoint RightBorderPoint
+        {
+            get
+            {
+                if (sortedPointList.Count > 0)
+                    return sortedPointList.Values[sortedPointList.Count - 1];
+                throw new ArgumentException("The list is empty!");
+            }
+        }
+        #endregion
+    
+        #region Public Member
+        public int IndexOf(DoubleExtension item)
+        {
+            return sortedPointList.IndexOfKey(item);
+        }
+
+        public bool NoDuplicatedX()
+        {
+            if (sortedPointList.Count < 2) return true;
+            for (int i = 1; i < sortedPointList.Count; i++)
+            {
+                if (DataPoint.HasSameX(sortedPointList.Values[i - 1], sortedPointList.Values[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void AddRange(List<DataPoint> points)
+        {
+            foreach (DataPoint item in points)
+            {
+                sortedPointList.Add(item.X, item);
+            }
+        }
+        #endregion
+
+        #region ICurvePointList Member
         public int IndexOf(DataPoint item)
         {
             return sortedPointList.IndexOfValue(item);
@@ -146,56 +196,6 @@ namespace Util.Variable.PointList
                     Y.Add(item.Y);
                 }
                 return Y;
-            }
-        }
-        #endregion
-
-        #region Public.Interface
-        public int IndexOf(DoubleExtension item)
-        {
-            return sortedPointList.IndexOfKey(item);
-        }
-
-        public bool noDuplicatedX()
-        {
-            if (sortedPointList.Count < 2) return true;
-            for (int i = 1; i < sortedPointList.Count; i++)
-            {
-                if (DataPoint.hasSameX(sortedPointList.Values[i - 1], sortedPointList.Values[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public void AddRange(List<DataPoint> points)
-        {
-            foreach (DataPoint item in points)
-            {
-                sortedPointList.Add(item.X, item);
-            }
-        }
-        #endregion
-
-        #region Property
-        public DataPoint LeftBorderPoint
-        {
-            get
-            {
-                if (sortedPointList.Count > 0)
-                    return sortedPointList.Values[0];
-                throw new ArgumentException("The list is empty!");
-            }
-        }
-
-        public DataPoint RightBorderPoint
-        {
-            get
-            {
-                if (sortedPointList.Count > 0)
-                    return sortedPointList.Values[sortedPointList.Count - 1];
-                throw new ArgumentException("The list is empty!");
             }
         }
         #endregion

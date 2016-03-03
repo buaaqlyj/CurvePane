@@ -58,7 +58,7 @@ namespace Util.Variable.Interval
                 subIntervals = new List<DataInterval>();
                 subIntervals.Add(this);
             }
-            multiplycity = ArrayExtension.GetMaxCountFromArray<DoubleExtension>(cutPoints);
+            multiplycity = ArrayExtension.GetMaxCountFromList<DoubleExtension>(cutPoints);
         }
 
         public PiecewiseDataInterval(int val1, int val2, List<DoubleExtension> cutPoints)
@@ -102,7 +102,7 @@ namespace Util.Variable.Interval
                 subIntervals = new List<DataInterval>();
                 subIntervals.Add(this);
             }
-            multiplycity = ArrayExtension.GetMaxCountFromArray<DoubleExtension>(cutPoints);
+            multiplycity = ArrayExtension.GetMaxCountFromList<DoubleExtension>(cutPoints);
         }
 
         public PiecewiseDataInterval(ICurvePointList points)
@@ -153,19 +153,19 @@ namespace Util.Variable.Interval
         }
         #endregion
 
-        #region Public.Interface
+        #region Public Member
         /// <summary>
         /// 每个点属于它右边的区间
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        public int findIntervalIndex(DoubleExtension val)
+        public int IndexOfInterval(DoubleExtension val)
         {
-            if (isBetweenBordersCloseInterval(val))
+            if (IsBetweenBordersCloseInterval(val))
             {
                 for (int i = 0; i < SubIntervals.Count; i++)
                 {
-                    if (!SubIntervals[i].NullInterval && SubIntervals[i].isBetweenBordersCloseInterval(val))
+                    if (!SubIntervals[i].NullInterval && SubIntervals[i].IsBetweenBordersCloseInterval(val))
                     {
                         return i;
                     }

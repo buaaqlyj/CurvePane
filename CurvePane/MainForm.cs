@@ -47,7 +47,7 @@ namespace CurvePane
                 switch (curveTypeComboBox.SelectedIndex)
                 {
                     case 0:
-                        //Polynomial Curve 多项式插值曲线
+                        //多项式插值曲线
                         masterCurveManager.DrawPolynomialCurve(curveName, comboBox1.SelectedIndex + 1);
                         break;
                     case 1:
@@ -168,7 +168,7 @@ namespace CurvePane
 
         private void DisplayBasePoint(Util.Variable.DataPoint point)
         {
-            textBox3.Text = point.ToString();
+            textBox3.Text = point.ToString() + "   " + masterCurveManager.TransformFromPaneToScreen(point).ToString();
         }
 
         private void listView1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)

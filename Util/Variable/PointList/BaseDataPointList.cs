@@ -39,7 +39,49 @@ namespace Util.Variable.PointList
         }
         #endregion
 
-        #region ICurvePointList
+        #region Property
+        public List<DataPoint> Points
+        {
+            get
+            {
+                return points;
+            }
+        }
+
+        public List<DataPoint> SortedPointList
+        {
+            get
+            {
+                List<DataPoint> list = new List<DataPoint>();
+                list.AddRange(sortedPointList.Values);
+                return list;
+            }
+        }
+        #endregion
+
+        #region Public Member
+        public int SortedIndexOf(DoubleExtension item)
+        {
+            return sortedPointList.IndexOfKey(item);
+        }
+
+        public int SortedIndexOf(DataPoint point)
+        {
+            return sortedPointList.IndexOfValue(point);
+        }
+
+        public void OrderedCopyTo(DataPoint[] array, int arrayIndex)
+        {
+            sortedPointList.Values.CopyTo(array, arrayIndex);
+        }
+
+        public IEnumerator<DataPoint> GetOrderedEnumerator()
+        {
+            return sortedPointList.Values.GetEnumerator();
+        }
+        #endregion
+
+        #region ICurvePointList Member
         public int IndexOf(DataPoint item)
         {
             return points.IndexOf(item);
@@ -153,48 +195,6 @@ namespace Util.Variable.PointList
                 }
                 return Y;
             }
-        }
-        #endregion
-
-        #region Property
-        public List<DataPoint> Points
-        {
-            get
-            {
-                return points;
-            }
-        }
-
-        public List<DataPoint> SortedPointList
-        {
-            get
-            {
-                List<DataPoint> list = new List<DataPoint>();
-                list.AddRange(sortedPointList.Values);
-                return list;
-            }
-        }
-        #endregion
-
-        #region Public.Interface
-        public int SortedIndexOf(DoubleExtension item)
-        {
-            return sortedPointList.IndexOfKey(item);
-        }
-
-        public int SortedIndexOf(DataPoint point)
-        {
-            return sortedPointList.IndexOfValue(point);
-        }
-        
-        public void OrderedCopyTo(DataPoint[] array, int arrayIndex)
-        {
-            sortedPointList.Values.CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<DataPoint> GetOrderedEnumerator()
-        {
-            return sortedPointList.Values.GetEnumerator();
         }
         #endregion
     }

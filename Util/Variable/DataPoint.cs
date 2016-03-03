@@ -49,6 +49,7 @@ namespace Util.Variable
                 return x;
             }
         }
+
         public DoubleExtension Y
         {
             get
@@ -58,27 +59,20 @@ namespace Util.Variable
         }
         #endregion
 
-        #region Object.Member
-        public override string ToString()
-        {
-            return X.ApproximateString + "," + Y.ApproximateString;
-        }
-        #endregion
-
-        #region Public.Interface
-        public double distance(DataPoint pt)
+        #region Public Member
+        public double CalculateDistance(DataPoint pt)
         {
             return Math.Sqrt(Math.Pow((pt.X - this.X).AccurateValue, 2) + Math.Pow((pt.Y - this.Y).AccurateValue, 2));
         }
         #endregion
 
-        #region Class.Interface
-        public static bool hasSameX(DataPoint pt1, DataPoint pt2)
+        #region Class Member
+        public static bool HasSameX(DataPoint pt1, DataPoint pt2)
         {
             return pt1.X == pt2.X;
         }
 
-        public static double distance(DataPoint pt1, DataPoint pt2)
+        public static double CalculateDistance(DataPoint pt1, DataPoint pt2)
         {
             return Math.Sqrt(Math.Pow((pt1.X - pt2.X).AccurateValue, 2) + Math.Pow((pt1.Y - pt2.Y).AccurateValue, 2));
         }
@@ -97,6 +91,13 @@ namespace Util.Variable
             }
             point = new DataPoint(0, 0);
             return false;
+        }
+        #endregion
+
+        #region Superclass Object Member
+        public override string ToString()
+        {
+            return X.ApproximateString + "," + Y.ApproximateString;
         }
         #endregion
 

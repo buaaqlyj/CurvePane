@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -21,7 +22,7 @@ namespace Util.Tool
 {
     public static class MathExtension
     {
-        public static int factorial(int number)
+        public static int Factorial(int number)
         {
             Debug.Assert(number > -1, "This method can't calculate factorial for negative numbers.");
             if (number < 2) return 1;
@@ -33,28 +34,36 @@ namespace Util.Tool
             return result;
         }
 
-        public static int combination(int big, int small)
+        public static int Combination(int big, int small)
         {
             Debug.Assert(small > big, "The first number should bigger than the second one.");
-            return factorial(big) / factorial(small) / factorial(big - small);
+            return Factorial(big) / Factorial(small) / Factorial(big - small);
         }
 
-        public static List<DoubleExtension> calculateLinearPolynomialCoefficients(DataPoint pt1, DataPoint pt2)
+        public static void MiddleBasedResize(DoubleExtension input1, DoubleExtension input2, DoubleExtension multiplier, out DoubleExtension output1, out DoubleExtension output2)
         {
-            Debug.Assert(pt1.X == pt2.X, "The two points have the same X value.");
-            List<DoubleExtension> coefficients = new List<DoubleExtension>();
-            double x1 = pt1.X.AccurateValue;
-            double y1 = pt1.Y.AccurateValue;
-            double x2 = pt2.X.AccurateValue;
-            double y2 = pt2.Y.AccurateValue;
-            double a = (y2 - y1) / (x2 - x1);
-            double b = (y1 + y2 - a * (x1 + x2)) / 2;
-            coefficients.Add(new DoubleExtension(b));
-            coefficients.Add(new DoubleExtension(a));
-            return coefficients;
+            DoubleExtension middle = (input1 + input2) / 2;
+            output1 = middle + (input1 - middle) * multiplier;
+            output2 = middle + (input2 - middle) * multiplier;
         }
 
-        public static List<DoubleExtension> calculateQuadraticPolynomialCoefficients(DataPoint pt1, DataPoint pt2, DataPoint pt3)
+        public static double DynamicRound(double val)
+        {
+            Debug.Assert(val > 0, "DynamicRound doesn't support negative input.");
+            double number = Math.Log(val, 10);
+            if (number < 1 && number >= 0)
+            {
+                //val 1<->10
+                return Math.Floor(val);
+            }
+            else
+            {
+                int pow = (int)Math.Floor(number) - 1;
+                return Math.Floor(val / Math.Pow(10, pow)) * Math.Pow(10, pow);
+            }
+        }
+
+        public static List<DoubleExtension> CalculateQuadraticPolynomialCoefficients(DataPoint pt1, DataPoint pt2, DataPoint pt3)
         {
             Debug.Assert(pt1.X == pt2.X, "Point1 and Point2 have the same X value.");
             Debug.Assert(pt1.X == pt3.X, "Point1 and Point3 have the same X value.");

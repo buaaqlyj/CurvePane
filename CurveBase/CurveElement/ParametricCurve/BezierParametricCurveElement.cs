@@ -72,7 +72,7 @@ namespace CurveBase.CurveElement.ParametricCurve
             combination.Clear();
             for (int i = 0; i <= count; i++)
             {
-                combination.Add(MathExtension.combination(count, i));
+                combination.Add(MathExtension.Combination(count, i));
             }
         }
 

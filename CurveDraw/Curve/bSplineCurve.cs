@@ -118,7 +118,7 @@ namespace CurveDraw.Curve
         {
             get
             {
-                return ArrayExtension.GetMaxCountFromArray<DoubleExtension>(curveParam.Interval.CutPoints);
+                return ArrayExtension.GetMaxCountFromList<DoubleExtension>(curveParam.Interval.CutPoints);
             }
         }
         #endregion

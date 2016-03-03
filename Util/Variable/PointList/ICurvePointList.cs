@@ -24,8 +24,6 @@ namespace Util.Variable.PointList
 
         void RemoveAt(int index);
 
-        DataPoint this[int index] { get; set; }
-
         void Add(DataPoint item);
 
         void Clear();
@@ -34,11 +32,13 @@ namespace Util.Variable.PointList
 
         void CopyTo(DataPoint[] array, int arrayIndex);
 
-        int Count { get; }
-
         bool Remove(DataPoint item);
 
         IEnumerator<DataPoint> GetEnumerator();
+
+        DataPoint this[int index] { get; set; }
+
+        int Count { get; }
 
         string Label { get; set; }
 

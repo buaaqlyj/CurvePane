@@ -13,7 +13,6 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Util.Variable.Interval
 {
@@ -21,8 +20,6 @@ namespace Util.Variable.Interval
     {
         protected DoubleExtension leftBorder, rightBorder;
         protected bool nullInterval;
-
-        public static DataInterval nullDataInterval = new DataInterval();
 
         #region Constructor
         public DataInterval(DoubleExtension val1, DoubleExtension val2)
@@ -100,25 +97,18 @@ namespace Util.Variable.Interval
         }
         #endregion
 
-        #region Object.Member
-        public override string ToString()
+        #region Public Member
+        public bool IsBetweenBordersCloseInterval(DoubleExtension db)
         {
-            return "[" + LeftBorder.CleanString + ", " + RightBorder.CleanString + "]";
-        }
-        #endregion
-
-        #region Public.Interface
-        public bool isBetweenBordersCloseInterval(DoubleExtension db)
-        {
-            return Math.Abs(pointsPosition(db)) < 2;
+            return Math.Abs(GetPointsPosition(db)) < 2;
         }
 
-        public bool isBetweenBordersOpenInterval(DoubleExtension db)
+        public bool IsBetweenBordersOpenInterval(DoubleExtension db)
         {
-            return pointsPosition(db) == 0;
+            return GetPointsPosition(db) == 0;
         }
 
-        public int pointsPosition(DoubleExtension db)
+        public int GetPointsPosition(DoubleExtension db)
         {
             if (db < LeftBorder) return -2;
             else if (db == LeftBorder) return -1;
@@ -128,17 +118,26 @@ namespace Util.Variable.Interval
         }
         #endregion
 
-        #region Class.Interface
+        #region Class Member
+        public static DataInterval NullDataInterval = new DataInterval();
+
         public static DataInterval Intersection(DataInterval di1, DataInterval di2)
         {
             if (di1.RightBorder <= di2.LeftBorder || di1.LeftBorder >= di2.RightBorder)
             {
-                return nullDataInterval;
+                return NullDataInterval;
             }
             else
             {
                 return new DataInterval(Math.Max(di1.LeftBorder.AccurateValue, di2.LeftBorder.AccurateValue), Math.Min(di1.RightBorder.AccurateValue, di2.RightBorder.AccurateValue));
             }
+        }
+        #endregion
+
+        #region Superclass Object Member
+        public override string ToString()
+        {
+            return "[" + LeftBorder.CleanString + ", " + RightBorder.CleanString + "]";
         }
         #endregion
 

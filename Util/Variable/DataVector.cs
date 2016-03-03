@@ -13,14 +13,12 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Util.Variable
 {
     public class DataVector
     {
-        private DoubleExtension xDiff = DoubleExtension.Zero, yDiff = DoubleExtension.Zero;
+        private DoubleExtension xDiff = DoubleExtension.ZERO, yDiff = DoubleExtension.ZERO;
         private bool isZero = true;
 
         #region Constructor
@@ -53,22 +51,22 @@ namespace Util.Variable
         {
             if (arc == Math.PI / 2.0)
             {
-                xDiff = DoubleExtension.Zero;
-                yDiff = DoubleExtension.PositiveOne;
+                xDiff = DoubleExtension.ZERO;
+                yDiff = DoubleExtension.POSITIVE_ONE;
             }
             else if (arc == Math.PI / (-2.0))
             {
-                xDiff = DoubleExtension.Zero;
-                yDiff = DoubleExtension.NegativeOne;
+                xDiff = DoubleExtension.ZERO;
+                yDiff = DoubleExtension.NEGATIVE_ONE;
             }
             else if (positive)
             {
-                xDiff = DoubleExtension.PositiveOne;
+                xDiff = DoubleExtension.POSITIVE_ONE;
                 yDiff = new DoubleExtension(Math.Tan(arc.AccurateValue));
             }
             else
             {
-                xDiff = DoubleExtension.NegativeOne;
+                xDiff = DoubleExtension.NEGATIVE_ONE;
                 yDiff = new DoubleExtension(0 - Math.Tan(arc.AccurateValue));
             }
             isZero = false;
@@ -76,7 +74,7 @@ namespace Util.Variable
         #endregion
 
         #region Property
-        public bool IsZero
+        public bool EqualsToZero
         {
             get
             {
@@ -84,67 +82,15 @@ namespace Util.Variable
             }
         }
 
-        public int Direction
-        {
-            get
-            {
-                if (xDiff > 0)
-                {
-                    if (yDiff > 0)
-                    {
-                        return 1;
-                    }
-                    else if (yDiff < 0)
-                    {
-                        return 4;
-                    }
-                    else
-                    {
-                        return 5;
-                    }
-                }
-                else if (xDiff < 0)
-                {
-                    if (yDiff > 0)
-                    {
-                        return 2;
-                    }
-                    else if (yDiff < 0)
-                    {
-                        return 3;
-                    }
-                    else
-                    {
-                        return 7;
-                    }
-                }
-                else
-                {
-                    if (yDiff > 0)
-                    {
-                        return 6;
-                    }
-                    else if (yDiff < 0)
-                    {
-                        return 8;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
-            }
-        }
-
         public DoubleExtension Arc
         {
             get
             {
-                if (xDiff == DoubleExtension.Zero)
+                if (xDiff == DoubleExtension.ZERO)
                 {
                     if (yDiff > 0) return new DoubleExtension(Math.PI / 2.0);
                     else if (yDiff < 0) return new DoubleExtension(Math.PI / -2.0);
-                    else return DoubleExtension.Zero;
+                    else return DoubleExtension.ZERO;
                 }
                 return new DoubleExtension(Math.Atan2(yDiff.AccurateValue, xDiff.AccurateValue));
             }
@@ -154,11 +100,11 @@ namespace Util.Variable
         {
             get
             {
-                if (xDiff == DoubleExtension.Zero)
+                if (xDiff == DoubleExtension.ZERO)
                 {
                     if (yDiff > 0) return new DoubleExtension(double.MaxValue);
                     else if (yDiff < 0) return new DoubleExtension(double.MinValue);
-                    else return DoubleExtension.Zero;
+                    else return DoubleExtension.ZERO;
                 }
                 return new DoubleExtension(Math.Atan2(yDiff.AccurateValue, xDiff.AccurateValue));
             }
@@ -190,32 +136,9 @@ namespace Util.Variable
         #endregion
 
         #region Class Interface
-        public static DoubleExtension InnerProduct(DataVector dv1, DataVector dv2)
+        public static DoubleExtension CalculateInnerProduct(DataVector dv1, DataVector dv2)
         {
             return dv1.X * dv2.X + dv1.Y * dv2.Y;
-        }
-
-        public static DoubleExtension IncludedAngle(DataVector dv1, DataVector dv2)
-        {
-            return new DoubleExtension(Math.Acos((InnerProduct(dv1, dv2) / dv1.Length / dv2.Length).AccurateValue));
-        }
-        #endregion
-
-        #region Public Interface
-        public bool GetTheFlagForCloserArc(DoubleExtension arc)
-        {
-            DataVector pos = new DataVector(arc, true);
-            DataVector neg = new DataVector(arc, false);
-            DoubleExtension posVal = DataVector.InnerProduct(this, pos) / pos.Length;
-            DoubleExtension negVal = DataVector.InnerProduct(this, neg) / neg.Length;
-            if (posVal.AccurateValue >= negVal.AccurateValue)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }

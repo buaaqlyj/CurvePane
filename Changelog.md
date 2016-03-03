@@ -1,12 +1,19 @@
 ****
-# CurvePane_vx.x.x
+# CurvePane_v0.7.30
+
+## Release Note
+
+I've finished the Parametric Cubic Spline Interpolation Curve and done a lot of small tweaks of other parts.
 
 ## Changelog
 
 * Tweak the names of some classes.
 * Add members to ICurvePointList.
 * Implement the Parametric Cubic Spline Interpolation Curve.
-* Fix the bug that drawing duplicated curves that connect base points.
+* Fix the bug that drawing duplicated curves which connect base points.
+* Fix the bug in the wrong data processing code segament for PCSI curve
+* Add an option to sync the scale of X Axis and Y Axis.
+* Refactor the Util assemble a bit.
 
 ****
 # CurvePane_v0.6.23

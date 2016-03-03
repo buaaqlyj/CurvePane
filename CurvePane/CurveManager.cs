@@ -73,6 +73,18 @@ namespace CurvePane
         }
         #endregion
 
+        #region Point Operation
+        public Util.Variable.DataPoint TransformFromPaneToScreen(Util.Variable.DataPoint panePoint)
+        {
+            return zedGraph.TransformFromPaneToScreen(panePoint);
+        }
+
+        public Util.Variable.DataPoint TransformFromScreenToPane(Util.Variable.DataPoint screenPoint)
+        {
+            return zedGraph.TransformFromScreenToPane(screenPoint);
+        }
+        #endregion
+
         #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
         {
@@ -209,7 +221,7 @@ namespace CurvePane
             BaseDataPointList pointList = this.basePoints;
             ArrayString aString = new ArrayString(cutList);
             List<DoubleExtension> cutPoints = null;
-            if (!aString.tryParseDoubleExtension(out cutPoints))
+            if (!aString.TryParseDoubleExtension(out cutPoints))
             {
                 throw new ArgumentException("The cutList contains unrecognised string: " + cutList, "cutList");
             }
@@ -232,12 +244,12 @@ namespace CurvePane
             BaseDataPointList pointList = this.basePoints;
             ArrayString aString = new ArrayString(cutList);
             List<DoubleExtension> cutPoints = null, weightValues = null;
-            if (!aString.tryParseDoubleExtension(out cutPoints))
+            if (!aString.TryParseDoubleExtension(out cutPoints))
             {
                 throw new ArgumentException("The cutList contains unrecognised string: " + cutList, "cutList");
             }
             aString = new ArrayString(weightList);
-            if (!aString.tryParseDoubleExtension(out weightValues))
+            if (!aString.TryParseDoubleExtension(out weightValues))
             {
                 throw new ArgumentException("The weightList contains unrecognised string: " + weightList, "weightList");
             }
@@ -311,7 +323,7 @@ namespace CurvePane
                     if (item.Key.PaneCurveType == PaneCurveType.connectingSupportingCurve) hasDrawBasePointsConnections = true;
                 }
                 color = getNewColor();
-                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.transformDataPointListToPointPairList(item.Key), item.Value, color);
+                DrawLine(curveName + item.Key.Label, ZedGraphWrapper.TransformDataPointListToPointPairList(item.Key), item.Value, color);
             }
             AddCurveName(curveName);
         }
@@ -377,11 +389,11 @@ namespace CurvePane
             }
             set
             {
+                bool oldVal = zedGraph.SameStepForXY;
                 zedGraph.SameStepForXY = value;
-                if (value == true)
-                {
-                    UpdatePaneView();
-                }
+                if (oldVal == true && value == false)
+                    zedGraph.RestorePaneScale();
+                UpdatePaneView();
             }
         }
         #endregion

@@ -86,7 +86,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
             cutPoints.Add(pointList[0].X);
             for (int i = 2; i < pointList.Count; i = i + 2)
             {
-                coefficients = MathExtension.calculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
+                coefficients = MathExtension.CalculateQuadraticPolynomialCoefficients(pointList[i - 2], pointList[i - 1], pointList[i]);
                 polynomialCurve.Add(new NormalIntervalPolynomialCurveElement(coefficients, 3, pointList[i - 2].X, pointList[i].X));
                 cutPoints.Add(pointList[i].X);
             }

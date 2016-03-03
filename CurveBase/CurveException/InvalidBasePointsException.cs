@@ -62,7 +62,7 @@ namespace CurveBase.CurveException
         {
             get
             {
-                string msg = "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType) + " can't be draw as request.";
+                string msg = "Invalid base points have been found, so the " + EnumExtension.GetDescriptionFromEnumValue<InterpolationCurveType>(curveType) + " can't be draw as request.";
                 if (additionalMessage != "") msg += Environment.NewLine + additionalMessage;
                 return msg;
             }

@@ -20,7 +20,13 @@ namespace Util.Tool
 {
     public static class EnumExtension
     {
-        public static T GetValueFromDescription<T>(string description)
+        /// <summary>
+        /// http://stackoverflow.com/a/4367868
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static T GetEnumValueFromDescription<T>(string description)
         {
             var type = typeof(T);
             if (!type.IsEnum) throw new InvalidOperationException();
@@ -42,7 +48,7 @@ namespace Util.Tool
             throw new ArgumentException("Not found.", "description");
         }
 
-        public static string GetDescriptionFromValue<T>(T enumValue)
+        public static string GetDescriptionFromEnumValue<T>(T enumValue)
         {
             var type = typeof(T);
             if (!type.IsEnum) throw new InvalidOperationException();

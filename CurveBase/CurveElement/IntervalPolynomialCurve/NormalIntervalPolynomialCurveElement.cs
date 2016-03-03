@@ -41,7 +41,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 for (int i = 0; i < degree; i++ )
                     this.coefficients.Add(coefficients[i]);
             }
-            if (this.coefficients.Count == 1 && this.coefficients[0].EqualsToZero())
+            if (this.coefficients.Count == 1 && this.coefficients[0].EqualsToZero)
                 equalsToZero = true;
             this.interval = interval;
         }
@@ -58,12 +58,12 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             this.coefficients = new List<DoubleExtension>();
             this.coefficients.Add(val);
             this.interval = interval;
-            if (val.EqualsToZero())
+            if (val.EqualsToZero)
                 this.equalsToZero = true;
         }
 
         protected NormalIntervalPolynomialCurveElement()
-            : this(new DoubleExtension(0), DataInterval.nullDataInterval)
+            : this(new DoubleExtension(0), DataInterval.NullDataInterval)
         {
             
         }
@@ -111,7 +111,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             {
                 newCoefficients.Add(coefficients[i] * val0);
             }
-            if (!(coefficients[degree - 1] * val1).EqualsToZero())
+            if (!(coefficients[degree - 1] * val1).EqualsToZero)
             {
                 newCoefficients.Add(coefficients[degree - 1] * val1);
             }
@@ -131,7 +131,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             {
                 return new NormalIntervalPolynomialCurveElement(new DoubleExtension(0), Interval);
             }
-            if (val.EqualsToZero())
+            if (val.EqualsToZero)
             {
                 throw new DivideByZeroException("The polynomial coefficients are divided by 0.");
             }
@@ -230,7 +230,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #region IntervalPolynomialCurve Member
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
-            if (!interval.isBetweenBordersCloseInterval(doubleExtension))
+            if (!interval.IsBetweenBordersCloseInterval(doubleExtension))
                 throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.ApproximateString + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             DoubleExtension result = new DoubleExtension(0);
             DoubleExtension poweredX = new DoubleExtension(1);
@@ -308,7 +308,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
 
         public static NormalIntervalPolynomialCurveElement operator *(DoubleExtension c1, NormalIntervalPolynomialCurveElement c2)
         {
-            if (c1.EqualsToZero()) return new NormalIntervalPolynomialCurveElement(c1, c2.Interval);
+            if (c1.EqualsToZero) return new NormalIntervalPolynomialCurveElement(c1, c2.Interval);
             for (int i = 0; i < c2.coefficients.Count; i++ )
             {
                 c2.coefficients[i] *= c1;

@@ -44,189 +44,6 @@ namespace Util.Variable.Matrix
         }
         #endregion
 
-        #region Operator
-        public static Matrix operator +(Matrix matrix1, Matrix matrix2)
-        {
-            int matrix1_Rows = matrix1.Data.GetLength(0);
-            int matrix1_Columns = matrix1.Data.GetLength(1);
-
-            int matrix2_Rows = matrix2.Data.GetLength(0);
-            int matrix2_Columns = matrix2.Data.GetLength(1);
-
-            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
-            {
-                throw new Exception("Matrix Dimensions Don't Agree!");
-            }
-
-            double[,] result = new double[matrix1_Rows, matrix1_Columns];
-            for (int i = 0; i < matrix1_Rows; i++)
-            {
-                for (int j = 0; j < matrix1_Columns; j++)
-                {
-                    result[i, j] = matrix1.Data[i, j] + matrix2.Data[i, j];
-                }
-            }
-
-            return new Matrix(result);
-        }
-
-        public static Matrix operator -(Matrix matrix1, Matrix matrix2)
-        {
-            int matrix1_Rows = matrix1.Data.GetLength(0);
-            int matrix1_Columns = matrix1.Data.GetLength(1);
-
-            int matrix2_Rows = matrix2.Data.GetLength(0);
-            int matrix2_Columns = matrix2.Data.GetLength(1);
-
-            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
-            {
-                throw new Exception("Matrix Dimensions Don't Agree!");
-            }
-
-            double[,] result = new double[matrix1_Rows, matrix1_Columns];
-            for (int i = 0; i < matrix1_Rows; i++)
-            {
-                for (int j = 0; j < matrix1_Columns; j++)
-                {
-                    result[i, j] = matrix1.Data[i, j] - matrix2.Data[i, j];
-                }
-            }
-
-            return new Matrix(result);
-        }
-
-        public static Matrix operator *(Matrix matrix1, Matrix matrix2)
-        {
-            int matrix1_Rows = matrix1.Data.GetLength(0);
-            int matrix1_Columns = matrix1.Data.GetLength(1);
-
-            int matrix2_Rows = matrix2.Data.GetLength(0);
-            int matrix2_Columns = matrix2.Data.GetLength(1);
-
-            if (matrix1_Columns != matrix2_Rows)
-            {
-                throw new Exception("Matrix Dimensions Don't Agree!");
-            }
-
-            double[,] result = new double[matrix1_Rows, matrix2_Columns];
-            for (int i = 0; i < matrix1_Rows; i++)
-            {
-                for (int j = 0; j < matrix2_Columns; j++)
-                {
-                    for (int k = 0; k < matrix2_Rows; k++)
-                    {
-                        result[i, j] += matrix1.Data[i, k] * matrix2.Data[k, j];
-                    }
-                }
-            }
-
-            return new Matrix(result);
-        }
-
-        public static Matrix operator /(double i, Matrix matrix)
-        {
-            return new Matrix(ScaleBy(i, INV(matrix.Data)));
-        }
-
-        public static bool operator ==(Matrix matrix1, Matrix matrix2)
-        {
-            bool result = true;
-
-            int matrix1_Rows = matrix1.Data.GetLength(0);
-            int matrix1_Columns = matrix1.Data.GetLength(1);
-
-            int matrix2_Rows = matrix2.Data.GetLength(0);
-            int matrix2_Columns = matrix2.Data.GetLength(1);
-
-            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
-            {
-                result = false;
-            }
-            else
-            {
-                for (int i = 0; i < matrix1_Rows; i++)
-                {
-                    for (int j = 0; j < matrix1_Columns; j++)
-                    {
-                        if (matrix1.Data[i, j] != matrix2.Data[i, j]) result = false;
-                    }
-                }
-            }
-            return result;
-        }
-
-        public static bool operator !=(Matrix matrix1, Matrix matrix2)
-        {
-            return !(matrix1 == matrix2);
-        }
-        #endregion
-
-        #region IEquatable<double> Member
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Matrix)) return false;
-            return this == (Matrix)obj;
-        }
-        #endregion
-
-        #region Matrix.Operation
-        public Matrix Inverse()
-        {
-            if ((this.IsSquare) && (!this.IsSingular))
-            {
-                return new Matrix(INV(this.Data));
-            }
-            else
-            {
-                throw new System.Exception(@"Cannot find inverse for non square /singular matrix");
-            }
-        }
-
-        public Matrix Transpose()
-        {
-            double[,] D = Transpose(this.Data);
-            return new Matrix(D);
-        }
-        #endregion
-
-        #region Class.Member
-        public static Matrix LinearSolve(Matrix COF, Matrix CON)
-        {
-            return COF.Inverse() * CON;
-        }
-
-        public static Matrix Zeros(int size)
-        {
-            double[,] D = new double[size, size];
-            return new Matrix(D);
-        }
-
-        public static Matrix Zeros(int rows, int cols)
-        {
-            double[,] D = new double[rows, cols];
-            return new Matrix(D);
-        }
-        #endregion
-
-        #region Public.Interface
-        public double Det()
-        {
-            if (this.IsSquare)
-            {
-                return Determinent(this.Data);
-            }
-            else
-            {
-                throw new System.Exception("Cannot Determine the DET for a non square matrix");
-            }
-        }
-        #endregion
-
         #region Property
         public bool IsSquare
         {
@@ -267,7 +84,119 @@ namespace Util.Variable.Matrix
         }
         #endregion
 
-        #region Private.Methods
+        #region Operator
+        public static Matrix operator +(Matrix matrix1, Matrix matrix2)
+        {
+            int matrix1_Rows = matrix1.Data.GetLength(0);
+            int matrix1_Columns = matrix1.Data.GetLength(1);
+
+            int matrix2_Rows = matrix2.Data.GetLength(0);
+            int matrix2_Columns = matrix2.Data.GetLength(1);
+
+            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
+            {
+                throw new Exception("Matrix Dimensions Don't Agree!");
+            }
+
+            double[,] result = new double[matrix1_Rows, matrix1_Columns];
+            for (int i = 0; i < matrix1_Rows; i++)
+            {
+                for (int j = 0; j < matrix1_Columns; j++)
+                {
+                    result[i, j] = matrix1.Data[i, j] + matrix2.Data[i, j];
+                }
+            }
+
+            return new Matrix(result);
+        }
+        public static Matrix operator -(Matrix matrix1, Matrix matrix2)
+        {
+            int matrix1_Rows = matrix1.Data.GetLength(0);
+            int matrix1_Columns = matrix1.Data.GetLength(1);
+
+            int matrix2_Rows = matrix2.Data.GetLength(0);
+            int matrix2_Columns = matrix2.Data.GetLength(1);
+
+            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
+            {
+                throw new Exception("Matrix Dimensions Don't Agree!");
+            }
+
+            double[,] result = new double[matrix1_Rows, matrix1_Columns];
+            for (int i = 0; i < matrix1_Rows; i++)
+            {
+                for (int j = 0; j < matrix1_Columns; j++)
+                {
+                    result[i, j] = matrix1.Data[i, j] - matrix2.Data[i, j];
+                }
+            }
+
+            return new Matrix(result);
+        }
+        public static Matrix operator *(Matrix matrix1, Matrix matrix2)
+        {
+            int matrix1_Rows = matrix1.Data.GetLength(0);
+            int matrix1_Columns = matrix1.Data.GetLength(1);
+
+            int matrix2_Rows = matrix2.Data.GetLength(0);
+            int matrix2_Columns = matrix2.Data.GetLength(1);
+
+            if (matrix1_Columns != matrix2_Rows)
+            {
+                throw new Exception("Matrix Dimensions Don't Agree!");
+            }
+
+            double[,] result = new double[matrix1_Rows, matrix2_Columns];
+            for (int i = 0; i < matrix1_Rows; i++)
+            {
+                for (int j = 0; j < matrix2_Columns; j++)
+                {
+                    for (int k = 0; k < matrix2_Rows; k++)
+                    {
+                        result[i, j] += matrix1.Data[i, k] * matrix2.Data[k, j];
+                    }
+                }
+            }
+
+            return new Matrix(result);
+        }
+        public static Matrix operator /(double i, Matrix matrix)
+        {
+            return new Matrix(ScaleBy(i, INV(matrix.Data)));
+        }
+        public static bool operator ==(Matrix matrix1, Matrix matrix2)
+        {
+            bool result = true;
+
+            int matrix1_Rows = matrix1.Data.GetLength(0);
+            int matrix1_Columns = matrix1.Data.GetLength(1);
+
+            int matrix2_Rows = matrix2.Data.GetLength(0);
+            int matrix2_Columns = matrix2.Data.GetLength(1);
+
+            if ((matrix1_Rows != matrix2_Rows) || (matrix1_Columns != matrix2_Columns))
+            {
+                result = false;
+            }
+            else
+            {
+                for (int i = 0; i < matrix1_Rows; i++)
+                {
+                    for (int j = 0; j < matrix1_Columns; j++)
+                    {
+                        if (matrix1.Data[i, j] != matrix2.Data[i, j]) result = false;
+                    }
+                }
+            }
+            return result;
+        }
+        public static bool operator !=(Matrix matrix1, Matrix matrix2)
+        {
+            return !(matrix1 == matrix2);
+        }
+        #endregion
+
+        #region Private Member
         private static double[,] INV(double[,] srcMatrix)
         {
             int rows = srcMatrix.GetLength(0);
@@ -434,7 +363,7 @@ namespace Util.Variable.Matrix
                     throw new Exception("Error: Matrix not Square");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -672,6 +601,70 @@ namespace Util.Variable.Matrix
             }
 
             return desMatrix;
+        }
+        #endregion
+
+        #region Public Member
+        public double Det()
+        {
+            if (this.IsSquare)
+            {
+                return Determinent(this.Data);
+            }
+            else
+            {
+                throw new System.Exception("Cannot Determine the DET for a non square matrix");
+            }
+        }
+
+        public Matrix Inverse()
+        {
+            if ((this.IsSquare) && (!this.IsSingular))
+            {
+                return new Matrix(INV(this.Data));
+            }
+            else
+            {
+                throw new System.Exception(@"Cannot find inverse for non square /singular matrix");
+            }
+        }
+
+        public Matrix Transpose()
+        {
+            double[,] D = Transpose(this.Data);
+            return new Matrix(D);
+        }
+        #endregion
+
+        #region Class Member
+        public static Matrix LinearSolve(Matrix COF, Matrix CON)
+        {
+            return COF.Inverse() * CON;
+        }
+
+        public static Matrix Zeros(int size)
+        {
+            double[,] D = new double[size, size];
+            return new Matrix(D);
+        }
+
+        public static Matrix Zeros(int rows, int cols)
+        {
+            double[,] D = new double[rows, cols];
+            return new Matrix(D);
+        }
+        #endregion
+
+        #region IEquatable<double> Member
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Matrix)) return false;
+            return this == (Matrix)obj;
         }
         #endregion
     }

@@ -50,14 +50,14 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         {
             this.degree = 0;
             this.list = new OrderedCurvePointList();
-            this.interval = DataInterval.nullDataInterval;
+            this.interval = DataInterval.NullDataInterval;
         }
         #endregion
 
         #region IntervalPolynomialCurve Member
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
-            if (!interval.isBetweenBordersCloseInterval(doubleExtension))
+            if (!interval.IsBetweenBordersCloseInterval(doubleExtension))
                 throw new ArgumentOutOfRangeException("doubleExtension", "The value given is out of borders of intervals. Value: " + doubleExtension.ApproximateString + ", Range: [" + interval.LeftBorder.ApproximateString + ", " + interval.RightBorder.ApproximateString + "].");
             double result = 0;
             double poweredX = 1;

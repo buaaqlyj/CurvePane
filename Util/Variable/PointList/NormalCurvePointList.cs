@@ -46,7 +46,22 @@ namespace Util.Variable.PointList
         }
         #endregion
 
-        #region ICurvePointList
+        #region Public Member
+        public void Insert(int index, DataPoint item)
+        {
+            points.Insert(index, item);
+        }
+
+        public void AddRange(List<DataPoint> points)
+        {
+            foreach (DataPoint item in points)
+            {
+                this.points.Add(item);
+            }
+        }
+        #endregion
+
+        #region ICurvePointList Member
         public int IndexOf(DataPoint item)
         {
             return points.IndexOf(item);
@@ -130,7 +145,7 @@ namespace Util.Variable.PointList
 
         public List<DoubleExtension> XList
         {
-            get 
+            get
             {
                 List<DoubleExtension> X = new List<DoubleExtension>();
                 foreach (DataPoint item in points)
@@ -151,21 +166,6 @@ namespace Util.Variable.PointList
                     Y.Add(item.Y);
                 }
                 return Y;
-            }
-        }
-        #endregion
-
-        #region Public.Interface
-        public void Insert(int index, DataPoint item)
-        {
-            points.Insert(index, item);
-        }
-
-        public void AddRange(List<DataPoint> points)
-        {
-            foreach (DataPoint item in points)
-            {
-                this.points.Add(item);
             }
         }
         #endregion

@@ -41,7 +41,7 @@ namespace CurveBase.CurveElement.ParametricCurve
         #region ParametricCurve Member
         public override DataPoint calculatePoint(DoubleExtension doubleExtension)
         {
-            Debug.Assert(interval.isBetweenBordersCloseInterval(doubleExtension), "Invalid argument for BSplineCurve.calculatePoint()");
+            Debug.Assert(interval.IsBetweenBordersCloseInterval(doubleExtension), "Invalid argument for BSplineCurve.calculatePoint()");
             DoubleExtension xVal = new DoubleExtension(0);
             DoubleExtension yVal = new DoubleExtension(0);
             DoubleExtension basisFunction;

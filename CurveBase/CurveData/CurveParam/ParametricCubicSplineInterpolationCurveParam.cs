@@ -41,7 +41,7 @@ namespace CurveBase.CurveData.CurveParam
         /// <param name="val4"></param>
         public ParametricCubicSplineInterpolationCurveParam(List<DataPoint> points, PCSIBorderConditionType curveType, DoubleExtension val1, DoubleExtension val2, DoubleExtension val3, DoubleExtension val4)
         {
-            DoubleExtension subValLeftX = DoubleExtension.Zero, subValRightX = DoubleExtension.Zero, subValLeftY = DoubleExtension.Zero, subValRightY = DoubleExtension.Zero;
+            DoubleExtension subValLeftX = DoubleExtension.ZERO, subValRightX = DoubleExtension.ZERO, subValLeftY = DoubleExtension.ZERO, subValRightY = DoubleExtension.ZERO;
             CSIBorderConditionType subType = CSIBorderConditionType.First_Order_Derivative;
             List<DataPoint> xPointList = new List<DataPoint>();
             List<DataPoint> yPointList = new List<DataPoint>();
@@ -51,14 +51,14 @@ namespace CurveBase.CurveData.CurveParam
 
             pointList = new NormalCurvePointList(points);
 
-            xPointList.Add(new DataPoint(DoubleExtension.Zero, points[0].X));
-            yPointList.Add(new DataPoint(DoubleExtension.Zero, points[0].Y));
-            DoubleExtension accumulatedChordLength = DoubleExtension.Zero;
+            xPointList.Add(new DataPoint(DoubleExtension.ZERO, points[0].X));
+            yPointList.Add(new DataPoint(DoubleExtension.ZERO, points[0].Y));
+            DoubleExtension accumulatedChordLength = DoubleExtension.ZERO;
             List<DoubleExtension> cutPoints = new List<DoubleExtension>();
             cutPoints.Add(accumulatedChordLength);
             for (int i = 1; i < points.Count; i++)
             {
-                accumulatedChordLength += DataPoint.distance(points[i - 1], points[i]);
+                accumulatedChordLength += DataPoint.CalculateDistance(points[i - 1], points[i]);
                 cutPoints.Add(accumulatedChordLength);
                 xPointList.Add(new DataPoint(accumulatedChordLength, points[i].X));
                 yPointList.Add(new DataPoint(accumulatedChordLength, points[i].Y));

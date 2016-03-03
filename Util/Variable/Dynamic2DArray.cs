@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Util.Variable
@@ -19,13 +20,11 @@ namespace Util.Variable
     public class Dynamic2DArray<T>
     {
         private List<List<T>> array;
-        private int rowCount = 0;
 
         #region Constructor
         public Dynamic2DArray()
         {
             array = new List<List<T>>();
-            rowCount = 0;
         }
         #endregion
 
@@ -34,19 +33,27 @@ namespace Util.Variable
         {
             get
             {
-                if (index < rowCount)
+                if (index < RowCount)
                     return array[index];
                 return new List<T>();
             }
         }
+
+        public int RowCount
+        {
+            get
+            {
+                return array.Count;
+            }
+        }
         #endregion
 
-        #region Public.Interface
+        #region Public Member
         public bool HasValue(int index1, int index2)
         {
-            if (index1 < rowCount)
+            if (index1 < RowCount)
             {
-                if (array[index1].Count > index2)
+                if (GetRowLength(index1) > index2)
                 {
                     return true;
                 }
@@ -57,22 +64,21 @@ namespace Util.Variable
         public T GetArrayElement(int index1, int index2)
         {
             if (HasValue(index1, index2)) return array[index1][index2];
-            return default(T);
+            throw new ArgumentException("The indexes are out of range! X: " + index1.ToString() + ", Y: " + index2.ToString());
         }
 
         public void SetArrayElement(int index1, int index2, T val)
         {
-            if (index1 >= rowCount)
+            if (index1 >= RowCount)
             {
-                for (int i = rowCount; i <= index1; i++)
+                for (int i = RowCount; i <= index1; i++)
                 {
                     array.Add(new List<T>());
-                    rowCount++;
                 }
             }
-            if (array[index1].Count <= index2)
+            if (GetRowLength(index1) <= index2)
             {
-                for (int i = array[index1].Count; i <= index2; i++)
+                for (int i = GetRowLength(index1); i <= index2; i++)
                 {
                     array[index1].Add(default(T));
                 }
@@ -83,11 +89,6 @@ namespace Util.Variable
         public int GetRowLength(int index)
         {
             return array[index].Count;
-        }
-
-        public int GetRowCount()
-        {
-            return array.Count;
         }
         #endregion
     }

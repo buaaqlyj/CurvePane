@@ -24,6 +24,7 @@ using CurveDraw.Draw;
 using Util.Enum;
 using Util.Tool;
 using Util.Variable;
+using Util.Variable.Interval;
 using Util.Variable.PointList;
 
 namespace CurveDraw.Curve
@@ -53,7 +54,7 @@ namespace CurveDraw.Curve
             if (curveParam.PolynomialCurveType == PolynomialCurveType.Newton)
             {
                 NewtonPolynomialCurveInterpolatedData data = new NewtonPolynomialCurveInterpolatedData(curveParam);
-                list.AddRange(sampleAPolynomialCurve(data.Curve, 200));
+                list.AddRange(sampleAPolynomialCurve(data.Curve, 200, data.Curve.Interval));
                 list.Add(data.getLastPoint());
                 list.Label = "[NP]";
             }
@@ -69,11 +70,7 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    //TODO: 更改取样方法
-                    //foreach (NormalIntervalPolynomialCurveElement curve in data.Curves)
-                    //{
-                    //    list.AddRange(sampleAPolynomialCurve(curve, 50));
-                    //}
+                    list.AddRange(sampleAPolynomialCurve(data.Curves, (data.PointList.Count - 1) * 50, data.Curves.Interval));
                     list.Add(data.getLastPoint());
                 }
                 list.Label = "[LP]";
@@ -97,7 +94,7 @@ namespace CurveDraw.Curve
                 PolynomialCurveParam param = (PolynomialCurveParam)curveParam;
                 if (param.Count < 2)
                     throw new InvalidBasePointsException(InterpolationCurveType.polynomialCurve, "At least two points are needed to draw Polynomial Interpolated Curve");
-                if (!param.PointList.noDuplicatedX())
+                if (!param.PointList.NoDuplicatedX())
                     throw new InvalidBasePointsException(InterpolationCurveType.polynomialCurve, "At least two points given have the same X value.");
             }
             else
@@ -107,23 +104,23 @@ namespace CurveDraw.Curve
             return true;
         }
 
-        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurveElement curve, int maxPointCount)
+        private List<DataPoint> sampleAPolynomialCurve(IntervalPolynomialCurveElement curve, int maxPointCount, DataInterval interval)
         {
             if (maxPointCount < 2)
                 throw new ArgumentOutOfRangeException("maxPointCount", "The parameter of sampleAPolynomialCurve is out of range.");
             double stepSize;
             int step;
-            if (curve.Interval.Length.AccurateValue > 0.001 * maxPointCount)
+            if (interval.Length.AccurateValue > 0.001 * maxPointCount)
             {
-                stepSize = curve.Interval.Length.AccurateValue / maxPointCount;
+                stepSize = interval.Length.AccurateValue / maxPointCount;
                 step = maxPointCount;
             }
             else
             {
                 stepSize = 0.001;
-                step = (int)(curve.Interval.Length.AccurateValue * 1000);
+                step = (int)(interval.Length.AccurateValue * 1000);
             }
-            double xValue = curve.Interval.LeftBorder.AccurateValue;
+            double xValue = interval.LeftBorder.AccurateValue;
             List<DataPoint> pts = new List<DataPoint>();
             int count = 0;
             while (count < step)

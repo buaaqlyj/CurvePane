@@ -12,9 +12,12 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Util.Tool;
+using Util.Variable;
 using Util.Variable.PointList;
 using ZedGraph;
 
@@ -25,7 +28,10 @@ namespace CurvePane.ZedGraphTool
         private ZedGraphControl zedGraphControl = null;
         private GraphPane masterPane = null;
         private LineItem baseLine = null;
+
         private bool sameStepForXY = false;
+
+        private double heightMultiplier = 1;
 
         public ZedGraphWrapper(ZedGraphControl zedGraphControl, string baseName)
         {
@@ -35,6 +41,12 @@ namespace CurvePane.ZedGraphTool
 
             zedGraphControl.DoubleClickEvent += new ZedGraphControl.ZedMouseEventHandler(zedGraphControl_DoubleClickEvent);
             zedGraphControl.MouseMoveEvent += new ZedGraphControl.ZedMouseEventHandler(zedGraphControl_MouseMoveEvent);
+            zedGraphControl.GraphPane.AxisChangeEvent += new GraphPane.AxisChangeEventHandler(GraphPane_AxisChangeEvent);
+
+            PointF paneLeftUpper = this.masterPane.GeneralTransform(new PointF(0, 0), CoordType.ChartFraction);
+            PointF paneRightLower = this.masterPane.GeneralTransform(new PointF(1, 1), CoordType.ChartFraction);
+
+            heightMultiplier = (paneRightLower.X - paneLeftUpper.X) / (paneRightLower.Y - paneLeftUpper.Y);
         }
 
         #region EventHandler
@@ -57,12 +69,40 @@ namespace CurvePane.ZedGraphTool
             MouseMove(new Util.Variable.DataPoint(xVal, yVal));
             return false;
         }
+
+        public void GraphPane_AxisChangeEvent(GraphPane pane)
+        {
+            if (sameStepForXY)
+            {
+                double realHeight = (zedGraphControl.GraphPane.YAxis.Scale.Max - zedGraphControl.GraphPane.YAxis.Scale.Min) * heightMultiplier;
+                double realWidth = zedGraphControl.GraphPane.XAxis.Scale.Max - zedGraphControl.GraphPane.XAxis.Scale.Min;
+                DoubleExtension multiplier, smallVal, bigVal;
+                if (realHeight > realWidth)
+                {
+                    multiplier = new DoubleExtension(realHeight / realWidth);
+                    MathExtension.MiddleBasedResize(new DoubleExtension(zedGraphControl.GraphPane.XAxis.Scale.Min), new DoubleExtension(zedGraphControl.GraphPane.XAxis.Scale.Max), multiplier, out smallVal, out bigVal);
+                    zedGraphControl.GraphPane.XAxis.Scale.Min = smallVal.AccurateValue;
+                    zedGraphControl.GraphPane.XAxis.Scale.Max = bigVal.AccurateValue;
+                    zedGraphControl.GraphPane.XAxis.Scale.MajorStep = MathExtension.DynamicRound((bigVal.AccurateValue - smallVal.AccurateValue) / 6);
+                    zedGraphControl.GraphPane.XAxis.Scale.MinorStep = MathExtension.DynamicRound((bigVal.AccurateValue - smallVal.AccurateValue) / 6) / 4;
+                }
+                else
+                {
+                    multiplier = new DoubleExtension(realWidth / realHeight);
+                    MathExtension.MiddleBasedResize(new DoubleExtension(zedGraphControl.GraphPane.YAxis.Scale.Min), new DoubleExtension(zedGraphControl.GraphPane.YAxis.Scale.Max), multiplier, out smallVal, out bigVal);
+                    zedGraphControl.GraphPane.YAxis.Scale.Min = smallVal.AccurateValue;
+                    zedGraphControl.GraphPane.YAxis.Scale.Max = bigVal.AccurateValue;
+                    zedGraphControl.GraphPane.YAxis.Scale.MajorStep = MathExtension.DynamicRound((bigVal.AccurateValue - smallVal.AccurateValue) / 6);
+                    zedGraphControl.GraphPane.YAxis.Scale.MinorStep = MathExtension.DynamicRound((bigVal.AccurateValue - smallVal.AccurateValue) / 6) / 4;
+                }
+            }
+        }
         #endregion
 
         #region BasePoints Operation
         public void AddBasePoint(Util.Variable.DataPoint point)
         {
-            baseLine.AddPoint(transformDataPointToPointPair(point));
+            baseLine.AddPoint(TransformDataPointToPointPair(point));
             zedGraphControl.Refresh();
         }
 
@@ -137,19 +177,13 @@ namespace CurvePane.ZedGraphTool
         #region Pane Operation
         public void UpdatePaneView()
         {
-            zedGraphControl.AxisChange();
-            if (sameStepForXY)
-            {
-                if (zedGraphControl.GraphPane.XAxis.Scale.MajorStep > zedGraphControl.GraphPane.YAxis.Scale.MajorStep)
-                {
-                    zedGraphControl.GraphPane.YAxis.Scale.MajorStep = zedGraphControl.GraphPane.XAxis.Scale.MajorStep;
-                }
-                else
-                {
-                    zedGraphControl.GraphPane.XAxis.Scale.MajorStep = zedGraphControl.GraphPane.YAxis.Scale.MajorStep;
-                }
-            }
+            zedGraphControl.GraphPane.AxisChange();
             zedGraphControl.Refresh();
+        }
+
+        public void RestorePaneScale()
+        {
+            zedGraphControl.RestoreScale(zedGraphControl.GraphPane);
         }
         #endregion
 
@@ -159,14 +193,6 @@ namespace CurvePane.ZedGraphTool
             get
             {
                 return zedGraphControl != null;
-            }
-        }
-
-        public GraphPane MasterPane
-        {
-            get
-            {
-                return masterPane;
             }
         }
 
@@ -183,18 +209,33 @@ namespace CurvePane.ZedGraphTool
         }
         #endregion
 
-        #region Public.Interface
-        public static PointPair transformDataPointToPointPair(Util.Variable.DataPoint point)
+        #region Public Member
+        public Util.Variable.DataPoint TransformFromPaneToScreen(Util.Variable.DataPoint panePoint)
+        {
+            PointF pt = this.masterPane.GeneralTransform(new PointF((float)panePoint.X.AccurateValue, (float)panePoint.Y.AccurateValue), CoordType.AxisXYScale);
+            return new Util.Variable.DataPoint(pt.X, pt.Y);
+        }
+
+        public Util.Variable.DataPoint TransformFromScreenToPane(Util.Variable.DataPoint screenPoint)
+        {
+            double xVal, yVal;
+            this.masterPane.ReverseTransform(new PointF((float)screenPoint.X.AccurateValue, (float)screenPoint.Y.AccurateValue), out xVal, out yVal);
+            return new Util.Variable.DataPoint(xVal, yVal);
+        }
+        #endregion
+
+        #region Class Member
+        public static PointPair TransformDataPointToPointPair(Util.Variable.DataPoint point)
         {
             return new PointPair(point.X.AccurateValue, point.Y.AccurateValue);
         }
 
-        public static PointPairList transformDataPointListToPointPairList(ICurvePointList points)
+        public static PointPairList TransformDataPointListToPointPairList(ICurvePointList points)
         {
             PointPairList list = new PointPairList();
             foreach (Util.Variable.DataPoint item in points)
             {
-                list.Add(transformDataPointToPointPair(item));
+                list.Add(TransformDataPointToPointPair(item));
             }
             return list;
         }

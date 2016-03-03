@@ -65,10 +65,10 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
         #region IntervalPolynomialCurve Member
         public override DoubleExtension calculate(DoubleExtension doubleExtension)
         {
-            int i = interval.findIntervalIndex(doubleExtension);
+            int i = interval.IndexOfInterval(doubleExtension);
             if (i > -1)
             {
-                Debug.Assert(interval[i].isBetweenBordersCloseInterval(doubleExtension), "Can't find proper interval for given value.");
+                Debug.Assert(interval[i].IsBetweenBordersCloseInterval(doubleExtension), "Can't find proper interval for given value.");
                 return polynomialCurves[i].calculate(doubleExtension);
             }
             else

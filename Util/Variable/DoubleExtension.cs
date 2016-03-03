@@ -31,11 +31,6 @@ namespace Util.Variable
         {
             this.va = Convert.ToDouble(va);
         }
-
-        public DoubleExtension()
-        {
-            
-        }
         #endregion
 
         #region Property
@@ -88,42 +83,12 @@ namespace Util.Variable
             }
         }
 
-        public bool IsZero
+        public bool EqualsToZero
         {
             get
             {
                 return ApproximateString == "0.000";
             }
-        }
-        #endregion
-
-        #region Public.Interface
-        public bool EqualsToZero()
-        {
-            return ApproximateString == "0.000";
-        }
-        #endregion
-
-        #region Class Member
-        public static DoubleExtension Zero = new DoubleExtension(0);
-        public static DoubleExtension PositiveOne = new DoubleExtension(1);
-        public static DoubleExtension NegativeOne = new DoubleExtension(-1);
-
-        public static bool areTheSameCoordinate(DoubleExtension v1, DoubleExtension v2)
-        {
-            return v1 == v2;
-        }
-
-        public static bool EqualsToZero(double val)
-        {
-            return (new DoubleExtension(val)).ApproximateString == "0.000";
-        }
-        #endregion
-
-        #region Object.Member
-        public override string ToString()
-        {
-            return CleanString;
         }
         #endregion
 
@@ -268,6 +233,19 @@ namespace Util.Variable
             return v1.ApproximateString != v2.ToString("0.000");
         }
         #endregion
+        #endregion
+
+        #region Class Member
+        public static DoubleExtension ZERO = new DoubleExtension(0);
+        public static DoubleExtension POSITIVE_ONE = new DoubleExtension(1);
+        public static DoubleExtension NEGATIVE_ONE = new DoubleExtension(-1);
+        #endregion
+
+        #region Superclass Object Member
+        public override string ToString()
+        {
+            return CleanString;
+        }
         #endregion
 
         #region IEquatable<DoubleExtension> Member

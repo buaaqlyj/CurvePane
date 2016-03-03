@@ -63,7 +63,7 @@ namespace CurveBase.CurveException
             {
                 string msg = base.Message;
                 if (curveType1 != InterpolationCurveType.unknown && curveType2 != InterpolationCurveType.unknown)
-                    msg = "The curve you are drawing is " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType1) + ", but you used the parameters of " + EnumExtension.GetDescriptionFromValue<InterpolationCurveType>(curveType2) + ".";
+                    msg = "The curve you are drawing is " + EnumExtension.GetDescriptionFromEnumValue<InterpolationCurveType>(curveType1) + ", but you used the parameters of " + EnumExtension.GetDescriptionFromEnumValue<InterpolationCurveType>(curveType2) + ".";
                 return msg;
             }
         }

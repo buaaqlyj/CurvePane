@@ -13,8 +13,6 @@
 /// limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Util.Variable.Matrix
 {
@@ -26,22 +24,60 @@ namespace Util.Variable.Matrix
         private bool isValid = false;
 
         #region Constructor
-        public LinearEquationSet() { }
-
         public LinearEquationSet(Matrix coefficients, Matrix constants)
         {
             this.coefficientsMatrix = coefficients;
             this.constantsMatrix = constants;
             degree = this.constantsMatrix.Rows;
-            if (this.coefficientsMatrix.Rows != degree || degree < 1 || this.coefficientsMatrix.IsSingular)
+            if (this.coefficientsMatrix.Rows != degree)
             {
-                return;
+                throw new ArgumentException("The row count of coefficient matrix is different from that of constant matrix.");
+            }
+            if (degree < 1)
+            {
+                throw new ArgumentException("The row counts of both matrices are 0.");
+            }
+            if (this.coefficientsMatrix.IsSingular)
+            {
+                throw new ArgumentException("The coefficient matrix is singular.");
             }
             isValid = true;
         }
         #endregion
 
         #region Property
+        public bool IsValid
+        {
+            get
+            {
+                return isValid;
+            }
+        }
+
+        public int Degree
+        {
+            get
+            {
+                return degree;
+            }
+        }
+
+        public Matrix Coefficients
+        {
+            get
+            {
+                return coefficientsMatrix;
+            }
+        }
+
+        public Matrix Constants
+        {
+            get
+            {
+                return constantsMatrix;
+            }
+        }
+
         public Matrix AnswerMatrix
         {
             get
@@ -52,7 +88,7 @@ namespace Util.Variable.Matrix
                 }
                 else
                 {
-                    return Matrix.Zeros(1);
+                    throw new ArgumentException("The equation set can't be solved.");
                 }
             }
         }

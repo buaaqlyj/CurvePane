@@ -72,7 +72,7 @@ namespace CurveDraw.Curve
                 CubicSplineInterpolationCurveParam param = (CubicSplineInterpolationCurveParam)curveParam;
                 if (param.Count < 2)
                     throw new InvalidBasePointsException(InterpolationCurveType.csiCurve, "At least two points are needed to draw Cubic Spline Interpolation Curve");
-                if (!param.PointList.noDuplicatedX())
+                if (!param.PointList.NoDuplicatedX())
                     throw new InvalidBasePointsException(InterpolationCurveType.csiCurve, "At least two points given have the same X value.");
             }
             else
