@@ -135,7 +135,7 @@ namespace Util.Variable
         }
         #endregion
 
-        #region Class Interface
+        #region Class Member
         public static DoubleExtension CalculateInnerProduct(DataVector dv1, DataVector dv2)
         {
             return dv1.X * dv2.X + dv1.Y * dv2.Y;

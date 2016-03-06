@@ -12,6 +12,7 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -28,11 +29,13 @@ namespace CurveBase.CurveData.CurveInterpolatedData
         private PiecewiseIntervalPolynomialCurveElement curve = null;
         private OrderedCurvePointList lagarangePolynomialInterpolatedPoints = null;
         private PolynomialCurveType curveType;
+        private DataPoint lastPoint = null;
 
         #region Constructor
         public LagarangePolynomialCurveInterpolatedData(PolynomialCurveParam curveParam)
         {
             this.curveType = curveParam.PolynomialCurveType;
+            this.lastPoint = curveParam.PointList.RightBorderPoint;
             switch (curveType)
             {
                 case PolynomialCurveType.Lagrange_Linear:
@@ -61,6 +64,16 @@ namespace CurveBase.CurveData.CurveInterpolatedData
                 return lagarangePolynomialInterpolatedPoints;
             }
         }
+
+        public int Count
+        {
+            get
+            {
+                if (curve != null) return curve.Curves.Count;
+                if (lagarangePolynomialInterpolatedPoints != null) return lagarangePolynomialInterpolatedPoints.Count - 1;
+                throw new ArgumentException("The LagarangePolynomialInterpolatedData hasn't been initialized properly.");
+            }
+        }
         #endregion
 
         #region ICurveInterpolatedData Member
@@ -71,7 +84,7 @@ namespace CurveBase.CurveData.CurveInterpolatedData
 
         public DataPoint getLastPoint()
         {
-            return curve.LastPoint;
+            return lastPoint;
         }
         #endregion
 

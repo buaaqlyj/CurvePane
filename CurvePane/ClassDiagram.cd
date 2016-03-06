@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CurvePane.CurveManager">
+    <Position X="15.75" Y="9.5" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="5.5" Y="8.059" />
+        <Point X="5.5" Y="8.676" />
+        <Point X="16.5" Y="8.676" />
+        <Point X="16.5" Y="9.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IAIIABACgMAIBAAVAQAMEYEAoBABABAgGEQAzjAAAQQ=</HashCode>
+      <FileName>CurveManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.ListViewHelper" Collapsed="true">
+    <Position X="11" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ListViewHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.ListViewColumnSorter" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="9.5" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="5.5" Y="8.059" />
+        <Point X="5.5" Y="8.696" />
+        <Point X="14" Y="8.696" />
+        <Point X="14" Y="9.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAICAAAEAAAAAAAACAAAgQBBAAAABAAAAAAAA=</HashCode>
+      <FileName>ListViewHelper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurvePane.MainForm" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/yAACgCAgSIgSFWUUYCAUQdCKADRAXAAMiAAE48AAPU=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.Program" Collapsed="true">
+    <Position X="17.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.Properties.Resources" Collapsed="true">
+    <Position X="8.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.Properties.Settings" Collapsed="true">
+    <Position X="9" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CurvePane.ZedGraphTool.ZedGraphWrapper" Collapsed="true">
+    <Position X="6.25" Y="9.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="CurvePane.ZedGraphTool.ZedGraphWrapper.DataPointEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ZedGraphTool\ZedGraphWrapper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="5.5" Y="8.059" />
+        <Point X="5.5" Y="8.719" />
+        <Point X="7" Y="8.719" />
+        <Point X="7" Y="9.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAQCAAAIcAABAABgAAEArBCAAAAIIAAAgADACQQ=</HashCode>
+      <FileName>ZedGraphTool\ZedGraphWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Util.Tool.ArrayExtension" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Tool.EnumExtension" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Tool.MathExtension" Collapsed="true">
+    <Position X="10.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.ArrayString" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.DataPoint" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.DataVector" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.DoubleExtension" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.Dynamic2DArray&lt;T&gt;" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.Interval.DataInterval" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.Interval.PiecewiseDataInterval" Collapsed="true">
+    <Position X="0.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.Matrix.LinearEquationSet" Collapsed="true">
+    <Position X="16" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.Matrix.Matrix" Collapsed="true">
+    <Position X="12.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Util.Variable.PointList.BaseDataPointList" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.PointList.NormalCurvePointList" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Util.Variable.PointList.OrderedCurvePointList" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.BezierCurveInterpolatedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.BSplineCurveInterpolatedData" Collapsed="true">
+    <Position X="3.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.CubicSplineInterpolationInterpolatedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.LagarangePolynomialCurveInterpolatedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.NewtonPolynomialCurveInterpolatedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.NurbsCurveInterpolatedData" Collapsed="true">
+    <Position X="3.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveInterpolatedData.ParametricCubicSplineInterpolationInterpolatedData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.BezierCurveParam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.BSplineCurveParam" Collapsed="true">
+    <Position X="1.25" Y="9.5" Width="1.5" />
+    <InheritanceLine Type="System.Object" ManuallyRouted="true">
+      <Path>
+        <Point X="5.5" Y="8.059" />
+        <Point X="5.5" Y="8.719" />
+        <Point X="2" Y="8.719" />
+        <Point X="2" Y="9.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.CubicSplineInterpolationCurveParam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.NurbsCurveParam" Collapsed="true">
+    <Position X="1.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.ParametricCubicSplineInterpolationCurveParam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveData.CurveParam.PolynomialCurveParam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveElement.IntervalPolynomialCurve.IntervalPolynomialCurveElement" Collapsed="true">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.IntervalPolynomialCurve.NewtonIntervalPolynomialCurveElement" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.IntervalPolynomialCurve.NormalIntervalPolynomialCurveElement" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.IntervalPolynomialCurve.PiecewiseIntervalPolynomialCurveElement" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.ParametricCurve.BezierParametricCurveElement" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.ParametricCurve.BSplineParametricCurveElement" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.ParametricCurve.NurbsParametricCurveElement" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.ParametricCurve.ParametricCubicSplineInterpolationCurveElement" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveElement.ParametricCurve.ParametricCurveElement" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="CurveBase.CurveException.InvalidBasePointsException" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveBase.CurveException.UnmatchedCurveParamTypeException" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="CurveDraw.Curve.BezierCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveDraw.Curve.BSplineCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveDraw.Curve.CubicSplineInterpolationCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveDraw.Curve.NurbsCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveDraw.Curve.ParametricCubicSplineInterpolationCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CurveDraw.Curve.PolynomialCurve" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="4.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="Util.Variable.PointList.ICurvePointList" Collapsed="true">
+    <Position X="14.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CurveBase.CurveData.CurveInterpolatedData.ICurveInterpolatedData" Collapsed="true">
+    <Position X="10.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CurveBase.CurveData.CurveParam.ICurveParam" Collapsed="true">
+    <Position X="12.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="CurveDraw.Curve.ICurve" Collapsed="true">
+    <Position X="9" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="Util.Enum.PaneCurveType" Collapsed="true">
+    <Position X="14.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="CurveBase.CurveData.CurveParam.CSIBorderConditionType" Collapsed="true">
+    <Position X="9" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="CurveBase.CurveData.CurveParam.PCSIBorderConditionType" Collapsed="true">
+    <Position X="16" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="CurveBase.CurveData.CurveParam.PolynomialCurveType" Collapsed="true">
+    <Position X="17.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="CurveBase.InterpolationCurveType" Collapsed="true">
+    <Position X="12.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="CurveDraw.Draw.DrawType" Collapsed="true">
+    <Position X="10.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>

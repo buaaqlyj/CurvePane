@@ -95,6 +95,7 @@ namespace CurvePane
             this.label14 = new System.Windows.Forms.Label();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.curveTypeComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -115,7 +116,6 @@ namespace CurvePane
             this.fetchControlButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.curveTypeTabControl.SuspendLayout();
             this.pcTabPage.SuspendLayout();
             this.csiTabPage.SuspendLayout();
@@ -666,6 +666,17 @@ namespace CurvePane
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "设置";
             // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(591, 129);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(144, 16);
+            this.checkBox4.TabIndex = 7;
+            this.checkBox4.Text = "X轴Y轴是否等步长显示";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -867,17 +878,6 @@ namespace CurvePane
             this.textBox2.Size = new System.Drawing.Size(262, 282);
             this.textBox2.TabIndex = 0;
             // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(591, 129);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(144, 16);
-            this.checkBox4.TabIndex = 7;
-            this.checkBox4.Text = "X轴Y轴是否等步长显示";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -888,6 +888,8 @@ namespace CurvePane
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.masterZedGraphControl);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "产品建模技术实践类大作业 - 建模曲线画布";
             this.Load += new System.EventHandler(this.MainForm_Load);

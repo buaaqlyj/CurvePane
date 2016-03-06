@@ -70,7 +70,7 @@ namespace CurveDraw.Curve
                 }
                 else if (data.Curves != null)
                 {
-                    list.AddRange(sampleAPolynomialCurve(data.Curves, (data.PointList.Count - 1) * 50, data.Curves.Interval));
+                    list.AddRange(sampleAPolynomialCurve(data.Curves, data.Count * 50, data.Curves.Interval));
                     list.Add(data.getLastPoint());
                 }
                 list.Label = "[LP]";
