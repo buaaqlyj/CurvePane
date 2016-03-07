@@ -1,4 +1,16 @@
 ****
+# CurvePane_v1.0.32
+
+## Release Note
+
+The whole project has finished.
+
+## Changelog
+
+* Update control points connections automately when control points change every time.
+* Fix a bug that results in null object in LagarangePolynomialCurve sampling function.
+
+****
 # CurvePane_v0.7.30
 
 ## Release Note
