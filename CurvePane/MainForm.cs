@@ -188,20 +188,23 @@ namespace CurvePane
                 {
                     return;
                 }
-                StreamReader sr = new StreamReader(filename);
-                string text;
-                while (!sr.EndOfStream)
+                using (StreamReader sr = new StreamReader(filename))
                 {
-                    text = sr.ReadLine().Trim();
-                    if (text.Contains("#"))
+                    string text;
+                    while (!sr.EndOfStream)
                     {
-                        text = text.Substring(0, text.IndexOf('#'));
-                    }
-                    if (text != "")
-                    {
-                        if (!masterCurveManager.TryAddBasePointFromText(text))
+                        text = sr.ReadLine().Trim();
+                        if (text.Contains("#"))
                         {
-                            textBox2.AppendText(Environment.NewLine + "Unrecognized text: " + text);
+                            text = text.Substring(0, text.IndexOf('#'));
+                        }
+                        if (text != "")
+                        {
+                            if (!masterCurveManager.TryAddBasePointFromText(text))
+                            {
+                                textBox2.AppendText(Environment.NewLine + "Unrecognized text: " + text);
+                                return;
+                            }
                         }
                     }
                 }
