@@ -46,6 +46,12 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
             this.interval = interval;
         }
 
+        public NormalIntervalPolynomialCurveElement(List<DoubleExtension> coefficients, DataInterval interval)
+            : this(coefficients, coefficients.Count, interval)
+        {
+            
+        }
+
         public NormalIntervalPolynomialCurveElement(List<DoubleExtension> coefficients, int degree, DoubleExtension borderVal1, DoubleExtension borderVal2)
             : this(coefficients, degree, new DataInterval(borderVal1, borderVal2))
         {
@@ -62,7 +68,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 this.equalsToZero = true;
         }
 
-        protected NormalIntervalPolynomialCurveElement()
+        private NormalIntervalPolynomialCurveElement()
             : this(new DoubleExtension(0), DataInterval.NullDataInterval)
         {
             

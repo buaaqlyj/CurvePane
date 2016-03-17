@@ -1,4 +1,16 @@
 ****
+# CurvePane_v1.0.34
+
+## Release Note
+
+Few bug fixes.
+
+## Changelog
+
+* Fix the bug that forget to dispose base points file after importing.
+* Fix the wrong method when interpolating Lagarange Polynomial Curve.
+
+****
 # CurvePane_v1.0.32
 
 ## Release Note

@@ -27,12 +27,12 @@ namespace CurveBase.CurveData.CurveInterpolatedData
     {
         private NewtonIntervalPolynomialCurveElement newtonCurve = null;
         private OrderedCurvePointList pointList = null;
-
+        
         #region Constructor
         public NewtonPolynomialCurveInterpolatedData(PolynomialCurveParam curveParam)
         {
-            pointList = curveParam.PointList;
-            newtonCurve = new NewtonIntervalPolynomialCurveElement(pointList);
+            this.pointList = curveParam.PointList;
+            this.newtonCurve = new NewtonIntervalPolynomialCurveElement(pointList);
         }
         #endregion
 

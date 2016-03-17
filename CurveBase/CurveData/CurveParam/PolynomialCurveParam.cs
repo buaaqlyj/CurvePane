@@ -154,8 +154,7 @@ namespace CurveBase.CurveData.CurveParam
 
     public enum PolynomialCurveType
     {
-        Lagrange_Linear = 1,
-        Lagrange_Quadratic = 2,
-        Newton = 3
+        Lagrange = 1,
+        Newton = 2
     }
 }
