@@ -29,9 +29,7 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
     public class NewtonIntervalPolynomialCurveElement : IntervalPolynomialCurveElement
     {
         protected static Dynamic2DArray<DoubleExtension> fullCoefficents = new Dynamic2DArray<DoubleExtension>();
-        
         protected OrderedCurvePointList list = null;
-        
         protected static NewtonIntervalPolynomialCurveElement nullNewtonPolynomialCurve = new NewtonIntervalPolynomialCurveElement();
 
         #region Constructor

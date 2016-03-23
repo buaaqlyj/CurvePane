@@ -53,6 +53,7 @@ namespace CurvePane
             curveNames = new List<string>();
             ZedGraphWrapper.DoubleClick += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_DoubleClick);
             ZedGraphWrapper.MouseMove += new ZedGraphWrapper.DataPointEventHandler(ZedGraphWrapper_MouseMove);
+            CurveManager.BasePointChangedEvent += new EventHandler(CurveManager_BasePointChangedEvent);
         }
 
         #region EventHandler
@@ -70,6 +71,11 @@ namespace CurvePane
             {
                 DisplayBasePointEvent(point);
             }
+        }
+
+        public void CurveManager_BasePointChangedEvent(object sender, EventArgs e)
+        {
+            hasDrawBasePointsConnections = false;
         }
         #endregion
 
