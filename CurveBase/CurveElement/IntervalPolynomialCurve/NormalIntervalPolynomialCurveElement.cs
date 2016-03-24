@@ -103,6 +103,34 @@ namespace CurveBase.CurveElement.IntervalPolynomialCurve
                 return equalsToZero;
             }
         }
+
+        public NormalIntervalPolynomialCurveElement FirstOrderDerivative
+        {
+            get
+            {
+                if (degree < 2) return new NormalIntervalPolynomialCurveElement(DoubleExtension.ZERO, Interval);
+                List<DoubleExtension> coef = new List<DoubleExtension>();
+                for (int i = 1; i < degree; i++)
+                {
+                    coef.Add(coefficients[i] * i);
+                }
+                return new NormalIntervalPolynomialCurveElement(coef, Interval);
+            }
+        }
+
+        public NormalIntervalPolynomialCurveElement SecondOrderDerivative
+        {
+            get
+            {
+                if (degree < 3) return new NormalIntervalPolynomialCurveElement(DoubleExtension.ZERO, Interval);
+                List<DoubleExtension> coef = new List<DoubleExtension>();
+                for (int i = 2; i < degree; i++)
+                {
+                    coef.Add(coefficients[i] * i * (i - 1));
+                }
+                return new NormalIntervalPolynomialCurveElement(coef, Interval);
+            }
+        }
         #endregion
 
         #region Public.Interface
